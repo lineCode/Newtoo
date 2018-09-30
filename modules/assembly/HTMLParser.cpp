@@ -352,13 +352,13 @@ namespace Newtoo
         }
         return 0;
     }
-    Token* fromMisc(DOMString str)
+    Token* fromMisc(const DOMString& str)
     {
         MiscToken* misc = new MiscToken();
         misc->data = str;
         return (Token*)misc;
     }
-    Token* fromText(DOMString str)
+    Token* fromText(const DOMString& str)
     {
         Text* text = new Text();
         text->text = str;
