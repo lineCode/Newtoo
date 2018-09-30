@@ -7,14 +7,14 @@
 namespace Newtoo
 {
 
-    class StyleSheetList final
+    class StyleSheetList
     {
     public:
 
         StyleSheetList();
 
-        StyleSheet* item(unsigned long index);
-        unsigned long length();
+        virtual StyleSheet* item(unsigned long index);
+        virtual unsigned long length();
 
     private:
 

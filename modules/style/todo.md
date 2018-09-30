@@ -6,4 +6,4 @@
 
 3. Сделать каскадирование CSSStyleDeclaration в StyleAssembler
 
-4. Сделать рабочий Document::styleSheets();
+4. ~~Сделать рабочий Document::styleSheets();~~

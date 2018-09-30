@@ -13,7 +13,7 @@
 namespace Newtoo
 {
 
-    Document::Document()
+    Document::Document() : Node(DOCUMENT_NODE), mStyleSheets(&childNodes())
     {}
 
     Node* Document::cloneNode(bool deep)

@@ -2,7 +2,7 @@
 
 #include "../../html/element/collection/HTMLCollection.h"
 #include "../../window/Location.h"
-#include "../../cssom/style/StyleSheetList.h"
+#include "../../cssom/style/StyleSheetListReflect.h"
 #include "../../cssom/misc/CaretPosition.h"
 #include "../../html/DocumentAndElementEventHandlers.h"
 #include "../event/GlobalEventHandlers.h"
@@ -208,7 +208,7 @@ namespace Newtoo
 
         EventHandler mOnreadystatechange;
 
-        StyleSheetList mStyleSheets;
+        StyleSheetListReflect mStyleSheets;
     };
 
 }
