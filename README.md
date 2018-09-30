@@ -2,31 +2,31 @@
 
 # Intelligent & fast web browser engine
 
-Newtoo is the brand new rendering engine for web browsers. Its idea is high perfomance, standard compilance and low memory consumption. It designed to use in web browser Magenta.
+Newtoo is a brand new rendering engine for web browsers. Its main drives are high performance, standard compliance and low memory consumption. It's designed to be used in the Magenta web browser.
   
-Newtoo tries to show a page faster than to load it completely.  
+Newtoo attempts to show a page before it is completely loaded.  
 
-## Its is history starts Today
+## It's history starts Today
 
-Newtoo is the new and all new web browser engine, written from scratch in C++.  
-His goal is to do similar things differently and to be different.
+Newtoo is all new web browser engine written from scratch in C++.  
+Its goal is to do similar things differently and to be different.
 
 # HTML5 & CSS Support   
 
 ![Features](http://newtoo.ucoz.net/resources/github/features.png?u=1)
 
-Learn about support to **web tecnologies** at <http:/newtoo.ru/html5-support> (RU)
+Learn about supported **web tecnologies** at <http:/newtoo.ru/html5-support> (RU)
 
 # Progress
 ![See our progress at <http:/newtoo.ru/html5-support> (RU)](http://newtoo.ru/resources/github/progress.png?u=5)  
 
 ### Annoncements  
 
-CSS Typed OM <https://www.w3.org/TR/css-typed-om-1> will be avaiable in Milestone 1 with it release
+CSS Typed OM <https://www.w3.org/TR/css-typed-om-1> will be available with the release of Milestone 1.
 
 ### Your thoughts about the new engine
 
-Has an idea? Write me a ticket [Newtoo/issues](https://github.com/FlightBlaze/Newtoo/issues)
+Have an idea? Write me a issue [Newtoo/issues](https://github.com/FlightBlaze/Newtoo/issues)
 
 For questions: flightblaze@gmail.com or [vk.com/dmitrykozichev](https://vk.com/dmitrykozichev)
 
