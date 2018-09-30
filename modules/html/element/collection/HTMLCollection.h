@@ -25,7 +25,10 @@ namespace Newtoo
             EMBEDS,
             LINKS,
             FORMS,
-            SCRIPTS
+            SCRIPTS,
+            FORM_CONTROLS,
+            TABLE_CELLS,
+            TABLE_ROWS
         };
 
         HTMLCollection(NodeList* aNodeList, Mode aMode = NORMAL, DOMString aArg = "",
@@ -37,9 +40,9 @@ namespace Newtoo
         Element* item(unsigned long index);
         Element* namedItem(DOMString name);
 
-    protected:
-
         bool acceptToCollection(Element* childElement);
+
+    protected:
 
         DOMString mArg;
         DOMString mArg2;

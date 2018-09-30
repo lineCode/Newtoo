@@ -43,6 +43,12 @@ namespace Newtoo
     const char HTMLParagraphElementTagName[] = "p";
     const char HTMLStyleElementTagName[] = "style";
     const char HTMLIFrameElementTagName[] = "iframe";
+    const char HTMLBRElementTagName[] = "br";
+    const char HTMLFormElementTagName[] = "form";
+    const char HTMLTableDataCellElementTagName[] = "td";
+    const char HTMLTableElementTagName[] = "table";
+    const char HTMLTableHeaderCellElementTagName[] = "th";
+    const char HTMLTableRowElementTagName[] = "tr";
 
     class ElementBuilder
     {

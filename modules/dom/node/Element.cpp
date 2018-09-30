@@ -270,6 +270,20 @@ namespace Newtoo
         return ElementKind::Element;
     }
 
+    bool Element::isFormControl()
+    {
+        return false;
+    }
+
+    bool Element::isTableCell()
+    {
+        return (localName() == "td" or localName() == "th") ? true : false;
+    }
+    bool Element::isTableRow()
+    {
+        return (localName() == "tr") ? true : false;
+    }
+
     bool Element::isHTMLElement()
     {
         return getElementKind() == ElementKind::HTMLElement;

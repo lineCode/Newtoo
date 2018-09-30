@@ -110,6 +110,10 @@ namespace Newtoo
 
         virtual ElementKind getElementKind();
 
+        virtual bool isFormControl();
+        bool isTableCell(); // non-virtual
+        bool isTableRow(); // non-virtual
+
         bool isHTMLElement();
         bool isSVGElement();
 

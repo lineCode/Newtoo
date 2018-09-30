@@ -16,6 +16,13 @@
 #include "../html/element/HTMLTitleElement.h"
 #include "../html/element/HTMLUListElement.h"
 #include "../html/element/HTMLIFrameElement.h"
+#include "../html/element/HTMLBRElement.h"
+#include "../html/element/HTMLFormElement.h"
+#include "../html/element/HTMLTableElement.h"
+#include "../html/element/HTMLTableDataCellElement.h"
+#include "../html/element/HTMLTableHeaderCellElement.h"
+#include "../html/element/HTMLTableRowElement.h"
+
 
 namespace Newtoo
 {
@@ -213,6 +220,36 @@ namespace Newtoo
         else if(tagname.name == HTMLIFrameElementTagName)
         {
             return new HTMLIFrameElement(namespaceURI, tagname.name, tagname.prefix);
+        }
+
+        else if(tagname.name == HTMLBRElementTagName)
+        {
+            return new HTMLBRElement(namespaceURI, tagname.name, tagname.prefix);
+        }
+
+        else if(tagname.name == HTMLFormElementTagName)
+        {
+            return new HTMLFormElement(namespaceURI, tagname.name, tagname.prefix);
+        }
+
+        else if(tagname.name == HTMLTableElementTagName)
+        {
+            return new HTMLTableElement(namespaceURI, tagname.name, tagname.prefix);
+        }
+
+        else if(tagname.name == HTMLTableDataCellElementTagName)
+        {
+            return new HTMLTableDataCellElement(namespaceURI, tagname.name, tagname.prefix);
+        }
+
+        else if(tagname.name == HTMLTableHeaderCellElementTagName)
+        {
+            return new HTMLTableHeaderCellElement(namespaceURI, tagname.name, tagname.prefix);
+        }
+
+        else if(tagname.name == HTMLTableRowElementTagName)
+        {
+            return new HTMLTableRowElement(namespaceURI, tagname.name, tagname.prefix);
         }
 
         return new HTMLUnknownElement(namespaceURI, tagname.name, tagname.prefix);
