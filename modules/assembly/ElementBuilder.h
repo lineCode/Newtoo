@@ -5,6 +5,9 @@
 namespace Newtoo
 {
 
+    const char HTMLHtmlElementTagName[] = "html";
+    const char HTMLHeadElementTagName[] = "head";
+    const char HTMLBodyElementTagName[] = "body";
     const char HTMLAddressElementTagName[] = "address";
     const char HTMLAnchorElementTagName[] = "anchor";
     const char HTMLBaseElementTagName[] = "base";
@@ -25,8 +28,6 @@ namespace Newtoo
     const char HTMLSourceElementTagName[] = "source";
     const char HTMLTitleElementTagName[] = "title";
     const char HTMLUListElementTagName[] = "ulist";
-    const char HTMLHeadElementTagName[] = "head";
-    const char HTMLBodyElementTagName[] = "body";
     const char HTMLArticleElementTagName[] = "article";
     const char HTMLSectionElementTagName[] = "section";
     const char HTMLNavElementTagName[] = "nav";
@@ -49,6 +50,7 @@ namespace Newtoo
     const char HTMLTableElementTagName[] = "table";
     const char HTMLTableHeaderCellElementTagName[] = "th";
     const char HTMLTableRowElementTagName[] = "tr";
+    const char HTMLInputElementTagName[] = "input";
 
     class ElementBuilder
     {

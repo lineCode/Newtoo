@@ -1,10 +1,10 @@
 1. Дописать интерфейсы событий https://www.w3.org/TR/uievents/ и остальные дописать
 
-2. Прикрепить к классам умные указатели (в DOM они обязательно нужны)
+2. Прикрепить к классам умные указатели ~~(в DOM они обязательно нужны)~~
 
 3. Надо доделать CSSRuleBuilder для CSSStyleSheet::insertRule
 
-4. Надо доделать ElementBuilder для Document::createElement
+4. ~~Надо доделать ElementBuilder для Document::createElement~~
 
 5. Надо сделать EventBuilder для Document::createEvent
 
@@ -14,4 +14,4 @@
 а не setEnd(node->nextSibling(), 0). Еще надо убрать mCursorEnd и сделать, чтобы можно было
 вставить элемент за самый первый дочерний узел~~
 
-8. Доделать незаконченные элементы (Form, Table, TableDataCell...) и дальше делать
+8. Доделать незаконченные элементы (Form, Table, Input, TableDataCell...) и дальше делать

@@ -117,6 +117,14 @@ namespace Newtoo
         bool isHTMLElement();
         bool isSVGElement();
 
+        bool isPseudoElement(); // non-virtual
+
+        bool isPseudoBefore() { return false; } // non-virtual
+        bool isPseudoAfter() { return false; } // non-virtual
+
+        Element* pseudoBefore();
+        Element* pseudoAfter();
+
         DOMTokenList reflectTo(DOMString attrName);
 
         //Из стандарта CSSOM и CSSOM View

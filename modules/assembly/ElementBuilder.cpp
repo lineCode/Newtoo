@@ -1,5 +1,8 @@
 #include "ElementBuilder.h"
 
+#include "../html/element/HTMLHtmlElement.h"
+#include "../html/element/HTMLHeadElement.h"
+#include "../html/element/HTMLBodyElement.h"
 #include "../html/element/HTMLAddressElement.h"
 #include "../html/element/HTMLAnchorElement.h"
 #include "../html/element/HTMLBaseElement.h"
@@ -22,6 +25,7 @@
 #include "../html/element/HTMLTableDataCellElement.h"
 #include "../html/element/HTMLTableHeaderCellElement.h"
 #include "../html/element/HTMLTableRowElement.h"
+#include "../html/element/HTMLInputElement.h"
 
 
 namespace Newtoo
@@ -227,6 +231,11 @@ namespace Newtoo
             return new HTMLBRElement(namespaceURI, tagname.name, tagname.prefix);
         }
 
+        else if(tagname.name == HTMLInputElementTagName)
+        {
+            return new HTMLInputElement(namespaceURI, tagname.name, tagname.prefix);
+        }
+
         else if(tagname.name == HTMLFormElementTagName)
         {
             return new HTMLFormElement(namespaceURI, tagname.name, tagname.prefix);
@@ -250,6 +259,21 @@ namespace Newtoo
         else if(tagname.name == HTMLTableRowElementTagName)
         {
             return new HTMLTableRowElement(namespaceURI, tagname.name, tagname.prefix);
+        }
+
+        else if(tagname.name == HTMLHtmlElementTagName)
+        {
+            return new HTMLHtmlElement(namespaceURI, tagname.name, tagname.prefix);
+        }
+
+        else if(tagname.name == HTMLHeadElementTagName)
+        {
+            return new HTMLHeadElement(namespaceURI, tagname.name, tagname.prefix);
+        }
+
+        else if(tagname.name == HTMLBodyElementTagName)
+        {
+            return new HTMLBodyElement(namespaceURI, tagname.name, tagname.prefix);
         }
 
         return new HTMLUnknownElement(namespaceURI, tagname.name, tagname.prefix);

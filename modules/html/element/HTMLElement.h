@@ -95,8 +95,6 @@ namespace Newtoo
     };
 
     typedef HTMLSemanticElement HTMLUnknownElement;
-    typedef HTMLSemanticElement HTMLHeadElement;
-    typedef HTMLSemanticElement HTMLBodyElement;
     typedef HTMLSemanticElement HTMLArticleElement;
     typedef HTMLSemanticElement HTMLSectionElement;
     typedef HTMLSemanticElement HTMLNavElement;

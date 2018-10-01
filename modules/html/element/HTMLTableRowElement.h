@@ -17,7 +17,7 @@ namespace Newtoo
         Node* cloneNode(bool deep = false) override;
 
         unsigned long rowIndex();
-        unsigned long sectionRowIndex();
+        //unsigned long sectionRowIndex();
 
         HTMLCollection cells();
 
