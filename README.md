@@ -15,12 +15,12 @@ Its goal is to do similar things differently and to be different.
 
 ![Features](http://newtoo.ucoz.net/resources/github/features.png?u=1)
 
-Learn about supported **web tecnologies** at <http:/newtoo.ru/html5-support> (RU)
+Learn about supported **web technologies** at <http:/newtoo.ru/html5-support> (RU)
 
 # Progress
 ![See our progress at <http:/newtoo.ru/html5-support> (RU)](http://newtoo.ru/resources/github/progress.png?u=5)  
 
-### Annoncements  
+### Announcements  
 
 CSS Typed OM <https://www.w3.org/TR/css-typed-om-1> will be available with the release of Milestone 1.
 
