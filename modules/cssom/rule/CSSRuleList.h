@@ -22,6 +22,8 @@ namespace Newtoo
         void insertRule(CSSRule* aRule, unsigned long index);
         void removeRule(unsigned long index);
 
+        void shrinkToFit();
+
     private:
 
         std::vector<CSSRule*> mList;

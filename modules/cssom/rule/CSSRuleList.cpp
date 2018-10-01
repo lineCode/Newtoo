@@ -34,6 +34,10 @@ namespace Newtoo
     void CSSRuleList::removeRule(unsigned long index)
     {
         mList.erase(mList.begin() + index);
+    }
+
+    void CSSRuleList::shrinkToFit()
+    {
         mList.shrink_to_fit();
     }
 

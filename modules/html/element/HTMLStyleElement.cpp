@@ -45,8 +45,9 @@ namespace Newtoo
 
         for(unsigned i = 0; i < s->cssRules().length(); i++)
         {
-            s->cssRules().removeRule(i);
+            s->cssRules().removeRule(0);
         }
+        s->cssRules().shrinkToFit();
         s->appendCSS(aHTML);
     }
 
