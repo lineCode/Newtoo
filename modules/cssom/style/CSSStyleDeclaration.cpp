@@ -206,16 +206,19 @@ namespace Newtoo
         {
             if(mStylePropertyList[i].id == property)
             {
-                if(priority != ImportantPriority)
+                if(priority == ImportantPriority)
                 {
                     mStylePropertyList[i].value = value;
                     mStylePropertyList[i].priority = priority;
                 } else
                 {
-                    if(priority.toLong() >= (long)styleRulePriority)
+                    if(mStylePropertyList[i].priority != ImportantPriority)
                     {
-                        mStylePropertyList[i].value = value;
-                        mStylePropertyList[i].priority = priority;
+                        if(priority.toLong() >= (long)styleRulePriority)
+                        {
+                            mStylePropertyList[i].value = value;
+                            mStylePropertyList[i].priority = priority;
+                        }
                     }
                 }
                 return;

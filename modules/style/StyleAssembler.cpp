@@ -47,7 +47,20 @@ namespace Newtoo
                         {
                             CSSStyleDeclaration& st = srule->style();
                             element->mergedStyle().clear();
+
                             unsigned long rulePriority = srule->priority();
+
+                            for(unsigned i = 0; i < element->style().length(); i++)
+                                element->mergedStyle().addProperty(element->style().propertyItem(i));
+
+                            CSSStyleDeclaration uaStyle = element->userAgentStyle();
+                            for(unsigned u = 0; u < uaStyle.length(); u++)
+                            {
+                                CSSStyleDeclaration::StyleProperty uaProp = st.propertyItem(u);
+                                element->mergedStyle().putProperty(uaProp.id, uaProp.value,
+                                                                   uaProp.priority, 1000);
+                            }
+
                             for(unsigned p = 0; p < st.length(); p++)
                             {
                                 CSSStyleDeclaration::StyleProperty prop = st.propertyItem(p);
