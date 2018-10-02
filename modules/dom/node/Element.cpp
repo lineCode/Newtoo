@@ -9,18 +9,20 @@
 namespace Newtoo
 {
 
-    Element::Element() {}
+    Element::Element() : mHasPseudoBefore(false), mHasPseudoAfter(false) {}
 
     Element::Element(DOMString aLocalName)
         :Node(ELEMENT_NODE),
-         mLocalName(aLocalName)
+         mLocalName(aLocalName), mHasPseudoBefore(false), mHasPseudoAfter(false)
     {}
 
     Element::Element(DOMString aNamespace, DOMString qualifiedName, DOMString aPrefix)
         :Node(ELEMENT_NODE),
          mNamespaceURI(aNamespace),
          mPrefix(aPrefix),
-         mLocalName(qualifiedName)
+         mLocalName(qualifiedName),
+         mHasPseudoBefore(false),
+         mHasPseudoAfter(false)
     {}
 
 #define AFTER_PREFIX ":"

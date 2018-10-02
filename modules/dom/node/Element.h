@@ -122,8 +122,17 @@ namespace Newtoo
         bool isPseudoBefore() { return false; } // non-virtual
         bool isPseudoAfter() { return false; } // non-virtual
 
+        virtual bool isPseudoBeforeAssigned() { return false; }
+        virtual bool isPseudoAfterAssigned() { return false; }
+
         Element* pseudoBefore();
         Element* pseudoAfter();
+
+        bool hasPseudoBefore()            const { return mHasPseudoBefore; }
+        bool hasPseudoAfter()             const { return mHasPseudoAfter; }
+
+        void setHasPseudoBefore(bool has)       { mHasPseudoBefore = has; }
+        void setHasPseudoAfter(bool has)        { mHasPseudoAfter = has; }
 
         DOMTokenList reflectTo(DOMString attrName);
 
@@ -190,6 +199,8 @@ namespace Newtoo
         NamedNodeMap mAttributes;
 
         CSSStyleDeclaration mMergedStyle;
+
+        bool mHasPseudoBefore, mHasPseudoAfter;
 
         void setAttributeBool(DOMString qualifiedName, bool value);
         bool getAttributeBool(DOMString qualifiedName);
