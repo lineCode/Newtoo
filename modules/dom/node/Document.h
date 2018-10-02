@@ -159,8 +159,8 @@ namespace Newtoo
 
         // CSS
 
-        void forceRestyle();
-        void restyle() {} // alias
+        void forceRestyle(); // alias
+        void restyle();
 
         Document(Document& reference, bool deep)
             :Node(reference, deep),

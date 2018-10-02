@@ -1,5 +1,6 @@
 #include "CSSSelectorParser.h"
 #include "../html/element/HTMLElement.h"
+#include "../html/element/PseudoElement.h"
 
 #include <string>
 
@@ -34,13 +35,6 @@ namespace Newtoo
     std::vector<DOMString> selectorList(DOMString selectors)
     {
         std::vector<DOMString> ret;
-
-        char* pseudoElementStart = (char*)selectors.find(PSEUDO_ELEMENT_STR);
-        if(pseudoElementStart != 0)
-        {
-            unsigned long pseudoElementIndex = pseudoElementStart - selectors.raw();
-            selectors = selectors.substring(0, pseudoElementIndex);
-        }
 
         char* split = (char*)selectors.find(SPLIT_LIST_STR);
 
@@ -88,19 +82,45 @@ namespace Newtoo
         SubsequentSibling
     };
 
-    bool CSSSelectorParser::elementMatches(Element* element, DOMString list)
+    CSSSelectorParser::Matches CSSSelectorParser::elementMatches(Element* element, DOMString list)
     {
         while(list.has("\n"))
             list = list.erase(list.indexOf("\n"), 1);
+
+        DOMString pseudoElement;
+        char* pseudoElementStart = (char*)list.find(PSEUDO_ELEMENT_STR);
+        if(pseudoElementStart != 0)
+        {
+            unsigned long pseudoElementIndex = pseudoElementStart - list.raw();
+            pseudoElement = list.substring(pseudoElementIndex, list.size() - pseudoElementIndex);
+            list = list.substring(0, pseudoElementIndex);
+        }
 
         std::vector<DOMString> selectors = selectorList(list);
 
         for(unsigned s = 0; s < selectors.size(); s++)
         {
             if(elementMatchesItem(element, selectors[s]))
-                return true;
+            {
+                if(pseudoElement.empty())
+                {
+                    return Assigned;
+                }
+                else
+                {
+                    if(pseudoElement.startsWith(pseudoBefore))
+                    {
+                        return Before;
+                    }
+                    else if(pseudoElement.startsWith(pseudoAfter))
+                    {
+                        return After;
+                    }
+                    return Assigned;
+                }
+            }
         }
-        return false;
+        return NotMatches;
     }
 
     bool CSSSelectorParser::elementMatchesItem(Element* element, DOMString text)

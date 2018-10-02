@@ -5,10 +5,20 @@ namespace Newtoo
 {
 
     StyleSheetListReflect::StyleSheetListReflect(NodeList* reference)
-        :mCollection(reference, HTMLCollection::BY_TAG_NAME, "script")
+        :mCollection(reference, HTMLCollection::BY_TAG_NAME, "style")
     {}
 
     StyleSheet* StyleSheetListReflect::item(unsigned long index)
+    {
+        return itemReflect(index);
+    }
+
+    unsigned long StyleSheetListReflect::length()
+    {
+        return lengthReflect();
+    }
+
+    StyleSheet* StyleSheetListReflect::itemReflect(unsigned long index)
     {
         HTMLStyleElement* elm = (HTMLStyleElement*)mCollection.item(index);
 
@@ -18,7 +28,7 @@ namespace Newtoo
         return elm->sheet();
     }
 
-    unsigned long StyleSheetListReflect::length()
+    unsigned long StyleSheetListReflect::lengthReflect()
     {
         return mCollection.length();
     }

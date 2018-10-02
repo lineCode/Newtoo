@@ -5,11 +5,11 @@
 namespace Newtoo
 {
 
-    class RenderStyle
+    class StyleMetrics
     {
     public:
 
-        RenderStyle(CSSStyleDeclaration aFrom);
+        StyleMetrics(CSSStyleDeclaration aFrom);
 
         //Тут будут все свойства и к ним можно будет добраться через методы
     };

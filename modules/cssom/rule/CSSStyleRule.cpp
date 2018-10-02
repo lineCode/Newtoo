@@ -8,7 +8,7 @@ namespace Newtoo
 #define WHITESPACE_CHAR ' '
 
     CSSStyleRule::CSSStyleRule(DOMString aCssText, CSSRule *parent)
-        :CSSRule(STYLE_RULE, parent)
+        :CSSRule(STYLE_RULE, parent), mPriority(0)
     {
         setCssText(aCssText);
     }
@@ -49,7 +49,7 @@ namespace Newtoo
 
         style().setCssText(aCssText.substring(indexOfOpenBracket + 1,
                           aCssText.size() - indexOfOpenBracket - 1),
-                          CSSSelectorParser::computePriorityString(mSelectorText));
+                          std::to_string(mPriority));
 
     }
     void CSSStyleRule::setSelectorText(DOMString aText)
@@ -58,6 +58,8 @@ namespace Newtoo
             aText = aText.substring(1, aText.size() - 1);
 
         mSelectorText = aText;
+
+        mPriority = CSSSelectorParser::computePriority(mSelectorText);
     }
 
 }

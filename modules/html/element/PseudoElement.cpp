@@ -11,6 +11,11 @@ namespace Newtoo
         :HTMLElement(aNamespace, qualifiedName, aPrefix)
     {}
 
+    DOMString PseudoElement::nodeValue()
+    {
+        return localName();
+    }
+
     Element* PseudoElement::assignedElement()
     {
         if(isPseudoAfter())

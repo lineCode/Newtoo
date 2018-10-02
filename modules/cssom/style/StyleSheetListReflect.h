@@ -14,6 +14,9 @@ namespace Newtoo
         StyleSheet* item(unsigned long index) override;
         unsigned long length() override;
 
+        StyleSheet* itemReflect(unsigned long index); // non-virtual
+        unsigned long lengthReflect(); // non-virtual
+
         HTMLCollection& collection()                        { return mCollection; }
 
     private:

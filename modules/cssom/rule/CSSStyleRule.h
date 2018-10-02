@@ -14,7 +14,10 @@ namespace Newtoo
 
         DOMString selectorText() const                          { return mSelectorText; }
         void setSelectorText(DOMString aText);
+
         CSSStyleDeclaration& style()                            { return mStyle; }
+
+        unsigned long priority()                          const { return mPriority; }
 
         CSSRule* clone() override;
 
@@ -24,13 +27,15 @@ namespace Newtoo
         CSSStyleRule(CSSStyleRule& reference)
             :CSSRule(reference),
              mSelectorText(reference.mSelectorText),
-             mStyle(reference.mStyle, this)
+             mStyle(reference.mStyle, this),
+             mPriority(reference.mPriority)
         {}
 
     private:
 
         DOMString mSelectorText;
         CSSStyleDeclaration mStyle;
+        unsigned long mPriority;
     };
 
 }

@@ -9,6 +9,7 @@
 #include "../../assembly/HTMLParser.h"
 #include "../../assembly/ElementBuilder.h"
 #include "../../html/element/HTMLElement.h"
+#include "../../style/StyleAssembler.h"
 
 namespace Newtoo
 {
@@ -182,6 +183,24 @@ namespace Newtoo
     void Document::forceRestyle()
     {
         restyle();
+    }
+    void Document::restyle()
+    {
+        HTMLElement* target = body();
+        if(target != 0)
+        {
+            StyleAssembler::cascade((Element*)target, (StyleSheetListReflect&)styleSheets());
+        } else
+        {
+            for(unsigned i = 0; i < childNodes().length(); i++)
+            {
+                if(childNodes().item(i)->nodeType() == ELEMENT_NODE)
+                {
+                    StyleAssembler::cascade((Element*)childNodes().item(i),
+                                    (StyleSheetListReflect&)styleSheets());
+                }
+            }
+        }
     }
 
 }

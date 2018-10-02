@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../dom/node/Element.h"
+#include "../cssom/style/StyleSheetListReflect.h"
 
 namespace Newtoo
 {
@@ -9,7 +10,7 @@ namespace Newtoo
     {
     public:
 
-        static CSSStyleDeclaration cascade(Element* element); // [NewObject]
+        static void cascade(Element* element, StyleSheetListReflect& styles);
     };
 
 }

@@ -194,6 +194,47 @@ namespace Newtoo
         return getPropertyValue("float");
     }
 
+    CSSStyleDeclaration::StyleProperty& CSSStyleDeclaration::propertyItem(unsigned long index)
+    {
+        return mStylePropertyList[index];
+    }
+
+    void CSSStyleDeclaration::putProperty(DOMString property, DOMString value, DOMString priority,
+                     unsigned long styleRulePriority)
+    {
+        for(unsigned i = 0; i < length(); i++)
+        {
+            if(mStylePropertyList[i].id == property)
+            {
+                if(priority != ImportantPriority)
+                {
+                    mStylePropertyList[i].value = value;
+                    mStylePropertyList[i].priority = priority;
+                } else
+                {
+                    if(priority.toLong() >= (long)styleRulePriority)
+                    {
+                        mStylePropertyList[i].value = value;
+                        mStylePropertyList[i].priority = priority;
+                    }
+                }
+                return;
+            }
+        }
+        StyleProperty prop = { property, value, priority };
+        mStylePropertyList.push_back(prop);
+    }
+
+    void CSSStyleDeclaration::addProperty(StyleProperty prop)
+    {
+        mStylePropertyList.push_back(prop);
+    }
+
+    void CSSStyleDeclaration::clear()
+    {
+        mStylePropertyList.clear();
+    }
+
     DOMString CSSStyleDeclaration::get(DOMString aProperty)
     {
         return getPropertyValue(aProperty.toUnderscore());

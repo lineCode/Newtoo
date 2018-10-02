@@ -8,7 +8,7 @@
 #include "../reflect/DOMTokenList.h"
 #include "../DOMString.h"
 #include "../geometry/DOMRect.h"
-#include "../../render/RenderStyle.h"
+#include "../../style/StyleMetrics.h"
 #include "Node.h"
 
 
@@ -156,18 +156,19 @@ namespace Newtoo
 
         // CSS
 
-        /* typedef int StyleHistory; */
-
         const int UAPropertyPriority = 0; // - User agent property priority
 
         virtual CSSStyleDeclaration userAgentStyle();
 
+        CSSStyleDeclaration& mergedStyle()            { return mMergedStyle; }
         CSSStyleDeclaration* parentStyle();
 
-        void computeStyles();
         void cascadeStyles();
 
-        RenderStyle* computedStyle();
+        //void computeStyles();
+
+        //StyleMetrics& styleMetrics();
+        //StyleHierarcy& styleHierarcy();
 
         Element(Element& reference, bool deep)
             :Node(reference, deep),
@@ -187,6 +188,8 @@ namespace Newtoo
         CSSStyleDeclaration mStyle;
 
         NamedNodeMap mAttributes;
+
+        CSSStyleDeclaration mMergedStyle;
 
         void setAttributeBool(DOMString qualifiedName, bool value);
         bool getAttributeBool(DOMString qualifiedName);

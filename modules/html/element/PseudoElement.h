@@ -17,6 +17,8 @@ namespace Newtoo
 
         Node* cloneNode(bool deep = false) override;
 
+        DOMString nodeValue() override;
+
         Element* assignedElement();
 
         PseudoElement(PseudoElement& reference, bool deep)

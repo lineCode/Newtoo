@@ -37,6 +37,15 @@ namespace Newtoo
         CSSRule* parentRule() const                         { return mParentRule; }
         DOMString cssFloat();
 
+        StyleProperty& propertyItem(unsigned long index);
+
+        void putProperty(DOMString property, DOMString value, DOMString priority,
+                         unsigned long styleRulePriority);
+
+        void addProperty(StyleProperty prop);
+
+        void clear();
+
         /* эти функции кстати превращают aProperty из CamelCase в snake_case (или underscore) */
         DOMString get(DOMString aProperty);
         void set(DOMString aProperty, DOMString value);

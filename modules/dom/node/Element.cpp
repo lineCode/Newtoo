@@ -1,5 +1,7 @@
 #include "Element.h"
 #include "Text.h"
+#include "Document.h"
+#include "../../style/StyleAssembler.h"
 #include "../../assembly/CSSSelectorParser.h"
 #include "../../assembly/HTMLSerializer.h"
 #include "../../assembly/HTMLParser.h"
@@ -172,7 +174,7 @@ namespace Newtoo
 
     bool Element::matches(DOMString selectors)
     {
-        return CSSSelectorParser::elementMatches(this, selectors);
+        return CSSSelectorParser::elementMatches(this, selectors) != CSSSelectorParser::NotMatches;
     }
 
     HTMLCollection Element::getElementsByTagName(DOMString localName)
@@ -326,6 +328,15 @@ namespace Newtoo
             return 0;
 
         return &parentElement()->style();
+    }
+
+    void Element::cascadeStyles()
+    {
+        Document* doc = ownerDocument();
+        if(doc == 0)
+            return;
+
+        StyleAssembler::cascade((Element*)this, (StyleSheetListReflect&)ownerDocument()->styleSheets());
     }
 
 }
