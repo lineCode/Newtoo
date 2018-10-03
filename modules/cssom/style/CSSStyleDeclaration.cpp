@@ -199,8 +199,7 @@ namespace Newtoo
         return mStylePropertyList[index];
     }
 
-    void CSSStyleDeclaration::putProperty(DOMString property, DOMString value, DOMString priority,
-                     unsigned long styleRulePriority)
+    void CSSStyleDeclaration::putProperty(DOMString property, DOMString value, DOMString priority)
     {
         for(unsigned i = 0; i < length(); i++)
         {
@@ -210,15 +209,13 @@ namespace Newtoo
                 {
                     mStylePropertyList[i].value = value;
                     mStylePropertyList[i].priority = priority;
-                } else
+                }
+                else if(mStylePropertyList[i].priority != ImportantPriority)
                 {
-                    if(mStylePropertyList[i].priority != ImportantPriority)
+                    if(priority.toLong() >= mStylePropertyList[i].priority.toLong())
                     {
-                        if(priority.toLong() >= (long)styleRulePriority)
-                        {
-                            mStylePropertyList[i].value = value;
-                            mStylePropertyList[i].priority = priority;
-                        }
+                        mStylePropertyList[i].value = value;
+                        mStylePropertyList[i].priority = priority;
                     }
                 }
                 return;

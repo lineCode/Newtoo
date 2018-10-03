@@ -29,6 +29,19 @@ namespace Newtoo
 
     void StyleAssembler::cascade(Element* element, StyleSheetListReflect& styles)
     {
+        element->mergedStyle().clear();
+
+        for(unsigned i = 0; i < element->style().length(); i++)
+            element->mergedStyle().addProperty(element->style().propertyItem(i));
+
+        CSSStyleDeclaration uaStyle = element->userAgentStyle();
+        for(unsigned u = 0; u < uaStyle.length(); u++)
+        {
+            CSSStyleDeclaration::StyleProperty uaProp = uaStyle.propertyItem(u);
+            element->mergedStyle().putProperty(uaProp.id, uaProp.value,
+                                               uaProp.priority);
+        }
+
         std::vector<Element*> pseudoElementGC; // удаляет не нужные псевдоэлементы
 
         for(unsigned s = 0; s < styles.lengthReflect(); s++)
@@ -46,26 +59,11 @@ namespace Newtoo
                         case CSSSelectorParser::Assigned:
                         {
                             CSSStyleDeclaration& st = srule->style();
-                            element->mergedStyle().clear();
-
-                            unsigned long rulePriority = srule->priority();
-
-                            for(unsigned i = 0; i < element->style().length(); i++)
-                                element->mergedStyle().addProperty(element->style().propertyItem(i));
-
-                            CSSStyleDeclaration uaStyle = element->userAgentStyle();
-                            for(unsigned u = 0; u < uaStyle.length(); u++)
-                            {
-                                CSSStyleDeclaration::StyleProperty uaProp = st.propertyItem(u);
-                                element->mergedStyle().putProperty(uaProp.id, uaProp.value,
-                                                                   uaProp.priority, 1000);
-                            }
 
                             for(unsigned p = 0; p < st.length(); p++)
                             {
-                                CSSStyleDeclaration::StyleProperty prop = st.propertyItem(p);
-                                element->mergedStyle().putProperty(prop.id, prop.value, prop.priority,
-                                                                   rulePriority);
+                                CSSStyleDeclaration::StyleProperty& prop = st.propertyItem(p);
+                                element->mergedStyle().putProperty(prop.id, prop.value, prop.priority);
                             }
                             if(element->hasPseudoBefore())
                             {

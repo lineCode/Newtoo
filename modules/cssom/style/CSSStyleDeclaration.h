@@ -39,9 +39,7 @@ namespace Newtoo
 
         StyleProperty& propertyItem(unsigned long index);
 
-        void putProperty(DOMString property, DOMString value, DOMString priority,
-                         unsigned long styleRulePriority);
-
+        void putProperty(DOMString property, DOMString value, DOMString priority);
         void addProperty(StyleProperty prop);
 
         void clear();
