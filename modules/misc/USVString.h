@@ -31,17 +31,17 @@ namespace Newtoo
         }
         inline void operator +=(const USVString str)
         {
-            data_ = data_ + str.data_;
+            data_ += str.data_;
         }
         inline void operator +=(const char str[])
         {
-            data_ = data_ + std::string(str);
+            data_ += std::string(str);
         }
         inline void operator +=(const char str)
         {
             std::string c;
             c = c + str;
-            data_ = data_ + c;
+            data_ += c;
         }
         inline void operator =(const USVString str)
         {
@@ -91,11 +91,11 @@ namespace Newtoo
         {
             return data_ == std::string(str);
         }
-        inline USVString& toLower();
-        inline USVString& toUpper();
-        inline USVString* dublicate()
+        //inline USVString& toLower();
+        //inline USVString& toUpper();
+        inline USVString dublicate()
         {
-            return new USVString(std::string(data_));
+            return USVString(std::string(data_));
         }
         inline USVString concat(USVString str)
         {
@@ -265,11 +265,13 @@ namespace Newtoo
         }
         inline bool hasChar(const char str, unsigned long startsAt)
         {
-            const char* i = strchr(this->data_.c_str(), str);
-            if(i != NULL)
+            for(unsigned i = 0; i < data_.size(); i++)
             {
-                if(i - this->data_.c_str() >= (int)startsAt)
-                    return true;
+                if(i >= startsAt)
+                {
+                    if(data_[i] == str)
+                        return true;
+                }
             }
             return false;
         }
