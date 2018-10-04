@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../dom/DOMString.h"
-#include "../dom/node/Node.h"
+#include "../../dom/DOMString.h"
+#include "../../dom/node/Node.h"
 
 #include <vector>
 

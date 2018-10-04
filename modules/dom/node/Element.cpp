@@ -2,9 +2,9 @@
 #include "Text.h"
 #include "Document.h"
 #include "../../style/StyleAssembler.h"
-#include "../../assembly/CSSSelectorParser.h"
-#include "../../assembly/HTMLSerializer.h"
-#include "../../assembly/HTMLParser.h"
+#include "../../assembly/selector/express/CSSSelectorParser.h"
+#include "../../assembly/html/HTMLSerializer.h"
+#include "../../assembly/html/HTMLParser.h"
 
 namespace Newtoo
 {

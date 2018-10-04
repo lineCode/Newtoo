@@ -1,6 +1,6 @@
 #include "CSSStyleRule.h"
 
-#include "../../assembly/CSSSelectorParser.h"
+#include "../../assembly/selector/express/CSSSelectorParser.h"
 
 namespace Newtoo
 {

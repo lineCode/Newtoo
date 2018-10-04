@@ -1,6 +1,6 @@
 #include "CSSSelectorParser.h"
-#include "../html/element/HTMLElement.h"
-#include "../html/element/pseudo/PseudoElement.h"
+#include "../../../html/element/HTMLElement.h"
+#include "../../../html/element/pseudo/PseudoElement.h"
 
 #include <string>
 

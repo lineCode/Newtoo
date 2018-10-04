@@ -6,8 +6,8 @@
 #include "Comment.h"
 #include "Text.h"
 #include "Attr.h"
-#include "../../assembly/HTMLParser.h"
-#include "../../assembly/ElementBuilder.h"
+#include "../../assembly/html/HTMLParser.h"
+#include "../../assembly/builder/ElementBuilder.h"
 #include "../../html/element/HTMLElement.h"
 #include "../../style/StyleAssembler.h"
 

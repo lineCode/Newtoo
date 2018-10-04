@@ -1,8 +1,8 @@
 #include "HTMLSerializer.h"
-#include "../dom/node/DocumentType.h"
-#include "../dom/node/Comment.h"
-#include "../dom/node/Text.h"
-#include "../dom/node/Document.h"
+#include "../../dom/node/DocumentType.h"
+#include "../../dom/node/Comment.h"
+#include "../../dom/node/Text.h"
+#include "../../dom/node/Document.h"
 
 namespace Newtoo
 {

@@ -1,9 +1,11 @@
 #include "StyleAssembler.h"
-#include "../assembly/CSSSelectorParser.h"
+#include "../assembly/selector/express/CSSSelectorParser.h"
 #include "../cssom/style/CSSStyleSheet.h"
 #include "../cssom/rule/CSSStyleRule.h"
 #include "../html/element/pseudo/PseudoBeforeElement.h"
 #include "../html/element/pseudo/PseudoAfterElement.h"
+
+#include <omp.h>
 
 namespace Newtoo
 {

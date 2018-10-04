@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../cssom/rule/CSSRule.h"
+#include "../../cssom/rule/CSSRule.h"
 
 namespace Newtoo
 {

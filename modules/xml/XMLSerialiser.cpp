@@ -1,5 +1,5 @@
 #include "XMLSerialiser.h"
-#include "../assembly/HTMLSerializer.h"
+#include "../assembly/html/HTMLSerializer.h"
 
 namespace Newtoo
 {

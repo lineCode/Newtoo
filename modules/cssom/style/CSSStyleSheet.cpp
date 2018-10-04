@@ -1,6 +1,6 @@
 #include "CSSStyleSheet.h"
 
-#include "../../assembly/CSSRuleBuilder.h"
+#include "../../assembly/builder/CSSRuleBuilder.h"
 
 namespace Newtoo
 {

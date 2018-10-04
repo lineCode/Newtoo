@@ -1,6 +1,6 @@
 #include "DOMParser.h"
 #include "DOMImplementation.h"
-#include "../assembly/HTMLParser.h"
+#include "../assembly/html/HTMLParser.h"
 
 namespace Newtoo
 {

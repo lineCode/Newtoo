@@ -1,6 +1,6 @@
 #include "CSSRuleBuilder.h"
 
-#include "../cssom/rule/CSSStyleRule.h"
+#include "../../cssom/rule/CSSStyleRule.h"
 
 namespace Newtoo
 {

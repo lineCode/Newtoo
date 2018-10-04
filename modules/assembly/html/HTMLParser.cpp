@@ -1,7 +1,7 @@
 #include "HTMLParser.h"
-#include "../dom/DOMImplementation.h"
-#include "../dom/node/Document.h"
-#include "../dom/node/Element.h"
+#include "../../dom/DOMImplementation.h"
+#include "../../dom/node/Document.h"
+#include "../../dom/node/Element.h"
 
 namespace Newtoo
 {
