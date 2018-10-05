@@ -1,4 +1,4 @@
-#include "CSSSelectorParser.h"
+#include "SelectorParserExpress.h"
 #include "../../../html/element/HTMLElement.h"
 #include "../../../html/element/pseudo/PseudoElement.h"
 
@@ -82,7 +82,8 @@ namespace Newtoo
         SubsequentSibling
     };
 
-    CSSSelectorParser::Matches CSSSelectorParser::elementMatches(Element* element, DOMString list)
+    SelectorParserExpress::Matches SelectorParserExpress::elementMatches(Element* element,
+                                                                         DOMString list)
     {
         while(list.has("\n"))
             list = list.erase(list.indexOf("\n"), 1);
@@ -123,7 +124,7 @@ namespace Newtoo
         return NotMatches;
     }
 
-    bool CSSSelectorParser::elementMatchesItem(Element* element, DOMString text)
+    bool SelectorParserExpress::elementMatchesItem(Element* element, DOMString text)
     {
         std::vector<Element*> elementsToCompare;
         elementsToCompare.push_back(element);
@@ -607,7 +608,7 @@ namespace Newtoo
     const int classSelectorPriority = 10;
     const int idSelectorPriority = 100;
 
-    unsigned long CSSSelectorParser::computePriority(DOMString text)
+    unsigned long SelectorParserExpress::computePriority(DOMString text)
     {
         unsigned long ret = 0;
 
@@ -707,7 +708,7 @@ namespace Newtoo
         }
         return ret;
     }
-    DOMString CSSSelectorParser::computePriorityString(DOMString text)
+    DOMString SelectorParserExpress::computePriorityString(DOMString text)
     {
         DOMString ret;
         ret.fromLong(computePriority(text));

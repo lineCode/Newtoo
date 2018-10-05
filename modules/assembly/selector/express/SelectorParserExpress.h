@@ -5,7 +5,7 @@
 namespace Newtoo
 {
 
-    class CSSSelectorParser
+    class SelectorParserExpress
     {
     public:
 

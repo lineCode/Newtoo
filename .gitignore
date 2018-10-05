@@ -40,3 +40,5 @@ Newtoo.qbs.user
 main.cpp
 
 counter.bat
+
+*.autosave

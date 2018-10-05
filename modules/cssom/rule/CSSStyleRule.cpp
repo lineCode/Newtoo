@@ -1,6 +1,6 @@
 #include "CSSStyleRule.h"
 
-#include "../../assembly/selector/express/CSSSelectorParser.h"
+#include "../../assembly/selector/express/SelectorParserExpress.h"
 
 namespace Newtoo
 {
@@ -59,7 +59,7 @@ namespace Newtoo
 
         mSelectorText = aText;
 
-        mPriority = CSSSelectorParser::computePriority(mSelectorText);
+        mPriority = SelectorParserExpress::computePriority(mSelectorText);
     }
 
 }

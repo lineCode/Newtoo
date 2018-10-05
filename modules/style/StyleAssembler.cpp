@@ -1,5 +1,5 @@
 #include "StyleAssembler.h"
-#include "../assembly/selector/express/CSSSelectorParser.h"
+#include "../assembly/selector/express/SelectorParserExpress.h"
 #include "../cssom/style/CSSStyleSheet.h"
 #include "../cssom/rule/CSSStyleRule.h"
 #include "../html/element/pseudo/PseudoBeforeElement.h"
@@ -56,9 +56,9 @@ namespace Newtoo
                 if(rule->type() == CSSRule::STYLE_RULE)
                 {
                     CSSStyleRule* srule = (CSSStyleRule*)rule;
-                    switch(CSSSelectorParser::elementMatches(element, srule->selectorText()))
+                    switch(SelectorParserExpress::elementMatches(element, srule->selectorText()))
                     {
-                        case CSSSelectorParser::Assigned:
+                        case SelectorParserExpress::Assigned:
                         {
                             CSSStyleDeclaration& st = srule->style();
 
@@ -93,7 +93,7 @@ namespace Newtoo
                             }
                             break;
                         }
-                        case CSSSelectorParser::Before:
+                        case SelectorParserExpress::Before:
                         {
                             CSSStyleDeclaration& st = srule->style();
                             CSSStyleDeclaration::StyleProperty* contentprop = 0;
@@ -114,7 +114,7 @@ namespace Newtoo
                             }
                             break;
                         }
-                        case CSSSelectorParser::After:
+                        case SelectorParserExpress::After:
                         {
                             CSSStyleDeclaration& st = srule->style();
                             CSSStyleDeclaration::StyleProperty* contentprop = 0;
@@ -135,7 +135,7 @@ namespace Newtoo
                             }
                             break;
                         }
-                        case CSSSelectorParser::NotMatches:
+                        case SelectorParserExpress::NotMatches:
                         {
                             break;
                         }

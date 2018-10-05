@@ -2,7 +2,7 @@
 #include "Text.h"
 #include "Document.h"
 #include "../../style/StyleAssembler.h"
-#include "../../assembly/selector/express/CSSSelectorParser.h"
+#include "../../assembly/selector/express/SelectorParserExpress.h"
 #include "../../assembly/html/HTMLSerializer.h"
 #include "../../assembly/html/HTMLParser.h"
 
@@ -176,7 +176,8 @@ namespace Newtoo
 
     bool Element::matches(DOMString selectors)
     {
-        return CSSSelectorParser::elementMatches(this, selectors) != CSSSelectorParser::NotMatches;
+        return SelectorParserExpress::elementMatches(this, selectors)
+                != SelectorParserExpress::NotMatches;
     }
 
     HTMLCollection Element::getElementsByTagName(DOMString localName)
@@ -295,6 +296,11 @@ namespace Newtoo
     bool Element::isSVGElement()
     {
         return getElementKind() == ElementKind::SVGElement;
+    }
+
+    bool Element::isPseudoElement()
+    {
+        return isPseudoBefore() or isPseudoAfter();
     }
 
     void Element::setAttributeBool(DOMString qualifiedName, bool value)
