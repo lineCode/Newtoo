@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../misc/USVString.h"
+#include "../util/USVString.h"
 
 namespace Newtoo
 {

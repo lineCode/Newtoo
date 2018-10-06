@@ -2,7 +2,7 @@
 
 #include "../event/EventTarget.h"
 #include "../DOMString.h"
-#include "../../misc/USVString.h"
+#include "../../util/USVString.h"
 #include "../../html/element/collection/HTMLCollection.h"
 #include "container/NodeListControlled.h"
 

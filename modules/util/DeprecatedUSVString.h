@@ -1,5 +1,9 @@
 #pragma once
 
+/*
+    Эта реализация строки работает некорректно и подлежит к удалению
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
