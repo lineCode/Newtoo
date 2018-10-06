@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../../dom/node/Element.h"
-#include "../../dom/DOMStringMap.h"
 #include "../../dom/event/GlobalEventHandlers.h"
 #include "misc/ElementContentEditable.h"
 
@@ -28,7 +27,7 @@ namespace Newtoo
         DOMString dir()                             { return getAttribute("dir"); }
         void setDir(DOMString aDir)                 { setAttribute("dir", aDir); }
 
-        DOMStringMap& dataset()                     { return mDataset; }
+        DOMStringMap dataset()                      { return reflectToAttributes(); }
 
         bool hidden()                               { return getAttributeBool("hidden"); }
         void setHidden(bool aHidden)                { setAttributeBool("hidden", aHidden); }
@@ -69,13 +68,8 @@ namespace Newtoo
         bool isContentEditable();
 
         HTMLElement(HTMLElement& reference, bool deep)
-            :Element(reference, deep),
-             mDataset(reference.mDataset)
+            :Element(reference, deep)
         {}
-
-    protected:
-
-        DOMStringMap mDataset;
     };
 
     class HTMLSemanticElement : public HTMLElement

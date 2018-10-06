@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../DOMString.h"
+#include "DOMStringOrNull.h"
 
 #include <vector>
 
@@ -14,7 +14,7 @@ namespace Newtoo
         DOMTokenList(DOMString* reference);
 
         unsigned long length();
-        DOMString* item(unsigned long index); // память утекает
+        DOMStringOrNull item(unsigned long index);
         bool contains(DOMString token);
         void remove(DOMString token);
         void add(DOMString token);
@@ -26,7 +26,7 @@ namespace Newtoo
 
     private:
 
-        DOMString trimWhitespaces(DOMString raw); // Удаляет все пробелы
+        DOMString trimWhitespaces(DOMString raw);
 
         DOMString* mRaw;
     };

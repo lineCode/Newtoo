@@ -27,15 +27,15 @@ namespace Newtoo
         return ret;
     }
 
-    DOMString* DOMTokenList::item(unsigned long index)
+    DOMStringOrNull DOMTokenList::item(unsigned long index)
     {
         if(mRaw == 0)
-            return 0;
+            return DOMStringOrNull(); //null
 
         unsigned long len = length();
 
         if(index >= len)
-            return 0;
+            return DOMStringOrNull(); //null
 
         if(len > 1)
         {
@@ -70,11 +70,11 @@ namespace Newtoo
                     lng++;
             }
 
-            return new DOMString(mRaw->substring(start, lng));
+            return DOMStringOrNull(mRaw->substring(start, lng));
         }
         else
         {
-            return new DOMString(*mRaw);
+            return DOMStringOrNull(*mRaw);
         }
     }
 

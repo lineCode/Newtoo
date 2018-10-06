@@ -83,6 +83,10 @@ namespace Newtoo
         else
             return DOMTokenList(0);
     }
+    DOMStringMap Element::reflectToAttributes()
+    {
+        return DOMStringMap(&mAttributes);
+    }
 
     Attr* Element::getAttributeNode(DOMString qualifiedName)
     {

@@ -6,6 +6,7 @@
 #include "../../cssom/misc/ScrollBehavior.h"
 #include "container/NamedNodeMap.h"
 #include "../reflect/DOMTokenList.h"
+#include "../reflect/DOMStringMap.h"
 #include "../DOMString.h"
 #include "../geometry/DOMRect.h"
 #include "../../style/StyleMetrics.h"
@@ -135,6 +136,7 @@ namespace Newtoo
         void setHasPseudoAfter(bool has)        { mHasPseudoAfter = has; }
 
         DOMTokenList reflectTo(DOMString attrName);
+        DOMStringMap reflectToAttributes();
 
         //Из стандарта CSSOM и CSSOM View
 
