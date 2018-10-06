@@ -118,6 +118,8 @@ namespace Newtoo
         bool isHTMLElement();
         bool isSVGElement();
 
+        // Deprecated API -----------
+
         bool isPseudoElement(); // non-virtual
 
         bool isPseudoBefore() { return false; } // non-virtual
@@ -134,6 +136,8 @@ namespace Newtoo
 
         void setHasPseudoBefore(bool has)       { mHasPseudoBefore = has; }
         void setHasPseudoAfter(bool has)        { mHasPseudoAfter = has; }
+
+        // -----------
 
         DOMTokenList reflectTo(DOMString attrName);
         DOMStringMap reflectToAttributes();

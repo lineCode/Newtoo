@@ -6,7 +6,7 @@ namespace Newtoo
 
     using namespace SelectorSyntax;
 
-    SelectorStringList groupListFromString(SelectorString string)
+    SelectorStringList SelectorParser::groupListFromString(SelectorString string)
     {
         SelectorStringList groups;
 
@@ -45,7 +45,7 @@ namespace Newtoo
         return groups;
     }
 
-    SelectorData parseSelectorFromString(SelectorString string)
+    SelectorData SelectorParser::parseSelectorFromString(SelectorString string)
     {
         SelectorData dat;
         SelectorStringList groupstrlist = groupListFromString(string);

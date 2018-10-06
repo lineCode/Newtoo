@@ -7,6 +7,12 @@
 namespace Newtoo
 {
 
+    const char FirstletterPseudoElementName[] = "firstletter";
+    const char FirstlinePseudoElementName[] = "fistline";
+    const char SelectionPseudoElementName[] = "Selection";
+    const char BeforePseudoElementName[] = "before";
+    const char AfterPseudoElementName[] = "after";
+
     class SelectorGroup
     {
     public:
@@ -19,8 +25,9 @@ namespace Newtoo
 
         enum Result
         {
-            FirstLetter,
-            FistLine,
+            Firstletter,
+            Firstline,
+            Selection,
             Before,
             After,
 

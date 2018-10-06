@@ -9,9 +9,12 @@ namespace Newtoo
     {
     public:
 
-        StyleMetrics(CSSStyleDeclaration aFrom);
+        StyleMetrics(CSSStyleDeclaration& declaration);
 
-        //Тут будут все свойства и к ним можно будет добраться через методы
+        /*
+            Тут будут все свойства ик ним можно
+            будет добраться через методы
+        */
     };
 
 }
