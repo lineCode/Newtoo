@@ -6,7 +6,7 @@ Newtoo is a brand new rendering engine for web browsers. Its main drives are hig
   
 Newtoo attempts to show a page before it is completely loaded.  
   
-![](http://newtoo.ru/resources/github/1a.png?u=1)
+![](http://newtoo.ru/resources/github/1a.png?u=2)
 
 ## It's history starts Today
 
