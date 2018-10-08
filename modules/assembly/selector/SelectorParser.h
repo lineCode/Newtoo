@@ -11,6 +11,7 @@ namespace Newtoo
     public:
 
         static SelectorStringList groupListFromString(SelectorString string);
+        static SelectorGroup parseGroupFromString(SelectorString string);
         static SelectorData parseSelectorFromString(SelectorString string);
     };
 

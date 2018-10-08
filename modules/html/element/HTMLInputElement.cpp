@@ -17,7 +17,7 @@ namespace Newtoo
         CSSStyleDeclaration st;
         st.setProperty("background-color", "#ffffff", UAPropertyPriority);
         st.setProperty("border", "2px solid #707070", UAPropertyPriority);
-        st.setProperty("color", "#212121", UAPropertyPriority);
+        st.setProperty("color", "#000000", UAPropertyPriority);
         st.setProperty("display", "inline-block", UAPropertyPriority);
         st.setProperty("font-family", "\"Arial\"", UAPropertyPriority);
         st.setProperty("padding-bottom", "1px", UAPropertyPriority);

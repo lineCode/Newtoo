@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../../dom/DOMString.h"
 #include "../CSSOMString.h"
 
 #include <vector>

@@ -45,13 +45,25 @@ namespace Newtoo
         return groups;
     }
 
+    SelectorGroup SelectorParser::parseGroupFromString(SelectorString string)
+    {
+        SelectorGroup group;
+
+
+        return group;
+    }
+
     SelectorData SelectorParser::parseSelectorFromString(SelectorString string)
     {
         SelectorData dat;
         SelectorStringList groupstrlist = groupListFromString(string);
 
+        for(unsigned i = 0; i < groupstrlist.size(); i++)
+            dat.groups().push_back(parseGroupFromString(groupstrlist.size()));
+
         return dat;
     }
+
 
 
 }

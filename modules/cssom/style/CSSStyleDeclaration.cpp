@@ -4,9 +4,8 @@ namespace Newtoo
 {
 
     CSSStyleDeclaration::CSSStyleDeclaration()
-    {
-
-    }
+        :mParentRule(0)
+    {}
 
     DOMString CSSStyleDeclaration::cssText()
     {
