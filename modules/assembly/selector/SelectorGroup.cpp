@@ -1,4 +1,5 @@
 #include "SelectorGroup.h"
+#include "SelectorObservationList.h"
 
 namespace Newtoo
 {
@@ -9,16 +10,18 @@ namespace Newtoo
 
     SelectorGroup::Result SelectorGroup::matches(Element* element)
     {
-        for(unsigned i = 0; i < list().size(); i++)
-            if(!list()[i].matches(element))
+        SelectorObservationList obslist(element);
+
+        for(unsigned i = 0; i < sequence().size(); i++)
+            if(!sequence()[i].matches(obslist))
                 return NotMatches;
 
         return mMatchesResult;
     }
 
-    SelectorGroup::SelectorList& SelectorGroup::list()
+    SelectorGroup::SelectorSequence& SelectorGroup::sequence()
     {
-        return mList;
+        return mSequence;
     }
 
     void SelectorGroup::setMatchesResult(Result result)

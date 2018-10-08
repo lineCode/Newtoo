@@ -4,6 +4,8 @@
 namespace Newtoo
 {
 
+    class SelectorObservationList;
+
     class Selector
     {
     public:
@@ -58,7 +60,7 @@ namespace Newtoo
 
         TokenType type() const;
 
-        virtual bool matches(Element* element);
+        virtual bool matches(SelectorObservationList& list);
         virtual unsigned long priority();
 
     private:

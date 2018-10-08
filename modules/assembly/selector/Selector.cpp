@@ -1,4 +1,5 @@
 #include "Selector.h"
+#include "SelectorObservationList.h"
 
 namespace Newtoo
 {
@@ -13,9 +14,14 @@ namespace Newtoo
         return mType;
     }
 
-    bool Selector::matches(Element *element)
+    bool Selector::matches(SelectorObservationList& list)
     {
-        return !element->isPseudoElement();
+        for(unsigned i = 0; i < list.collection().size(); i++)
+        {
+            if(list.collection()[i]->isPseudoElement())
+                return false;
+        }
+        return true;
     }
     unsigned long Selector::priority()
     {

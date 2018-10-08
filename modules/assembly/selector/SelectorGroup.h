@@ -17,11 +17,11 @@ namespace Newtoo
     {
     public:
 
-        typedef std::vector<Selector> SelectorList;
+        typedef std::vector<Selector> SelectorSequence;
 
         SelectorGroup();
 
-        SelectorList& list();
+        SelectorSequence& sequence();
 
         enum Result
         {
@@ -51,7 +51,7 @@ namespace Newtoo
     private:
 
         Result mMatchesResult;
-        SelectorList mList;
+        SelectorSequence mSequence;
     };
 
 }

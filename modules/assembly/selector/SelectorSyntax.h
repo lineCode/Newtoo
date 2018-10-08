@@ -15,7 +15,7 @@ namespace Newtoo
         const char compare_equals = '=';
         const char compare_ends_with = '$';
         const char compare_starts_with = '^';
-        const char compare_start_with_prefix = '|';
+        const char compare_starts_with_prefix = '|';
         const char compare_contains = '*';
         const char compare_contains_item = '~';
         const char universal = '*';
