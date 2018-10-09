@@ -18,6 +18,11 @@ namespace Newtoo
         void nextSibling();
         void subsequentSibling();
 
+    protected:
+
+        std::vector<Element*>& transferBuffer();
+        void swap();
+
     private:
 
         std::vector<Element*> mCollection;
