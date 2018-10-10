@@ -4,7 +4,7 @@
 namespace Newtoo
 {
 
-    Comparator::Comparator()
+    Comparator::Comparator(DOMString mAttrName, DOMString mAttrValue)
         :Selector(UNIVERSAL)
     {}
 

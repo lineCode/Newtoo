@@ -5,7 +5,7 @@ namespace Newtoo
 {
 
     SubsequentCombinator::SubsequentCombinator()
-        :Selector(UNIVERSAL)
+        :Selector(SUBSEQUENT_SIBLING)
     {}
 
     bool SubsequentCombinator::matches(SelectorObservationList& list)
