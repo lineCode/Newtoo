@@ -7,11 +7,11 @@
 namespace Newtoo
 {
 
-    const char FirstletterPseudoElementName[] = "firstletter";
-    const char FirstlinePseudoElementName[] = "fistline";
-    const char SelectionPseudoElementName[] = "Selection";
-    const char BeforePseudoElementName[] = "before";
-    const char AfterPseudoElementName[] = "after";
+    const char FirstletterPseudoElementSuffix[] = "::firstletter";
+    const char FirstlinePseudoElementSuffix[] = "::fistline";
+    const char SelectionPseudoElementSuffix[] = "::Selection";
+    const char BeforePseudoElementSuffix[] = "::before";
+    const char AfterPseudoElementSuffix[] = "::after";
 
     class SelectorGroup
     {
@@ -47,6 +47,8 @@ namespace Newtoo
             который будет возращатся, если элемент соответствует
             всем селекторам.
         */
+
+        unsigned long priority();
 
     private:
 

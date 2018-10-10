@@ -12,4 +12,13 @@ namespace Newtoo
         return mData;
     }
 
+    void SelectorData::calcPriority()
+    {
+        unsigned long p;
+        for(unsigned i = 0; i < groups().size(); i++)
+            p+= groups()[i].priority();
+
+        mPriority = p;
+    }
+
 }

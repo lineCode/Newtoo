@@ -29,4 +29,13 @@ namespace Newtoo
         mMatchesResult = result;
     }
 
+    unsigned long SelectorGroup::priority()
+    {
+        unsigned long totalPriority = 0;
+        for(unsigned i = 0; i < sequence().size(); i++)
+            totalPriority += sequence()[i].priority();
+
+        return totalPriority;
+    }
+
 }

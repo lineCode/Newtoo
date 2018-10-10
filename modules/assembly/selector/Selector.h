@@ -1,3 +1,5 @@
+#pragma once
+
 #include "../../dom/node/Element.h"
 #include "../../dom/DOMString.h"
 
@@ -61,6 +63,11 @@ namespace Newtoo
         TokenType type() const;
 
         virtual bool matches(SelectorObservationList& list);
+
+        const int IdPriority = 1;
+        const int ClassPriority = 10;
+        const int TypePriority = 100;
+
         virtual unsigned long priority();
 
     private:

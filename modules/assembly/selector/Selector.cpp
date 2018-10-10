@@ -18,10 +18,10 @@ namespace Newtoo
     {
         for(unsigned i = 0; i < list.collection().size(); i++)
         {
-            if(list.collection()[i]->isPseudoElement())
-                return false;
+            if(!list.collection()[i]->isPseudoElement())
+                return true;
         }
-        return true;
+        return false;
     }
     unsigned long Selector::priority()
     {

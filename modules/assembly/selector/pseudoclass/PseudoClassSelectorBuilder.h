@@ -1,11 +1,11 @@
 #pragma once
 
-#include "SelectorGroup.h"
+#include "../SelectorGroup.h"
 
 namespace Newtoo
 {
 
-    class SelectorPseudoClassBuilder
+    class PseudoClassSelectorBuilder
     {
     public:
 

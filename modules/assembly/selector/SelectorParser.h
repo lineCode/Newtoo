@@ -1,3 +1,5 @@
+#pragma once
+
 #include "SelectorData.h"
 
 namespace Newtoo

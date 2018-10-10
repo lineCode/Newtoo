@@ -1,6 +1,14 @@
 #include "SelectorParser.h"
 #include "SelectorSyntax.h"
-#include "SelectorPseudoClassBuilder.h"
+#include "pseudoclass/PseudoClassSelectorBuilder.h"
+#include "UniversalSelector.h"
+#include "ClassSelector.h"
+#include "TypeSelector.h"
+#include "IdSelector.h"
+#include "combinator/ChildCombinator.h"
+#include "combinator/DescedantCombinator.h"
+#include "combinator/NextSiblingCombinator.h"
+#include "combinator/SubsequentCombinator.h"
 
 namespace Newtoo
 {
@@ -56,27 +64,65 @@ namespace Newtoo
         EndsWith
     };
 
-    enum SwitchCombinator
+    void checkForPseudoElement(SelectorGroup group, SelectorString& string)
     {
-        NoSwitch,
-        Descendant,
-        Child,
-        NextSibling,
-        SubsequentSibling
-    };
+        if(string.endsWith(FirstletterPseudoElementSuffix))
+        {
+            group.setMatchesResult(SelectorGroup::Firstletter);
+
+            string = string.substring(0, string.size()
+            - sizeof(FirstletterPseudoElementSuffix));
+        }
+
+        else if(string.endsWith(FirstlinePseudoElementSuffix))
+        {
+            group.setMatchesResult(SelectorGroup::Firstline);
+
+            string = string.substring(0, string.size()
+            - sizeof(FirstlinePseudoElementSuffix));
+        }
+
+        else if(string.endsWith(SelectionPseudoElementSuffix))
+        {
+            group.setMatchesResult(SelectorGroup::Selection);
+
+            string = string.substring(0, string.size()
+            - sizeof(SelectionPseudoElementSuffix));
+        }
+
+        else if(string.endsWith(BeforePseudoElementSuffix))
+        {
+            group.setMatchesResult(SelectorGroup::Before);
+
+            string = string.substring(0, string.size()
+            - sizeof(BeforePseudoElementSuffix));
+        }
+
+        else if(string.endsWith(AfterPseudoElementSuffix))
+        {
+            group.setMatchesResult(SelectorGroup::After);
+
+            string = string.substring(0, string.size()
+            - sizeof(AfterPseudoElementSuffix));
+        }
+    }
+
+#define clean_up() if(!query.empty()) { query.clear(); } whitespaceAfter = false
 
     SelectorGroup SelectorParser::parseGroupFromString(SelectorString string)
     {
         SelectorGroup group;
 
-
+        checkForPseudoElement(group, string);
 
         CompareMode compareMode = Equals;
-        SwitchCombinator switchCombinator = NoSwitch;
-        DOMString content;
+
+        DOMString query;
         DOMString value2;
         bool inString = false;
         char quote = 0;
+
+        bool whitespaceAfter = false;
 
         for(signed long i = string.length() - 1; i != -1; i--)
         {
@@ -87,48 +133,50 @@ namespace Newtoo
 
                 if(c == id)
                 {
-
-                    content.clear();
+                    group.sequence().push_back(IdSelector(query));
+                    clean_up();
                 }
                 else if(c == class_char)
                 {
-
-                    content.clear();
+                    group.sequence().push_back(ClassSelector(query));
+                    clean_up();
                 }
                 else if(c == whitespace)
                 {
-                    content.clear();
-
-                    if(switchCombinator == NoSwitch)
-                        switchCombinator = Descendant;
+                    if(!query.empty())
+                    {
+                        group.sequence().push_back(TypeSelector(query));
+                        query.clear();
+                    }
+                    whitespaceAfter = true;
                 }
                 else if(c == universal)
                 {
-
-                    content.clear();
+                    group.sequence().push_back(UniversalSelector());
+                    clean_up();
                 }
                 else if(c == pseudo_class)
                 {
-                    SelectorPseudoClassBuilder::appendSelector(group, content);
-                    content.clear();
+                    PseudoClassSelectorBuilder::appendSelector(group, query);
+                    clean_up();
                 }
                 else if(c == child_combinator)
                 {
-                    switchCombinator = Child;
+                    group.sequence().push_back(ChildCombinator());
                 }
                 else if(c == next_sibling_combinator)
                 {
-                    switchCombinator = NextSibling;
+                    group.sequence().push_back(NextSiblingCombinator());
                 }
                 else if(c == subsequent_sibling_combinator)
                 {
-                    switchCombinator = SubsequentSibling;
+                    group.sequence().push_back(SubsequentCombinator());
                 }
                 else if(c == compare_equals)
                 {
                     compareMode = Equals;
-                    value2 = content;
-                    content.clear();
+                    value2 = query;
+                    clean_up();
                 }
                 else if(c == compare_starts_with)
                 {
@@ -152,7 +200,7 @@ namespace Newtoo
                 }
                 else if(c == compare_close)
                 {
-                    content.clear();
+                    clean_up();
                 }
                 else if(c == compare_open)
                 {
@@ -162,41 +210,41 @@ namespace Newtoo
                         case Equals:
                         {
 
-                            content.clear();
+                            clean_up();
                             break;
                         }
                         case StartsWith:
                         {
 
-                            content.clear();
+                            clean_up();
                             break;
                         }
                         case StartsWithPrefix:
                         {
 
-                            content.clear();
+                            clean_up();
                             break;
                         }
                         case EndsWith:
                         {
 
-                            content.clear();
+                            clean_up();
                             break;
                         }
                         case Contains:
                         {
 
-                            content.clear();
+                            clean_up();
                             break;
                         }
                         case ContainsItem:
                         {
 
-                            content.clear();
+                            clean_up();
                             break;
                         }
                     }
-                    content.clear();
+                    clean_up();
                 }
                 else if(c == quote or c == quote_alternative)
                 {
@@ -205,47 +253,17 @@ namespace Newtoo
                 }
                 else
                 {
-                    content.prependCharToThis(c);
-
-                    switch(switchCombinator)
+                    if(whitespaceAfter)
                     {
-                        case NoSwitch:
-                        {
-                            break;
-                        }
-                        case Descendant:
-                        {
-                            switchCombinator = NoSwitch;
-
-
-                            break;
-                        }
-                        case Child:
-                        {
-                            switchCombinator = NoSwitch;
-
-
-                            break;
-                        }
-                        case NextSibling:
-                        {
-                            switchCombinator = NoSwitch;
-
-
-                            break;
-                        }
-                        case SubsequentSibling:
-                        {
-                            switchCombinator = NoSwitch;
-
-
-                            break;
-                        }
+                        group.sequence().push_back(DescedantCombinator());
+                        whitespaceAfter = false;
                     }
+
+                    query.prependCharToThis(c);
 
                     if(i == 0)
                     {
-                        //добавить туда TypeSelector
+                        group.sequence().push_back(TypeSelector(query));
                     }
                 }
 
@@ -257,7 +275,7 @@ namespace Newtoo
                     inString = false;
                 } else
                 {
-                    content.prependCharToThis(c);
+                    query.prependCharToThis(c);
                 }
             }
 

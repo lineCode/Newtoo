@@ -1,3 +1,5 @@
+#pragma once
+
 #include "SelectorGroup.h"
 
 #include <vector>
