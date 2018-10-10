@@ -52,14 +52,38 @@ namespace Newtoo
                           std::to_string(mPriority));
 
     }
+
+    SelectorRecency& CSSStyleRule::selectorRecency()
+    {
+        return mSelectorRecency;
+    }
+
+    SelectorData& CSSStyleRule::selectorData()
+    {
+        return mSelectorData;
+    }
+
+    SelectorString CSSStyleRule::selectorText() const
+    {
+        return mSelectorText;
+    }
+
     void CSSStyleRule::setSelectorText(DOMString aText)
     {
         while(aText.startsWithChar(WHITESPACE_CHAR))
             aText = aText.substring(1, aText.size() - 1);
 
+        if(aText == mSelectorText)
+            return;
+
         mSelectorText = aText;
 
-        mPriority = SelectorParserExpress::computePriority(mSelectorText);
+        mSelectorData = SelectorParser::parseSelectorFromString(mSelectorText);
+
+        mSelectorData.calcPriority();
+        mPriority = mSelectorData.priority();
+
+        mSelectorRecency.renew();
     }
 
 }

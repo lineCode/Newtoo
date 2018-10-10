@@ -4,8 +4,8 @@
 namespace Newtoo
 {
 
-    Comparator::Comparator(DOMString mAttrName, DOMString mAttrValue)
-        :Selector(UNIVERSAL)
+    Comparator::Comparator(DOMString aAttrName, DOMString aAttrValue)
+        :Selector(UNIVERSAL), mAttrName(aAttrName), mAttrValue(aAttrValue)
     {}
 
     unsigned long Comparator::priority()

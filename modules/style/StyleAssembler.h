@@ -11,6 +11,7 @@ namespace Newtoo
     public:
 
         static void cascade(Element* element, StyleSheetListReflect& styles);
+        static void cascade(Document* document);
     };
 
 }

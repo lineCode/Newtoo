@@ -2,6 +2,8 @@
 
 #include "CSSRule.h"
 #include "../style/CSSStyleDeclaration.h"
+#include "../../assembly/selector/SelectorRecency.h"
+#include "../../assembly/selector/SelectorParser.h"
 
 namespace Newtoo
 {
@@ -12,7 +14,9 @@ namespace Newtoo
 
         CSSStyleRule(DOMString aCssText, CSSRule* parent = 0);
 
-        DOMString selectorText() const                          { return mSelectorText; }
+        SelectorRecency& selectorRecency();
+        SelectorData& selectorData();
+        SelectorString selectorText() const;
         void setSelectorText(DOMString aText);
 
         CSSStyleDeclaration& style()                            { return mStyle; }
@@ -33,7 +37,10 @@ namespace Newtoo
 
     private:
 
-        DOMString mSelectorText;
+        SelectorRecency mSelectorRecency;
+        SelectorData mSelectorData;
+        SelectorString mSelectorText;
+
         CSSStyleDeclaration mStyle;
         unsigned long mPriority;
     };

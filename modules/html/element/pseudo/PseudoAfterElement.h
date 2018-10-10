@@ -9,8 +9,7 @@ namespace Newtoo
     {
     public:
 
-        PseudoAfterElement();
-        PseudoAfterElement(DOMString aContent, CSSStyleDeclaration& aStyle);
+        PseudoAfterElement(Element* aAssignedElement, DOMString aContent, CSSStyleDeclaration& aStyle);
 
         Node* cloneNode(bool deep = false) override;
 
@@ -19,6 +18,8 @@ namespace Newtoo
         PseudoAfterElement(PseudoAfterElement& reference, bool deep)
             :PseudoElement(reference, deep)
         {}
+
+        ~PseudoAfterElement() override;
     };
 
 }

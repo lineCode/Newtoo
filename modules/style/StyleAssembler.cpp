@@ -4,6 +4,7 @@
 #include "../cssom/rule/CSSStyleRule.h"
 #include "../html/element/pseudo/PseudoBeforeElement.h"
 #include "../html/element/pseudo/PseudoAfterElement.h"
+#include "../dom/node/Document.h"
 
 #include <omp.h>
 
@@ -53,94 +54,122 @@ namespace Newtoo
             for(unsigned i = 0; i < stylesheet->cssRules().length(); i++)
             {
                 CSSRule* rule = stylesheet->cssRules().item(i);
-                if(rule->type() == CSSRule::STYLE_RULE)
-                {
-                    CSSStyleRule* srule = (CSSStyleRule*)rule;
-                    switch(SelectorParserExpress::elementMatches(element, srule->selectorText()))
-                    {
-                        case SelectorParserExpress::Assigned:
-                        {
-                            CSSStyleDeclaration& st = srule->style();
+                if(rule->type() != CSSRule::STYLE_RULE)
+                    continue;
 
-                            for(unsigned p = 0; p < st.length(); p++)
-                            {
-                                CSSStyleDeclaration::StyleProperty& prop = st.propertyItem(p);
-                                element->mergedStyle().putProperty(prop.id, prop.value, prop.priority);
-                            }
-                            if(element->hasPseudoBefore())
-                            {
-                                Element* pseudo = element->previousElementSibling();
-                                if(pseudo != 0)
-                                {
-                                    if(pseudo->isPseudoBeforeAssigned())
-                                    {
-                                        element->setHasPseudoBefore(false);
-                                        pseudoElementGC.push_back(pseudo);
-                                    }
-                                }
-                            }
-                            if(element->hasPseudoAfter())
-                            {
-                                Element* pseudo = element->nextElementSibling();
-                                if(pseudo != 0)
-                                {
-                                    if(pseudo->isPseudoAfterAssigned())
-                                    {
-                                        element->setHasPseudoAfter(false);
-                                        pseudoElementGC.push_back(pseudo);
-                                    }
-                                }
-                            }
-                            break;
-                        }
-                        case SelectorParserExpress::Before:
+                CSSStyleRule* srule = (CSSStyleRule*)rule;
+
+                if(srule->selectorRecency().updated())
+                    continue;
+                else srule->selectorRecency().affect();
+
+                SelectorData& data = srule->selectorData();
+
+                bool pseudoAfterAffected = false,
+                     pseudoBeforeAffected = false,
+                     assigned = false;
+
+                for(unsigned g = 0; g < data.groups().size(); g++)
+                {
+                    SelectorGroup::Result result = data.groups()[g].matches(element);
+
+                    switch(result)
+                    {
+                        case SelectorGroup::Assigned:
                         {
-                            CSSStyleDeclaration& st = srule->style();
-                            CSSStyleDeclaration::StyleProperty* contentprop = 0;
-                            for(unsigned i = 0; i < st.length(); i++)
-                            {
-                                if(st.propertyItem(i).id == contentStylePropertyId)
-                                {
-                                    contentprop = &st.propertyItem(i);
-                                    break;
-                                }
-                            }
-                            if(contentprop != 0 and element->parentNode() != 0)
-                            {
-                                element->setHasPseudoBefore(true);
-                                DOMString val = processContentValue(contentprop->value);
-                                PseudoBeforeElement* pseudo = new PseudoBeforeElement(val, st);
-                                element->parentNode()->insertBefore(pseudo, element);
-                            }
+                            assigned = true;
                             break;
                         }
-                        case SelectorParserExpress::After:
+                        case SelectorGroup::Firstletter:
                         {
-                            CSSStyleDeclaration& st = srule->style();
-                            CSSStyleDeclaration::StyleProperty* contentprop = 0;
-                            for(unsigned i = 0; i < st.length(); i++)
-                            {
-                                if(st.propertyItem(i).id == contentStylePropertyId)
-                                {
-                                    contentprop = &st.propertyItem(i);
-                                    break;
-                                }
-                            }
-                            if(contentprop != 0 and element->parentNode() != 0)
-                            {
-                                element->setHasPseudoAfter(true);
-                                DOMString val = processContentValue(contentprop->value);
-                                PseudoAfterElement* pseudo = new PseudoAfterElement(val, st);
-                                element->parentNode()->insertAfter(pseudo, element);
-                            }
                             break;
                         }
-                        case SelectorParserExpress::NotMatches:
+                        case SelectorGroup::Firstline:
+                        {
+                            break;
+                        }
+                        case SelectorGroup::Selection:
+                        {
+                            break;
+                        }
+                        case SelectorGroup::Before:
+                        {
+                            pseudoBeforeAffected = true;
+                            break;
+                        }
+                        case SelectorGroup::After:
+                        {
+                            pseudoAfterAffected = true;
+                            break;
+                        }
+                        case SelectorGroup::NotMatches:
                         {
                             break;
                         }
                     } // switch
-                } // if STYLE_RULE
+                }
+
+                if(assigned)
+                {
+                    CSSStyleDeclaration& st = srule->style();
+
+                    for(unsigned p = 0; p < st.length(); p++)
+                    {
+                        CSSStyleDeclaration::StyleProperty& prop = st.propertyItem(p);
+                        element->mergedStyle().putProperty(prop.id, prop.value, prop.priority);
+                    }
+
+                    if(element->hasPseudoBefore())
+                        pseudoElementGC.push_back(element->pseudoBefore());
+
+                    if(element->hasPseudoAfter())
+                        pseudoElementGC.push_back(element->pseudoAfter());
+                }
+
+                if(pseudoBeforeAffected)
+                {
+                    CSSStyleDeclaration& st = srule->style();
+                    CSSStyleDeclaration::StyleProperty* contentprop = 0;
+                    for(unsigned i = 0; i < st.length(); i++)
+                    {
+                        if(st.propertyItem(i).id == contentStylePropertyId)
+                        {
+                            contentprop = &st.propertyItem(i);
+                            break;
+                        }
+                    }
+                    if(contentprop != 0 and element->parentNode() != 0)
+                    {
+                        DOMString val = processContentValue(contentprop->value);
+
+                        PseudoBeforeElement* pseudo = new PseudoBeforeElement(element, val, st);
+                        element->parentNode()->insertBefore(pseudo, element);
+                        element->setPseudoBefore(pseudo);
+                    }
+                }
+
+                if(pseudoAfterAffected)
+                {
+                    CSSStyleDeclaration& st = srule->style();
+                    CSSStyleDeclaration::StyleProperty* contentprop = 0;
+                    for(unsigned i = 0; i < st.length(); i++)
+                    {
+                        if(st.propertyItem(i).id == contentStylePropertyId)
+                        {
+                            contentprop = &st.propertyItem(i);
+                            break;
+                        }
+                    }
+                    if(contentprop != 0 and element->parentNode() != 0)
+                    {
+                        DOMString val = processContentValue(contentprop->value);
+
+                        PseudoAfterElement* pseudo = new PseudoAfterElement(element, val, st);
+                        element->parentNode()->insertAfter(pseudo, element);
+                        element->setPseudoAfter(pseudo);
+                    }
+                }
+
             }
         }
 
@@ -153,6 +182,25 @@ namespace Newtoo
         {
             if(element->childNodes().item(i)->nodeType() == Node::ELEMENT_NODE)
                 cascade((Element*)element->childNodes().item(i), styles);
+        }
+    }
+
+    void StyleAssembler::cascade(Document* document)
+    {
+        HTMLElement* target = document->body();
+        if(target != 0)
+        {
+            StyleAssembler::cascade((Element*)target, (StyleSheetListReflect&)document->styleSheets());
+        } else
+        {
+            for(unsigned i = 0; i < document->childNodes().length(); i++)
+            {
+                if(document->childNodes().item(i)->nodeType() == Node::ELEMENT_NODE)
+                {
+                    StyleAssembler::cascade((Element*)document->childNodes().item(i),
+                                    (StyleSheetListReflect&)document->styleSheets());
+                }
+            }
         }
     }
 

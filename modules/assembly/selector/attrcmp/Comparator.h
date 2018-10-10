@@ -9,7 +9,7 @@ namespace Newtoo
     {
     public:
 
-        Comparator(DOMString mAttrName, DOMString mAttrValue);
+        Comparator(DOMString aAttrName, DOMString aAttrValue);
 
         unsigned long priority() override;
 

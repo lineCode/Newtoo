@@ -3,12 +3,8 @@
 namespace Newtoo
 {
 
-    PseudoElement::PseudoElement()
-    {}
-
-    PseudoElement::PseudoElement(DOMString aNamespace, DOMString qualifiedName,
-                                             DOMString aPrefix)
-        :HTMLElement(aNamespace, qualifiedName, aPrefix)
+    PseudoElement::PseudoElement(Element* aAssingedElement)
+        :mAssinged(aAssingedElement)
     {}
 
     DOMString PseudoElement::nodeValue()
@@ -16,17 +12,9 @@ namespace Newtoo
         return localName();
     }
 
-    Element* PseudoElement::assignedElement()
+    Element* PseudoElement::assignedElement() const
     {
-        if(isPseudoAfter())
-        {
-            return previousElementSibling();
-        }
-        else if(isPseudoBefore())
-        {
-            return nextElementSibling();
-        }
-        return 0;
+        return mAssinged;
     }
 
     Node* PseudoElement::cloneNode(bool deep)

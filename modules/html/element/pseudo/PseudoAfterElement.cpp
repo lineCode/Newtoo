@@ -3,11 +3,12 @@
 namespace Newtoo
 {
 
-    PseudoAfterElement::PseudoAfterElement()
-    {}
-
-    PseudoAfterElement::PseudoAfterElement(DOMString aContent, CSSStyleDeclaration& aStyle)
+    PseudoAfterElement::PseudoAfterElement(Element* aAssignedElement, DOMString aContent,
+                                           CSSStyleDeclaration& aStyle)
+        :PseudoElement(aAssignedElement)
     {
+        aAssignedElement->setPseudoAfter(this);
+
         for(unsigned i = 0; i < aStyle.length(); i++)
             style().addProperty(aStyle.propertyItem(i));
 
@@ -22,6 +23,12 @@ namespace Newtoo
     bool PseudoAfterElement::isPseudoAfterAssigned()
     {
         return true;
+    }
+
+    PseudoAfterElement::~PseudoAfterElement()
+    {
+        if(assignedElement()->pseudoAfter() == this)
+            assignedElement()->setPseudoAfter(0);
     }
 
 }

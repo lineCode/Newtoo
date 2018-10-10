@@ -12,18 +12,21 @@ namespace Newtoo
     {
     public:
 
-        PseudoElement();
-        PseudoElement(DOMString aNamespace, DOMString qualifiedName,DOMString aPrefix = "");
+        PseudoElement(Element* aAssingedElement);
 
         Node* cloneNode(bool deep = false) override;
 
         DOMString nodeValue() override;
 
-        Element* assignedElement();
+        Element* assignedElement() const;
 
         PseudoElement(PseudoElement& reference, bool deep)
             :HTMLElement(reference, deep)
         {}
+
+    private:
+
+        Element* mAssinged;
     };
 
 }

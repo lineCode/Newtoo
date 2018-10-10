@@ -118,26 +118,19 @@ namespace Newtoo
         bool isHTMLElement();
         bool isSVGElement();
 
-        // Deprecated API -----------
-
-        bool isPseudoElement(); // non-virtual
-
-        bool isPseudoBefore() { return false; } // non-virtual
-        bool isPseudoAfter() { return false; } // non-virtual
 
         virtual bool isPseudoBeforeAssigned() { return false; }
         virtual bool isPseudoAfterAssigned() { return false; }
 
-        Element* pseudoBefore();
-        Element* pseudoAfter();
+        bool isPseudoElement();
 
-        bool hasPseudoBefore()            const { return mHasPseudoBefore; }
-        bool hasPseudoAfter()             const { return mHasPseudoAfter; }
+        Element* pseudoBefore() const;
+        Element* pseudoAfter() const;
+        bool hasPseudoBefore();
+        bool hasPseudoAfter();
+        void setPseudoBefore(Element* aElement);
+        void setPseudoAfter(Element* aElement);
 
-        void setHasPseudoBefore(bool has)       { mHasPseudoBefore = has; }
-        void setHasPseudoAfter(bool has)        { mHasPseudoAfter = has; }
-
-        // -----------
 
         DOMTokenList reflectTo(DOMString attrName);
         DOMStringMap reflectToAttributes();
@@ -194,6 +187,8 @@ namespace Newtoo
              mAttributes(reference.attributes(), this)
         {}
 
+        ~Element() override;
+
     protected:
 
         DOMString mNamespaceURI;
@@ -206,7 +201,8 @@ namespace Newtoo
 
         CSSStyleDeclaration mMergedStyle;
 
-        bool mHasPseudoBefore, mHasPseudoAfter;
+        Element* mPseudoBefore;
+        Element* mPseudoAfter;
 
         void setAttributeBool(DOMString qualifiedName, bool value);
         bool getAttributeBool(DOMString qualifiedName);

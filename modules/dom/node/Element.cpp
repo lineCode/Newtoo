@@ -9,11 +9,11 @@
 namespace Newtoo
 {
 
-    Element::Element() : mHasPseudoBefore(false), mHasPseudoAfter(false) {}
+    Element::Element() : mPseudoBefore(0), mPseudoAfter(0) {}
 
     Element::Element(DOMString aLocalName)
         :Node(ELEMENT_NODE),
-         mLocalName(aLocalName), mHasPseudoBefore(false), mHasPseudoAfter(false)
+         mLocalName(aLocalName), mPseudoBefore(0), mPseudoAfter(0)
     {}
 
     Element::Element(DOMString aNamespace, DOMString qualifiedName, DOMString aPrefix)
@@ -21,8 +21,8 @@ namespace Newtoo
          mNamespaceURI(aNamespace),
          mPrefix(aPrefix),
          mLocalName(qualifiedName),
-         mHasPseudoBefore(false),
-         mHasPseudoAfter(false)
+         mPseudoBefore(0),
+         mPseudoAfter(0)
     {}
 
 #define AFTER_PREFIX ":"
@@ -304,7 +304,34 @@ namespace Newtoo
 
     bool Element::isPseudoElement()
     {
-        return isPseudoBefore() or isPseudoAfter();
+        return isPseudoBeforeAssigned() or isPseudoAfterAssigned();
+    }
+
+    Element* Element::pseudoBefore() const
+    {
+        return mPseudoBefore;
+    }
+    Element* Element::pseudoAfter() const
+    {
+        return mPseudoAfter;
+    }
+
+    bool Element::hasPseudoBefore()
+    {
+        return mPseudoBefore;
+    }
+    bool Element::hasPseudoAfter()
+    {
+        return mPseudoAfter;
+    }
+
+    void Element::setPseudoBefore(Element* aElement)
+    {
+        mPseudoBefore = aElement;
+    }
+    void Element::setPseudoAfter(Element* aElement)
+    {
+        mPseudoAfter = aElement;
     }
 
     void Element::setAttributeBool(DOMString qualifiedName, bool value)
@@ -349,6 +376,15 @@ namespace Newtoo
             return;
 
         StyleAssembler::cascade((Element*)this, (StyleSheetListReflect&)ownerDocument()->styleSheets());
+    }
+
+    Element::~Element()
+    {
+        if(pseudoBefore() != 0)
+            delete pseudoBefore();
+
+        if(pseudoAfter() != 0)
+            delete pseudoAfter();
     }
 
 }
