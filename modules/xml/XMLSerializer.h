@@ -5,7 +5,7 @@
 namespace Newtoo
 {
 
-    class XMLSerialiser
+    class XMLSerializer
     {
     public:
 

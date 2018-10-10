@@ -1,10 +1,10 @@
-#include "XMLSerialiser.h"
+#include "XMLSerializer.h"
 #include "../assembly/html/HTMLSerializer.h"
 
 namespace Newtoo
 {
 
-    DOMString XMLSerialiser::serializeToString(Node* root)
+    DOMString XMLSerializer::serializeToString(Node* root)
     {
         HTMLSerializerNodeSequence list;
         list.push_back(root);
