@@ -19,6 +19,13 @@ Its goal is to do similar things differently and to be different.
 
 Learn about supported **web technologies** at <http:/newtoo.ru/html5-support> (RU)
 
+# Integrated to Magenta
+![https://github.com/FlightBlaze/Newtoo/releases](http://newtoo.ru/resources/github/magenta-introducing.png?u=1)  
+Magenta is the all new & smart web browser with new user experience.  Magenta uses Newtoo to display web pages.  
+  
+    
+Download lastest release for [Windows](https://github.com/FlightBlaze/Newtoo/releases) or macOS platform.
+
 # Progress
 ![See our progress at <http:/newtoo.ru/html5-support> (RU)](http://newtoo.ru/resources/github/progress.png?u=5)  
 
