@@ -109,7 +109,7 @@ namespace Newtoo
 
 #define clean_up() if(!query.empty()) { query.clear(); } whitespaceAfter = false
 
-    SelectorGroup SelectorParser::parseGroupFromString(SelectorString string)
+    SelectorGroup SelectorParser::parseGroupFromString(SelectorString string) // bad string
     {
         SelectorGroup group;
 

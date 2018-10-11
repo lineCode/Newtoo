@@ -59,7 +59,7 @@ namespace Newtoo
 
                 CSSStyleRule* srule = (CSSStyleRule*)rule;
 
-                if(srule->selectorRecency().updated())
+                if(!srule->selectorRecency().updated())
                     continue;
                 else srule->selectorRecency().affect();
 

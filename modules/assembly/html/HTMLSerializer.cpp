@@ -76,6 +76,17 @@ namespace Newtoo
                         html += VALUE_END;
                     }
 
+#ifdef n2DEBUG
+                    if(element->mergedStyle().length() > 0)
+                    {
+                        html += WHITESPACE;
+                        html += "mergedstyle";
+                        html += VALUE_START;
+                        html += element->mergedStyle().cssText();
+                        html += VALUE_END;
+                    }
+#endif
+
                     html += TAG_BRACKET_CLOSE;
                     /* Внутренности элемента */
 

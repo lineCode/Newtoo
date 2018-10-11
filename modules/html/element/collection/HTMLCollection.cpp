@@ -118,7 +118,7 @@ namespace Newtoo
         return accept;
     }
 
-    void itemRecursive(Element* elm, unsigned long index, unsigned long& in, HTMLCollection& collection,
+    void itemRecursive(Element*& elm, unsigned long index, unsigned long& in, HTMLCollection& collection,
                        NodeList* target)
     {
         if(elm != 0)
@@ -143,7 +143,7 @@ namespace Newtoo
         }
     }
 
-    void namedItemRecursive(Element* elm, DOMString name, HTMLCollection& collection, NodeList* target)
+    void namedItemRecursive(Element*& elm, DOMString name, HTMLCollection& collection, NodeList* target)
     {
         if(elm != 0)
             return;

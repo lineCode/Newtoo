@@ -156,6 +156,11 @@ namespace Newtoo
             return new HTMLDivElement(namespaceURI, tagname.name, tagname.prefix);
         }
 
+        else if(tagname.name == HTMLParagraphElementTagName)
+        {
+            return new HTMLParagraphElement(namespaceURI, tagname.name, tagname.prefix);
+        }
+
         else if(tagname.name == HTMLBodyElementTagName)
         {
             return new HTMLBodyElement(namespaceURI, tagname.name, tagname.prefix);
