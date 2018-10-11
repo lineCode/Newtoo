@@ -30,6 +30,18 @@ namespace Newtoo
         return val;
     }
 
+    CSSStyleDeclaration::StyleProperty* findContentProperty(CSSStyleDeclaration& st)
+    {
+        for(unsigned i = 0; i < st.length(); i++)
+        {
+            if(st.propertyItem(i).id == contentStylePropertyId)
+            {
+                return &st.propertyItem(i);
+            }
+        }
+        return 0;
+    }
+
     void StyleAssembler::cascade(Element* element, StyleSheetListReflect& styles)
     {
         element->mergedStyle().clear();
@@ -45,8 +57,6 @@ namespace Newtoo
                                                uaProp.priority);
         }
 
-        std::vector<Element*> pseudoElementGC; // удаляет не нужные псевдоэлементы
-
         for(unsigned s = 0; s < styles.lengthReflect(); s++)
         {
             CSSStyleSheet* stylesheet = (CSSStyleSheet*)styles.itemReflect(s);
@@ -59,9 +69,8 @@ namespace Newtoo
 
                 CSSStyleRule* srule = (CSSStyleRule*)rule;
 
-                if(!srule->selectorRecency().updated())
-                    continue;
-                else srule->selectorRecency().affect();
+                if(srule->selectorRecency().updated())
+                    srule->selectorRecency().affect();
 
                 SelectorData& data = srule->selectorData();
 
@@ -119,63 +128,41 @@ namespace Newtoo
                         element->mergedStyle().putProperty(prop.id, prop.value, prop.priority);
                     }
 
-                    if(element->hasPseudoBefore())
-                        pseudoElementGC.push_back(element->pseudoBefore());
-
-                    if(element->hasPseudoAfter())
-                        pseudoElementGC.push_back(element->pseudoAfter());
                 }
 
                 if(pseudoBeforeAffected)
                 {
                     CSSStyleDeclaration& st = srule->style();
-                    CSSStyleDeclaration::StyleProperty* contentprop = 0;
-                    for(unsigned i = 0; i < st.length(); i++)
-                    {
-                        if(st.propertyItem(i).id == contentStylePropertyId)
-                        {
-                            contentprop = &st.propertyItem(i);
-                            break;
-                        }
-                    }
+                    CSSStyleDeclaration::StyleProperty* contentprop = findContentProperty(st);
+
                     if(contentprop != 0 and element->parentNode() != 0)
                     {
                         DOMString val = processContentValue(contentprop->value);
 
-                        PseudoBeforeElement* pseudo = new PseudoBeforeElement(element, val, st);
-                        element->parentNode()->insertBefore(pseudo, element);
-                        element->setPseudoBefore(pseudo);
+                        if(element->hasPseudoBefore())
+                            new PseudoBeforeElement(element, val, st);
+                        else
+                            element->pseudoBefore()->updatePseudoElement(val, st);
                     }
                 }
 
                 if(pseudoAfterAffected)
                 {
                     CSSStyleDeclaration& st = srule->style();
-                    CSSStyleDeclaration::StyleProperty* contentprop = 0;
-                    for(unsigned i = 0; i < st.length(); i++)
-                    {
-                        if(st.propertyItem(i).id == contentStylePropertyId)
-                        {
-                            contentprop = &st.propertyItem(i);
-                            break;
-                        }
-                    }
+                    CSSStyleDeclaration::StyleProperty* contentprop = findContentProperty(st);
+
                     if(contentprop != 0 and element->parentNode() != 0)
                     {
                         DOMString val = processContentValue(contentprop->value);
 
-                        PseudoAfterElement* pseudo = new PseudoAfterElement(element, val, st);
-                        element->parentNode()->insertAfter(pseudo, element);
-                        element->setPseudoAfter(pseudo);
+                        if(element->hasPseudoAfter())
+                            new PseudoAfterElement(element, val, st);
+                        else
+                            element->pseudoAfter()->updatePseudoElement(val, st);
                     }
                 }
 
             }
-        }
-
-        for(unsigned i = 0; i < pseudoElementGC.size(); i++)
-        {
-            pseudoElementGC[i]->remove();
         }
 
         for(unsigned i = 0; i < element->childNodes().length(); i++)

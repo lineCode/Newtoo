@@ -18,6 +18,8 @@ namespace Newtoo
 
         DOMString nodeValue() override;
 
+        void updatePseudoElement(DOMString aContent, CSSStyleDeclaration& aStyle);
+
         Element* assignedElement() const;
 
         PseudoElement(PseudoElement& reference, bool deep)

@@ -26,6 +26,8 @@ namespace Newtoo
         NEAREST
     };
 
+    class PseudoElement;
+
     class Element : public Node
     {
     public:
@@ -124,8 +126,8 @@ namespace Newtoo
 
         bool isPseudoElement();
 
-        Element* pseudoBefore() const;
-        Element* pseudoAfter() const;
+        PseudoElement* pseudoBefore() const;
+        PseudoElement* pseudoAfter() const;
         bool hasPseudoBefore();
         bool hasPseudoAfter();
         void setPseudoBefore(Element* aElement);
@@ -184,7 +186,9 @@ namespace Newtoo
              mPrefix(reference.mPrefix),
              mLocalName(reference.mLocalName),
              mStyle(reference.mStyle, 0),
-             mAttributes(reference.attributes(), this)
+             mAttributes(reference.attributes(), this),
+             mPseudoBefore(0),
+             mPseudoAfter(0)
         {}
 
         ~Element() override;

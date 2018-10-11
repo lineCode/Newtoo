@@ -307,13 +307,13 @@ namespace Newtoo
         return isPseudoBeforeAssigned() or isPseudoAfterAssigned();
     }
 
-    Element* Element::pseudoBefore() const
+    PseudoElement* Element::pseudoBefore() const
     {
-        return mPseudoBefore;
+        return (PseudoElement*)mPseudoBefore;
     }
-    Element* Element::pseudoAfter() const
+    PseudoElement* Element::pseudoAfter() const
     {
-        return mPseudoAfter;
+        return (PseudoElement*)mPseudoAfter;
     }
 
     bool Element::hasPseudoBefore()

@@ -13,6 +13,11 @@ namespace Newtoo
             style().addProperty(aStyle.propertyItem(i));
 
         setInnerHTML(aContent);
+
+        if(aAssignedElement->parentNode() == 0)
+            return;
+
+        aAssignedElement->parentNode()->insertAfter(this, aAssignedElement);
     }
 
     Node* PseudoAfterElement::cloneNode(bool deep)
