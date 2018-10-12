@@ -109,7 +109,7 @@ namespace Newtoo
 
 #define clean_up() if(!query.empty()) { query.clear(); } whitespaceAfter = false
 
-    SelectorGroup SelectorParser::parseGroupFromString(SelectorString string) // bad string
+    SelectorGroup SelectorParser::parseGroupFromString(SelectorString string)
     {
         SelectorGroup group;
 
@@ -290,7 +290,7 @@ namespace Newtoo
         SelectorStringList groupstrlist = groupListFromString(string);
 
         for(unsigned i = 0; i < groupstrlist.size(); i++)
-            dat.groups().push_back(parseGroupFromString(groupstrlist.size()));
+            dat.groups().push_back(parseGroupFromString(groupstrlist[i]));
 
         return dat;
     }
