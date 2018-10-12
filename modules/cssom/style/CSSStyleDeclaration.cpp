@@ -11,11 +11,12 @@ namespace Newtoo
     {
         DOMString text;
 
-        for(unsigned i = 0; i < length(); i++)
+        unsigned long len = length();
+        for(unsigned i = 0; i < len; i++)
         {
             StyleProperty prop = mStylePropertyList[i];
             text += prop.id;
-            text += ":";
+            text += ": ";
             text += prop.value;
             if(prop.priority == ImportantPriority)
             {
@@ -23,6 +24,10 @@ namespace Newtoo
                 text += ImportantPriority;
             }
             text += ";";
+            if(i < len - 1)
+            {
+                text += " ";
+            }
         }
 
         return text;
@@ -61,6 +66,7 @@ namespace Newtoo
 
     void CSSStyleDeclaration::setCssText(DOMString css, DOMString priority)
     {
+        // TODO: Переписать это полостью
         unsigned long before = 0;
         IndexOfChar splitter;
         splitter.find(0, CSS_SPLIT, css);
@@ -71,11 +77,6 @@ namespace Newtoo
             StyleProperty prop;
             prop.priority = priority;
             prop.id = css.substring(before, splitter.index - before);
-
-            while(prop.id.has("\n"))
-                prop.id = prop.id.erase(prop.id.indexOf("\n"), 1);
-            while(prop.id.has(" "))
-                prop.id = prop.id.erase(prop.id.indexOf(" "), 1);
 
             IndexOfChar seperator;
             seperator.find(splitter.index, CSS_SEPERATOR, css);

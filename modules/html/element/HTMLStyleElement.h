@@ -37,6 +37,7 @@ namespace Newtoo
 
     private:
 
+        DOMString mCssInnerHTML;
     };
 
 }

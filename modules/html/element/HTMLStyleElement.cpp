@@ -26,15 +26,7 @@ namespace Newtoo
 
     DOMString HTMLStyleElement::innerHTML()
     {
-        DOMString html;
-
-        CSSStyleSheet* s = (CSSStyleSheet*)sheet();
-
-        for(unsigned i = 0; i < s->cssRules().length(); i++)
-        {
-            html += s->cssRules().item(i)->cssText();
-        }
-        return html;
+        return mCssInnerHTML;
     }
     void HTMLStyleElement::setInnerHTML(DOMString aHTML)
     {
@@ -49,6 +41,8 @@ namespace Newtoo
         }
         s->cssRules().shrinkToFit();
         s->appendCSS(aHTML);
+
+        mCssInnerHTML = aHTML;
     }
 
 }

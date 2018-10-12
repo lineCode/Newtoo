@@ -20,26 +20,58 @@ namespace Newtoo
 
     DOMString CSSStyleRule::cssText()
     {
-        DOMString ret = cssComment();
-        ret += mSelectorText;
+        DOMString ret = mSelectorText;
         ret += " { ";
         ret = ret.append_(style().cssText());
         ret += " } ";
         return ret;
     }
+
+#define OPEN_COMMENT_STR "/*"
+#define CLOSE_COMMENT_STR "*/"
+#define OPEN_SINGLE_COMMENT_STR "//"
+#define CLOSE_SINGLE_COMMENT_STR "\n"
+
+
+void eraseComments(DOMString& str)
+{
+    /*
+        Работает довольно медленно. Расчитываю на то,
+        что комментариев в коде вообще не будет
+    */
+
+    if(str.has(OPEN_COMMENT_STR) or str.has(OPEN_SINGLE_COMMENT_STR))
+    {
+        while(str.has(OPEN_COMMENT_STR) and str.has(CLOSE_COMMENT_STR))
+        {
+            unsigned long start = str.indexOf(OPEN_COMMENT_STR);
+            unsigned long end = str.indexOf(CLOSE_COMMENT_STR);
+
+            str.eraseThis(start, end - start + 2);
+        };
+        while(str.has(OPEN_SINGLE_COMMENT_STR) and str.has(CLOSE_SINGLE_COMMENT_STR))
+        {
+            unsigned long start = str.indexOf(OPEN_SINGLE_COMMENT_STR);
+            unsigned long end = str.indexOf(CLOSE_SINGLE_COMMENT_STR);
+
+            str.eraseThis(start, end - start);
+        };
+    }
+}
+
+#define NEWLINE "\n"
+
     void CSSStyleRule::setCssText(DOMString aCssText)
     {
-        CommentCheckOutput commentCheck = checkForComments(aCssText);
-        if(commentCheck.hasComments)
-        {
-            aCssText = commentCheck.processed;
-        }
+        eraseComments(aCssText);
+
+        while(aCssText.has(NEWLINE))
+            aCssText.eraseThis(aCssText.indexOf(NEWLINE), 1);
 
         if(!aCssText.has("{"))
             return;
 
         unsigned long indexOfOpenBracket = aCssText.indexOf("{");
-        // если char равен одному байту
 
         DOMString selText = aCssText.substring(0, indexOfOpenBracket);
         while(selText.endsWith(" "))
@@ -47,9 +79,18 @@ namespace Newtoo
 
         setSelectorText(selText);
 
+#ifdef n2DEBUG
+        std::cout << "=====================\n" << "[Newtoo::CSSStyleDeclaration Before]: \"" << aCssText.substring(indexOfOpenBracket + 1,
+                                                                      aCssText.size() - indexOfOpenBracket - 1).raw() << "\"" << std::endl;
+#endif
+
         style().setCssText(aCssText.substring(indexOfOpenBracket + 1,
                           aCssText.size() - indexOfOpenBracket - 1),
                           std::to_string(mPriority));
+
+#ifdef n2DEBUG
+        std::cout << "-----\n" << "[Newtoo::CSSStyleDeclaration After]: \"" << style().cssText().raw() << "\"" << std::endl;
+#endif
 
     }
 

@@ -40,14 +40,6 @@ namespace Newtoo
             bool hasComments;
         };
 
-        CommentCheckOutput checkForComments(DOMString str); // вырезает комментарии даже из скобок
-
-        DOMString comment() const                               { return mComment; }
-        DOMString cssComment();
-        void setComment(DOMString aComment)                     { mComment = aComment; }
-        bool hasComment();
-
-
         CSSRule(CSSRule& reference)
             :mType(reference.mType),
              mParentRule(reference.mParentRule)
@@ -57,8 +49,6 @@ namespace Newtoo
 
         RuleType mType;
         CSSRule* mParentRule;
-
-        DOMString mComment;
     };
 
 }
