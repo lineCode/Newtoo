@@ -41,6 +41,7 @@ namespace Newtoo
         void putProperty(DOMString property, DOMString value, DOMString priority);
         void addProperty(StyleProperty prop);
 
+        void merge(CSSStyleDeclaration* decl);
         void clear();
 
         /* эти функции кстати превращают aProperty из CamelCase в snake_case (или underscore) */

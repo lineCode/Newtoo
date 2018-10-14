@@ -46,6 +46,16 @@ namespace Newtoo
     {
         element->mergedStyle().clear();
 
+        element->pseudoFirstletterStyle().clear();
+        element->pseudoFirstlineStyle().clear();
+        element->pseudoSelectionStyle().clear();
+
+        if(element->hasPseudoBefore())
+            element->pseudoBefore()->style().clear();
+
+        if(element->hasPseudoAfter())
+            element->pseudoAfter()->style().clear();
+
         for(unsigned i = 0; i < element->style().length(); i++)
             element->mergedStyle().addProperty(element->style().propertyItem(i));
 
@@ -56,6 +66,9 @@ namespace Newtoo
             element->mergedStyle().putProperty(uaProp.id, uaProp.value,
                                                uaProp.priority);
         }
+
+        bool usingPseudoBefore = false,
+             usingPseudoAfter = false;
 
         for(unsigned s = 0; s < styles.lengthReflect(); s++)
         {
@@ -91,14 +104,17 @@ namespace Newtoo
                         }
                         case SelectorGroup::Firstletter:
                         {
+                            element->pseudoFirstletterStyle().merge(&srule->style());
                             break;
                         }
                         case SelectorGroup::Firstline:
                         {
+                            element->pseudoFirstlineStyle().merge(&srule->style());
                             break;
                         }
                         case SelectorGroup::Selection:
                         {
+                            element->pseudoSelectionStyle().merge(&srule->style());
                             break;
                         }
                         case SelectorGroup::Before:
@@ -120,18 +136,12 @@ namespace Newtoo
 
                 if(assigned)
                 {
-                    CSSStyleDeclaration& st = srule->style();
-
-                    for(unsigned p = 0; p < st.length(); p++)
-                    {
-                        CSSStyleDeclaration::StyleProperty& prop = st.propertyItem(p);
-                        element->mergedStyle().putProperty(prop.id, prop.value, prop.priority);
-                    }
-
+                    element->mergedStyle().merge(&srule->style());
                 }
 
                 if(pseudoBeforeAffected)
                 {
+                    usingPseudoBefore = true;
                     CSSStyleDeclaration& st = srule->style();
                     CSSStyleDeclaration::StyleProperty* contentprop = findContentProperty(st);
 
@@ -148,6 +158,7 @@ namespace Newtoo
 
                 if(pseudoAfterAffected)
                 {
+                    usingPseudoAfter = true;
                     CSSStyleDeclaration& st = srule->style();
                     CSSStyleDeclaration::StyleProperty* contentprop = findContentProperty(st);
 
@@ -163,6 +174,17 @@ namespace Newtoo
                 }
 
             }
+        }
+
+        if(!usingPseudoBefore)
+        {
+           if(element->hasPseudoBefore())
+               element->pseudoBefore()->remove();
+        }
+        if(!usingPseudoAfter)
+        {
+           if(element->hasPseudoAfter())
+               element->pseudoAfter()->remove();
         }
 
         for(unsigned i = 0; i < element->childNodes().length(); i++)

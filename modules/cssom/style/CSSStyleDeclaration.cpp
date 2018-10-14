@@ -282,6 +282,15 @@ namespace Newtoo
         mStylePropertyList.push_back(prop);
     }
 
+    void CSSStyleDeclaration::merge(CSSStyleDeclaration* decl)
+    {
+        for(unsigned i = 0; i < decl->length(); i++)
+        {
+            StyleProperty& prop = decl->propertyItem(i);
+            putProperty(prop.id, prop.value, prop.priority);
+        }
+    }
+
     void CSSStyleDeclaration::clear()
     {
         mStylePropertyList.clear();

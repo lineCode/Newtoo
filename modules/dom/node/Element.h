@@ -173,6 +173,11 @@ namespace Newtoo
         CSSStyleDeclaration& mergedStyle()            { return mMergedStyle; }
         CSSStyleDeclaration* parentStyle();
 
+        CSSStyleDeclaration& pseudoFirstletterStyle() { return mPseudoFirstletterStyle; }
+        CSSStyleDeclaration& pseudoFirstlineStyle()   { return mPseudoFirstlineStyle; }
+        CSSStyleDeclaration& pseudoSelectionStyle()   { return mPseudoSelectionStyle; }
+
+
         void cascadeStyles();
 
         //void computeStyles();
@@ -204,6 +209,10 @@ namespace Newtoo
         NamedNodeMap mAttributes;
 
         CSSStyleDeclaration mMergedStyle;
+
+        CSSStyleDeclaration mPseudoFirstletterStyle;
+        CSSStyleDeclaration mPseudoFirstlineStyle;
+        CSSStyleDeclaration mPseudoSelectionStyle;
 
         Element* mPseudoBefore;
         Element* mPseudoAfter;
