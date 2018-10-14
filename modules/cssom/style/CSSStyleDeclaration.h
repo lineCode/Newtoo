@@ -9,7 +9,7 @@ namespace Newtoo
 
     class CSSRule;
 
-    const char ImportantPriority[] = "!important";
+    const char ImportantPriority[] = "important";
     const char InlinePriority[] = "1000";
 
     class CSSStyleDeclaration

@@ -68,7 +68,6 @@ Project {
             "modules/assembly/selector/template/Selector-template.h.txt",
             "modules/cssom/CSS.cpp",
             "modules/cssom/CSS.h",
-            "modules/cssom/IMPORTANT.md",
             "modules/cssom/rule/CSSFontFaceRule.cpp",
             "modules/cssom/rule/CSSFontFaceRule.h",
             "modules/cssom/rule/CSSGroupingRule.cpp",

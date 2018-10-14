@@ -33,78 +33,130 @@ namespace Newtoo
         return text;
     }
 
-#define idx startAt
-
-    struct IndexOfChar
+    namespace _setCssText // работает, но появляются какие-то каракули
     {
-        unsigned long index;
-        bool found;
 
-        IndexOfChar() : index(0), found(false) {}
-
-        inline void find(unsigned long startAt, const char target, DOMString& str)
+        enum Location
         {
-            found = false;
-            while(idx < str.size())
+            PROPERTY, VALUE, IMPORTANT
+        };
+
+        struct State
+        {
+            CSSStyleDeclaration* declaration;
+            unsigned long index, size;
+            String defaultPriority;
+            String& reference;
+            Location location;
+            bool inQuotes;
+            char quote;
+
+            CSSStyleDeclaration::StyleProperty prop;
+
+            void newprop()
             {
-                if(str[idx] == target)
-                {
-                    index = idx;
-                    found = true;
-                    return;
-                }
-
-                idx++;
+                declaration->addProperty(prop);
+                prop = CSSStyleDeclaration::StyleProperty();
+                location = PROPERTY;
             }
+            void finish()
+            {
+                declaration->addProperty(prop);
+            }
+
+            State(CSSStyleDeclaration* aDec, String aRef, String aDefPriority)
+                : declaration(aDec),
+                  index(0),
+                  size(aRef.size()),
+                  defaultPriority(aDefPriority),
+                  reference(aRef),
+                  location(PROPERTY),
+                  inQuotes(false),
+                  quote(0)
+            {}
+        };
+
+        const char quote = '"';
+        const char quote_alternative = '\'';
+        const char important_prefix = '!';
+        const char splitter = ';';
+        const char equals = ':';
+
+        bool proceed(State* state)
+        {
+            if(state->index == state->size)
+            {
+                state->finish();
+                return false;
+            }
+
+            char c = state->reference[state->index];
+
+            state->index++;
+
+            if(state->inQuotes)
+            {
+                if(c == quote && c == quote_alternative) {
+                    state->inQuotes = true;
+                    return true;
+                }
+            } else
+            {
+                if(c == state->quote) {
+                    state->inQuotes = false;
+                    return true;
+                }
+            }
+
+            switch(state->location)
+            {
+                case PROPERTY:
+                {
+                    if(c == equals)
+                    {
+                        state->location = VALUE;
+                    } else
+                    {
+                        state->prop.id += c;
+                    }
+                    break;
+                }
+                case VALUE:
+                {
+                    if(c == splitter)
+                    {
+                        state->newprop();
+                    }
+                    else if(c == important_prefix)
+                    {
+                        state->location = IMPORTANT;
+                    } else
+                    {
+                        state->prop.value += c;
+                    }
+                    break;
+                }
+                case IMPORTANT:
+                {
+                    if(c == splitter)
+                    {
+                        state->newprop();
+                    } else
+                    {
+                        state->prop.priority += c;
+                    }
+                    break;
+                }
+            }
+            return true;
         }
-    };
-
-#undef idx
-
-#define CSS_SEPERATOR ';'
-#define CSS_SPLIT ':'
+    }
 
     void CSSStyleDeclaration::setCssText(DOMString css, DOMString priority)
     {
-        // TODO: Переписать это полостью
-        unsigned long before = 0;
-        IndexOfChar splitter;
-        splitter.find(0, CSS_SPLIT, css);
-
-        while(splitter.found)
-        {
-
-            StyleProperty prop;
-            prop.priority = priority;
-            prop.id = css.substring(before, splitter.index - before);
-
-            IndexOfChar seperator;
-            seperator.find(splitter.index, CSS_SEPERATOR, css);
-
-            if(seperator.found)
-            {
-                before = seperator.index + 1;
-                splitter.find(before, CSS_SPLIT, css);
-
-                prop.value = css.substring(splitter.index + 1, seperator.index - splitter.index - 1);
-
-                if(prop.value.endsWith(ImportantPriority))
-                {
-                    prop.value = prop.value.substring(0, prop.value.length()
-                                                      - sizeof(ImportantPriority));
-                    prop.priority = ImportantPriority;
-                }
-
-                mStylePropertyList.push_back(prop);
-            }
-            else
-            {
-                prop.value = css.substring(splitter.index + 1, css.length() - splitter.index - 1);
-
-                mStylePropertyList.push_back(prop);
-                break;
-            }
-        }
+        _setCssText::State* state = new _setCssText::State(this, css, priority);
+        while(proceed(state));
+        delete state;
     }
 
     unsigned long CSSStyleDeclaration::length()

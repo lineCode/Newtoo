@@ -14,92 +14,108 @@ namespace Newtoo
         return new CSSStyleSheet(*this);
     }
 
-#define QUOTE '\"'
-#define ALTERNATIVE_QUOTE '\''
-#define CLOSE_RULE_CHAR '}'
-#define CLOSE_SINGLE_RULE_CHAR ';'
-#define OPEN_RULE_CHAR '{'
+    const char quote_char = '\"';
+    const char alternative_quote = '\'';
+    const char close_rule = '}';
+    const char close_single_rule = ';';
+    const char open_rule = '{';
 
-#define noInRule deep == 0
-
-#define split(ind) if(ind + 1 < (int)size) { \
-DOMString next = target->substring(ind + 1, target->size() - ind - 1); \
-*target = target->substring(0, ind); \
-rules.push_back(next); \
-target = &rules.back(); i = 0; continue; } else { return rules; }
+#define split_target() \
+list.push_back(target->substring(i + 1, target->size() - i - 1)); \
+target = &list[list.size() - 2]; \
+target->eraseThis(i + 1, target->size() - i - 1); \
+target = &list.back(); \
+size = target->size(); \
+i = 0; continue
 
     std::vector<DOMString> toRuleList(DOMString text)
     {
-        /*
-            Тут был баг. Если написать после последнего правила лишние
-            символы, Newtoo создаст лишний CSSStyleRule с неверными
-            входными данными (нету кавычек) и вылетит.
-            Я его исправил ниже
-        */
-        do
-        {
-            if(text.endsWithChar(CLOSE_RULE_CHAR)
-            or text.endsWithChar(CLOSE_SINGLE_RULE_CHAR))
-                break;
-            text = text.substring(0, text.size() - 2);
-        }
-        while(true);
+        std::vector<DOMString> list;
+        list.push_back(text);
 
-        std::vector<DOMString> rules;
-        rules.push_back(text);
+        DOMString* target = &list[0];
 
-        DOMString* target = &rules.back();
+        unsigned long size, level, i;
+        size = target->size();
+        level = 0;
+        i = 0;
 
-        bool inString = false;
-        unsigned int deep = 0;
+        bool inquotes = false;
         char quote = 0;
-
-        signed long i = 0;
 
         while(true)
         {
-            unsigned long size = target->size();
-
-            if(i >= (int)size)
+            if(i >= size)
                 break;
 
-            char c = target->item(i);
-
-            if(!inString)
+            if(!inquotes)
             {
-                if(c == QUOTE or c == ALTERNATIVE_QUOTE)
+                switch(target->item(i))
                 {
-                    inString = true;
-                    quote = c;
-                    continue;
-                }
-                else if(c == OPEN_RULE_CHAR)
-                {
-                    deep++;
-                }
-                else if(c == CLOSE_RULE_CHAR)
-                {
-                    deep--;
-                    if(noInRule)
+                    default:
                     {
-                        split(i);
+                        i++;
+                        break;
                     }
-                }
-                else if(c == CLOSE_SINGLE_RULE_CHAR and noInRule)
-                {
-                    split(i);
+                    case open_rule:
+                    {
+                        level++;
+                        i++;
+                        break;
+                    }
+                    case close_rule:
+                    {
+                        level--;
+                        if(level == 0)
+                        {
+                            split_target();
+                        }
+                        else i++;
+                        break;
+                    }
+                    case close_single_rule:
+                    {
+                        if(level == 0)
+                        {
+                            split_target();
+                        }
+                        else i++;
+                        break;
+                    }
+                    case quote_char:
+                    {
+                        inquotes = true;
+                        quote = quote_char;
+                        i++;
+                        break;
+                    }
+                    case alternative_quote:
+                    {
+                        inquotes = true;
+                        quote = alternative_quote;
+                        i++;
+                        break;
+                    }
                 }
             } else
             {
-                if(c == quote)
-                {
-                    inString = false;
-                }
+                if(target->item(i) == quote)
+                    inquotes = false;
+                i++;
             }
-
-            i++;
         }
-        return rules;
+
+#ifdef n2DEBUG
+        std::cout << "[REFERENCE]: \n\n\"" << text.raw() << "\n\"\n\n";
+        for(unsigned i = 0; i < list.size(); i++)
+        {
+            std::cout << "[LIST ITEM #" << i <<"]: \n\n\"" << list[i].raw() << "\n\"\n\n";
+        }
+#endif
+
+        list.pop_back(); // Удалить пустую строку
+
+        return list;
     }
 
     unsigned long CSSStyleSheet::insertRule(DOMString rule, unsigned long index)

@@ -265,13 +265,28 @@ namespace Newtoo
         }
         bool hasChar(const char str, unsigned long startsAt)
         {
-            for(unsigned i = 0; i < data_.size(); i++)
-            {
+            for(unsigned i = 0; i < data_.size(); i++) {
                 if(i >= startsAt)
                 {
                     if(data_[i] == str)
                         return true;
                 }
+            }
+            return false;
+        }
+        bool hasChar(const char str)
+        {
+            for(unsigned i = 0; i < data_.size(); i++) {
+                if(data_[i] == str)
+                    return true;
+            }
+            return false;
+        }
+        bool hasCharReverse(const char str)
+        {
+            for(signed i = data_.size() - 1; i > -1; i++) {
+                if(data_[i] == str)
+                    return true;
             }
             return false;
         }

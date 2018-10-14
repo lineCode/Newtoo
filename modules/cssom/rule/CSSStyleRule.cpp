@@ -27,51 +27,53 @@ namespace Newtoo
         return ret;
     }
 
-#define OPEN_COMMENT_STR "/*"
-#define CLOSE_COMMENT_STR "*/"
-#define OPEN_SINGLE_COMMENT_STR "//"
-#define CLOSE_SINGLE_COMMENT_STR "\n"
+    const char open_comment[] = "/*";
+    const char close_comment[] = "*/";
+    const char open_single_comment[] = "//";
+    const char close_single_comment[] = "\n";
+    const char close_bracket = '}';
+    const char open_bracket = '{';
+    const char newline = '\n';
 
 
-void eraseComments(DOMString& str)
-{
-    /*
-        Работает довольно медленно. Расчитываю на то,
-        что комментариев в коде вообще не будет
-    */
-
-    if(str.has(OPEN_COMMENT_STR) or str.has(OPEN_SINGLE_COMMENT_STR))
+    void eraseComments(DOMString& str)
     {
-        while(str.has(OPEN_COMMENT_STR) and str.has(CLOSE_COMMENT_STR))
-        {
-            unsigned long start = str.indexOf(OPEN_COMMENT_STR);
-            unsigned long end = str.indexOf(CLOSE_COMMENT_STR);
+        /*
+            Работает довольно медленно. Расчитываю на то,
+            что комментариев в коде вообще не будет
+        */
 
-            str.eraseThis(start, end - start + 2);
-        };
-        while(str.has(OPEN_SINGLE_COMMENT_STR) and str.has(CLOSE_SINGLE_COMMENT_STR))
+        if(str.has(open_comment) or str.has(open_single_comment))
         {
-            unsigned long start = str.indexOf(OPEN_SINGLE_COMMENT_STR);
-            unsigned long end = str.indexOf(CLOSE_SINGLE_COMMENT_STR);
+            while(str.has(open_comment) and str.has(close_comment))
+            {
+                unsigned long start = str.indexOf(open_comment);
+                unsigned long end = str.indexOf(close_comment);
 
-            str.eraseThis(start, end - start);
-        };
+                str.eraseThis(start, end - start + 2);
+            };
+            while(str.has(open_single_comment) and str.has(close_single_comment))
+            {
+                unsigned long start = str.indexOf(open_single_comment);
+                unsigned long end = str.indexOf(close_single_comment);
+
+                str.eraseThis(start, end - start);
+            };
+        }
     }
-}
-
-#define NEWLINE "\n"
 
     void CSSStyleRule::setCssText(DOMString aCssText)
     {
         eraseComments(aCssText);
 
-        while(aCssText.has(NEWLINE))
-            aCssText.eraseThis(aCssText.indexOf(NEWLINE), 1);
+        while(aCssText.hasChar(newline))
+            aCssText.eraseThis(aCssText.indexOfChar(newline), 1);
 
-        if(!aCssText.has("{"))
+        if(!aCssText.hasChar(open_bracket) or !aCssText.hasCharReverse(close_bracket))
             return;
 
-        unsigned long indexOfOpenBracket = aCssText.indexOf("{");
+        unsigned long indexOfOpenBracket = aCssText.indexOfChar(open_bracket);
+        unsigned long indexOfCloseBracket = aCssText.indexOfChar(close_bracket);
 
         DOMString selText = aCssText.substring(0, indexOfOpenBracket);
         while(selText.endsWith(" "))
@@ -81,11 +83,11 @@ void eraseComments(DOMString& str)
 
 #ifdef n2DEBUG
         std::cout << "=====================\n" << "[Newtoo::CSSStyleDeclaration Before]: \"" << aCssText.substring(indexOfOpenBracket + 1,
-                                                                      aCssText.size() - indexOfOpenBracket - 1).raw() << "\"" << std::endl;
+                                                                      indexOfCloseBracket - indexOfOpenBracket - 1).raw() << "\"" << std::endl;
 #endif
 
         style().setCssText(aCssText.substring(indexOfOpenBracket + 1,
-                          aCssText.size() - indexOfOpenBracket - 1),
+                          indexOfCloseBracket - indexOfOpenBracket - 1),
                           std::to_string(mPriority));
 
 #ifdef n2DEBUG

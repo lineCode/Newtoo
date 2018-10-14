@@ -5,6 +5,7 @@
 #include "../../assembly/selector/express/SelectorParserExpress.h"
 #include "../../assembly/html/HTMLSerializer.h"
 #include "../../assembly/html/HTMLParser.h"
+#include "../../html/element/pseudo/PseudoElement.h"
 
 namespace Newtoo
 {
@@ -381,10 +382,10 @@ namespace Newtoo
     Element::~Element()
     {
         if(pseudoBefore() != 0)
-            delete pseudoBefore();
+            pseudoBefore()->remove();
 
         if(pseudoAfter() != 0)
-            delete pseudoAfter();
+            pseudoAfter()->remove();
     }
 
 }
