@@ -23,6 +23,7 @@ namespace Newtoo
             NEXT_SIBLING,
             SUBSEQUENT_SIBLING,
 
+            ATTRIBUTE,
             ATTRIBUTE_EQUALS,
             ATTRIBUTE_ENDS_WITH,
             ATTRIBUTE_STARTS_WITH,

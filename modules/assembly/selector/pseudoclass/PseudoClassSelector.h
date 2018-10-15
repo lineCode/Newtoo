@@ -9,7 +9,7 @@ namespace Newtoo
     {
     public:
 
-        PseudoClassSelector(DOMString aName);
+        PseudoClassSelector(TokenType aType, DOMString aName);
 
         unsigned long priority() override;
 

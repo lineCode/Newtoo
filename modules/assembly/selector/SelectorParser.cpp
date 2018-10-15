@@ -9,6 +9,13 @@
 #include "combinator/DescedantCombinator.h"
 #include "combinator/NextSiblingCombinator.h"
 #include "combinator/SubsequentCombinator.h"
+#include "attrcmp/AttributeSelector.h"
+#include "attrcmp/AttributeContainsItemSelector.h"
+#include "attrcmp/AttributeContainsSelector.h"
+#include "attrcmp/AttributeEndsWithSelector.h"
+#include "attrcmp/AttributeEqualsSelector.h"
+#include "attrcmp/AttributeStartsWithPrefixSelector.h"
+#include "attrcmp/AttributeStartsWithSelector.h"
 
 namespace Newtoo
 {
@@ -56,6 +63,7 @@ namespace Newtoo
 
     enum CompareMode
     {
+        OnlyAttribute,
         Equals,
         Contains,
         ContainsItem,
@@ -200,6 +208,7 @@ namespace Newtoo
                 }
                 else if(c == compare_close)
                 {
+                    compareMode = OnlyAttribute;
                     clean_up();
                 }
                 else if(c == compare_open)
@@ -207,39 +216,46 @@ namespace Newtoo
 
                     switch(compareMode)
                     {
+                        case OnlyAttribute:
+                        {
+                            group.sequence().push_back(AttributeSelector(query));
+                            clean_up();
+                            break;
+                        }
                         case Equals:
                         {
-
+                            group.sequence().push_back(AttributeEqualsSelector(query, value2));
                             clean_up();
                             break;
                         }
                         case StartsWith:
                         {
-
+                            group.sequence().push_back(AttributeStartsWithSelector(query, value2));
                             clean_up();
                             break;
                         }
                         case StartsWithPrefix:
                         {
-
+                            group.sequence().push_back(AttributeStartsWithPrefixSelector(query,
+                                                                                         value2));
                             clean_up();
                             break;
                         }
                         case EndsWith:
                         {
-
+                            group.sequence().push_back(AttributeEndsWithSelector(query, value2));
                             clean_up();
                             break;
                         }
                         case Contains:
                         {
-
+                            group.sequence().push_back(AttributeContainsSelector(query, value2));
                             clean_up();
                             break;
                         }
                         case ContainsItem:
                         {
-
+                            group.sequence().push_back(AttributeContainsItemSelector(query, value2));
                             clean_up();
                             break;
                         }

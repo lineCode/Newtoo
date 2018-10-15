@@ -4,8 +4,8 @@
 namespace Newtoo
 {
 
-    PseudoClassSelector::PseudoClassSelector(DOMString aName)
-        :Selector(UNIVERSAL), mName(aName)
+    PseudoClassSelector::PseudoClassSelector(TokenType aType, DOMString aName)
+        :Selector(aType), mName(aName)
     {}
 
     unsigned long PseudoClassSelector::priority()

@@ -33,7 +33,7 @@ namespace Newtoo
         return text;
     }
 
-    namespace _setCssText // работает, но появляются какие-то каракули
+    namespace _setCssText
     {
 
         enum Location
@@ -46,7 +46,7 @@ namespace Newtoo
             CSSStyleDeclaration* declaration;
             unsigned long index, size;
             String defaultPriority;
-            String& reference;
+            String reference;
             Location location;
             bool inQuotes;
             char quote;
@@ -90,7 +90,7 @@ namespace Newtoo
                 return false;
             }
 
-            char c = state->reference[state->index];
+            const char c = state->reference[state->index];
 
             state->index++;
 
