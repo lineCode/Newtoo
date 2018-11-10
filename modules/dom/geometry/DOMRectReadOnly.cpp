@@ -3,7 +3,7 @@
 namespace Newtoo
 {
 
-    DOMRectReadOnly::DOMRectReadOnly(int aX, long aY, int aWidth, long aHeight)
+    DOMRectReadOnly::DOMRectReadOnly(double aX, double aY, double aWidth, double aHeight)
         :mX(aX), mY(aY), mWidth(aWidth), mHeight(aHeight)
     {}
 

@@ -14,9 +14,9 @@ namespace Newtoo
     {
     public:
 
-        DOMRect(int aX, long aY, int aWidth, long aHeight);
+        DOMRect(double aX, double aY, double aWidth, double aHeight);
 
-        static DOMRect fromRect(int aX = 0, long aY = 0, int aWidth = 0, long aHeight = 0)
+        static DOMRect fromRect(double aX = 0, double aY = 0, double aWidth = 0, double aHeight = 0)
         {
             return DOMRect(aX, aY, aWidth, aHeight);
         }
@@ -25,10 +25,10 @@ namespace Newtoo
             return DOMRect(aRect.x(), aRect.y(), aRect.width(), aRect.height());
         }
 
-        void setX(int aX);
-        void setY(int aY);
-        void setWidth(int aWidth);
-        void setHeight(int aHeight);
+        void setX(double aX);
+        void setY(double aY);
+        void setWidth(double aWidth);
+        void setHeight(double aHeight);
     };
 
 }

@@ -14,29 +14,30 @@ namespace Newtoo
     {
     public:
 
-        DOMRectReadOnly(int aX, long aY, int aWidth, long aHeight);
+        DOMRectReadOnly(double aX, double aY, double aWidth, double aHeight);
 
-        static DOMRectReadOnly fromRect(int aX = 0, long aY = 0, int aWidth = 0, long aHeight = 0)
+        static DOMRectReadOnly fromRect(double aX = 0, double aY = 0, double aWidth = 0,
+                                        double aHeight = 0)
         {
             return DOMRectReadOnly(aX, aY, aWidth, aHeight);
         }
 
-        int x() const           { return mX; }
-        long y() const          { return mY; }
-        int width() const       { return mWidth; }
-        long height() const     { return mHeight; }
+        double x() const            { return mX; }
+        double y() const            { return mY; }
+        double width() const        { return mWidth; }
+        double height() const       { return mHeight; }
 
-        int left()              { return x(); }
-        long top()              { return y(); }
-        int right()             { return x() + width(); }
-        long bottom()           { return y() + height(); }
+        double left()               { return x(); }
+        double top()                { return y(); }
+        double right()              { return x() + width(); }
+        double bottom()             { return y() + height(); }
 
     protected:
 
-        int     mX;
-        long    mY;
-        int     mWidth;
-        long    mHeight;
+        double mX;
+        double mY;
+        double mWidth;
+        double mHeight;
     };
 
 }

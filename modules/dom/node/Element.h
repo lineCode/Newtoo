@@ -217,6 +217,9 @@ namespace Newtoo
         Element* mPseudoBefore;
         Element* mPseudoAfter;
 
+        double mScrollTop;
+        double mScrollLeft;
+
         void setAttributeBool(DOMString qualifiedName, bool value);
         bool getAttributeBool(DOMString qualifiedName);
         void setAttributeSignedLong(DOMString qualifiedName, signed long value);

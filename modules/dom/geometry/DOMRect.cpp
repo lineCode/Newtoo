@@ -3,23 +3,23 @@
 namespace Newtoo
 {
 
-    DOMRect::DOMRect(int aX, long aY, int aWidth, long aHeight)
+    DOMRect::DOMRect(double aX, double aY, double aWidth, double aHeight)
         :DOMRectReadOnly(aX, aY, aWidth, aHeight)
     {}
 
-    void DOMRect::setX(int aX)
+    void DOMRect::setX(double aX)
     {
         mX = aX;
     }
-    void DOMRect::setY(int aY)
+    void DOMRect::setY(double aY)
     {
         mY = aY;
     }
-    void DOMRect::setWidth(int aWidth)
+    void DOMRect::setWidth(double aWidth)
     {
         mWidth = aWidth;
     }
-    void DOMRect::setHeight(int aHeight)
+    void DOMRect::setHeight(double aHeight)
     {
         mHeight = aHeight;
     }
