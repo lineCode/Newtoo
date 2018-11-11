@@ -62,6 +62,13 @@ interface NumericValue
     static NumericValue fromString(CSSOMString str);
 };
 
+enum TimeUnit
+{
+    "Minutes",
+    "Seconds",
+    "Milliseconds"
+};
+
 [Constructor(unsigned long aNumber, TimeUnit aUnit)]
 interface PeriodValue
 {
@@ -312,13 +319,6 @@ typed enum AlignSelf
     "Center",
     "Baseline",
     "Stretch"
-};
-
-enum TimeUnit
-{
-    "Minutes",
-    "Seconds",
-    "Milliseconds"
 };
 
 typed enum AnimationDirection

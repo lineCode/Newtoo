@@ -31,7 +31,7 @@ Download lastest release for [Windows](https://github.com/FlightBlaze/Newtoo/rel
 
 # Big news
 - Introducing [Newtoo Web Interface Mapper](https://github.com/FlightBlaze/Newtoo-web-interface-mapper) — the new technology converting WebIDL to C++
-- Announced Newtoo Styling Engine. See [IDL Index](https://github.com/FlightBlaze/Newtoo/blob/master/modules/styling/index.idl)
+- Announced Newtoo Styling Engine. See [IDL Index](https://github.com/FlightBlaze/Newtoo/blob/master/modules/styling/index.webidl)
 
 ### Your thoughts about the new engine
 
