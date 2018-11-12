@@ -34,7 +34,7 @@ typed enum Unit
     "Deg",
     "Grad",
     "Rad",
-    "Turn"
+    "Turn",
 
     // Относительные единицы длины
 
