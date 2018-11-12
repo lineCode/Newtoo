@@ -1,4 +1,4 @@
-[Constructor(CSSStyleDeclaration? decl)]
+[Constructor(StyleMetrics? parent), Constructor(CSSStyleDeclaration? importFrom, optional StyleMetrics? parent)]
 
 interface StyleMetrics
 {
@@ -17,6 +17,8 @@ interface StyleMetrics
     static CSSOMString keywordToString(short value);
     static short keywordFromString(CSSOMString str);
     static boolean isKeyword(CSSOMString str);
+
+    [SameObject] attribute StyleMetrics? assignedParent;
 };
 
 typed enum Unit
@@ -1445,6 +1447,19 @@ interface PathData
     static PathData fromString(CSSOMString str);
 };
 
+typed enum StrokeType
+{
+    "None",
+    "Colored"
+};
+
+[Constructor(StrokeType keyword), Constructor(ColorValue aColor)]
+interface Stroke
+{
+    [SameObject] StrokeType type;
+    [SameObject] ColorValue color;
+};
+
 interface Dasharray
 {
     NumericValue item(unsigned long index);
@@ -1472,7 +1487,157 @@ typed enum StrokeLinejoin
     "Arcs"
 };
 
-[Constructor(CSSStyleDeclaration? decl)]
+typed enum FilterType
+{
+    "None",
+    "Specified"
+}
+
+[Destructor, Constructor(unsigned short type)]
+interface FilterModifier
+{
+    const unsigned short FILTER_BLUR = 1;
+    const unsigned short FILTER_BRIGHTNESS = 2;
+    const unsigned short FILTER_CONTRAST = 3;
+    const unsigned short FILTER_DROP_SHADOW = 4;
+    const unsigned short FILTER_GRAYSCALE = 5;
+    const unsigned short FILTER_SATURATE = 6;
+    const unsigned short FILTER_SEPIA = 7;
+    const unsigned short FILTER_HUE_ROTATE = 8;
+    const unsigned short FILTER_INVERT = 9;
+    const unsigned short FILTER_OPACITY = 10;
+    const unsigned short FILTER_URL = 11;
+
+    [SameObject] readonly attribute unsigned short filterType;
+    [SameObject] readonly attribute Filter? owner;
+
+    CSSOMString toString(); // virtual
+    void remove();
+};
+
+[Constructor(NumericValue aRange)]
+interface FilterBlur : FilterModifier
+{
+    [SameObject] attribute NumericValue range;
+
+    static FilterBlur fromString(CSSOMString str);
+};
+
+[Constructor(NumericValue aIntensity)]
+interface FilterBrightness : FilterModifier
+{
+    [SameObject] attribute NumericValue intensity; // %
+
+    static FilterBrightness fromString(CSSOMString str);
+};
+
+[Constructor(NumericValue aIntensity)]
+interface FilterContrast : FilterModifier
+{
+    [SameObject] attribute NumericValue intensity; // %
+
+    static FilterContrast fromString(CSSOMString str);
+};
+
+[Constructor(NumericValue aH, NumericValue aV, optional NumericValue aBlur = NumericValue(0.0, Px),
+ColorValue aColor optional = ColorValue(Black))]
+interface FilterDropShadow : FilterModifier
+{
+    [SameObject] attribute NumericValue h;
+    [SameObject] attribute NumericValue v;
+    [SameObject] attribute NumericValue blur;
+    [SameObject] attribute ColorValue color;
+
+    static FilterDropShadow fromString(CSSOMString str);
+};
+
+[Constructor(NumericValue aIntensity)]
+interface FilterGrayscale : FilterModifier
+{
+    [SameObject] attribute NumericValue intensity; // %
+
+    static FilterGrayscale fromString(CSSOMString str);
+};
+
+[Constructor(NumericValue aIntensity)]
+interface FilterHueRotate : FilterModifier
+{
+    [SameObject] attribute NumericValue intensity; // deg
+
+    static FilterHueRotate fromString(CSSOMString str);
+};
+
+[Constructor(NumericValue aIntensity)]
+interface FilterInvert : FilterModifier
+{
+    [SameObject] attribute NumericValue intensity; // %
+
+    static FilterInvert fromString(CSSOMString str);
+};
+
+[Constructor(NumericValue aIntensity)]
+interface FilterOpacity : FilterModifier
+{
+    [SameObject] attribute NumericValue intensity; // %
+
+    static FilterOpacity fromString(CSSOMString str);
+};
+
+[Constructor(NumericValue aIntensity)]
+interface FilterSaturate : FilterModifier
+{
+    [SameObject] attribute NumericValue intensity; // %
+
+    static FilterSaturate fromString(CSSOMString str);
+};
+
+[Constructor(NumericValue aIntensity)]
+interface FilterSepia : FilterModifier
+{
+    [SameObject] attribute NumericValue intensity; // %
+
+    static FilterSepia fromString(CSSOMString str);
+};
+
+[Constructor(CSSOMString aUrl)]
+interface FilterUrl : FilterModifier
+{
+    [SameObject] attribute CSSOMString url;
+
+    static FilterUrl fromString(CSSOMString str);
+};
+
+[Destructor]
+interface FilterList
+{
+    FilterModifier? item(unsigned long index);
+    readonly attribute unsigned long length;
+    [CEReactions] void appendModifier(FilterModifier? modifier);
+    [CEReactions] FilterModifier? removeModifier(unsigned long index);
+};
+
+[Constructor(FilterType keyword)]
+interface Filter
+{
+    [SameObject] attribute FilterType type;
+    [SameObject] readonly attribute FilterList modifiers;
+
+    CSSOMString toString();
+
+    static Filter fromString(CSSOMString str);
+};
+
+typed enum WritingMode
+{
+    "LrTb", // По-умолчанию
+    "RlTb",
+    "TbRl",
+    "Lr",
+    "Rl",
+    "Tb"
+};
+
+[Constructor(StyleMetrics? parent), Constructor(CSSStyleDeclaration? importFrom, optional StyleMetrics? parent)]
 interface ElementStyleMetrics : StyleMetrics
 {
     const AnimationIterationCount Infinite = -1;
@@ -1547,6 +1712,8 @@ interface ElementStyleMetrics : StyleMetrics
     [SameObject] attribute Direction direction;
     [SameObject] attribute Display display;
     [SameObject] attribute EmptyCells emptyCells;
+
+    [SameObject] attribute Filter filter;
 
     [SameObject] attribute FlexBasis flexBasis;
     [SameObject] attribute FlexDirection flexDirection;
@@ -1653,7 +1820,7 @@ interface ElementStyleMetrics : StyleMetrics
     [SameObject] attribute IntegerValue zIndex;
 };
 
-[Constructor(CSSStyleDeclaration? decl)]
+[Constructor(StyleMetrics? parent), Constructor(CSSStyleDeclaration? importFrom, optional StyleMetrics? parent)]
 interface FirstLetterStyleMetrics : StyleMetrics
 {
     [SameObject] attribute BackgroundAttachment backgroundAttachment;
@@ -1722,7 +1889,7 @@ interface FirstLetterStyleMetrics : StyleMetrics
     [SameObject] attribute WordSpacing wordSpacing;
 };
 
-[Constructor(CSSStyleDeclaration? decl)]
+[Constructor(StyleMetrics? parent), Constructor(CSSStyleDeclaration? importFrom, optional StyleMetrics? parent)]
 interface FirstLineStyleMetrics : StyleMetrics
 {
     [SameObject] attribute BackgroundAttachment backgroundAttachment;
@@ -1759,7 +1926,7 @@ interface FirstLineStyleMetrics : StyleMetrics
     [SameObject] attribute WordSpacing wordSpacing;
 };
 
-[Constructor(CSSStyleDeclaration? decl)]
+[Constructor(StyleMetrics? parent), Constructor(CSSStyleDeclaration? importFrom, optional StyleMetrics? parent)]
 interface SelectionStyleMetrics : StyleMetrics
 {
     [SameObject] attribute ColorValue backgroundColor;
@@ -1777,7 +1944,7 @@ interface SelectionStyleMetrics : StyleMetrics
     [SameObject] attribute TextShadow textShadow;
 };
 
-[Constructor(CSSStyleDeclaration? decl)]
+[Constructor(StyleMetrics? parent), Constructor(CSSStyleDeclaration? importFrom, optional StyleMetrics? parent)]
 interface SVGElementStyleMetrics : StyleMetrics
 {
     [SameObject] attribute ColorValue color;
@@ -1785,6 +1952,8 @@ interface SVGElementStyleMetrics : StyleMetrics
     [SameObject] attribute Cursor cursor;
 
     [SameObject] attribute Direction direction;
+
+    [SameObject] attribute Display display;
 
     [SameObject] attribute StringValue fontFamily;
     [SameObject] attribute FontFeatureSettings fontFeatureSettings;
@@ -1795,10 +1964,14 @@ interface SVGElementStyleMetrics : StyleMetrics
     [SameObject] attribute FontVariant fontVariant;
     [SameObject] attribute FontWeight fontWeight;
 
+    [SameObject] attribute Filter filter;
+
     [SameObject] attribute LetterSpacing letterSpacing;
     [SameObject] attribute LineHeight lineHeight;
 
     [SameObject] attribute FloatValue opacity;
+
+    [SameObject] attribute Overflow overflow;
 
     [SameObject] attribute TextDecoration textDecoration;
     [SameObject] attribute TextOverflow textOverflow;
@@ -1848,12 +2021,17 @@ interface SVGElementStyleMetrics : StyleMetrics
     [SameObject] attribute Marker markerMid;
     [SameObject] attribute Marker markerEnd;
 
-    [SameObject] attribute ColorValue stroke;
+    [SameObject] attribute ColorValue stopColor;  // По-умолчанию Black
+    [SameObject] attribute IntegerValue stopOpacity;  // По-умолчанию 1
+
+    [SameObject] attribute Stroke stroke;
     [SameObject] attribute Dasharray strokeDasharray;
     [SameObject] attribute NumericValue strokeDashoffset;
-    [SameObject] attribute ColorValue strokeLinecap;
-    [SameObject] attribute ColorValue strokeLinejoin;
+    [SameObject] attribute StrokeLinecap strokeLinecap;
+    [SameObject] attribute StrokeLinejoin strokeLinejoin;
     [SameObject] attribute IntegerValue strokeMitterlimit; // По-умолчанию 4
     [SameObject] attribute FloatValue strokeOpacity;
     [SameObject] attribute IntegerValue strokeWidth;
+
+    [SameObject] attribute WritingMode writingMode;
 };
