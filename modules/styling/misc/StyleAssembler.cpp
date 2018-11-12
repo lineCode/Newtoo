@@ -1,10 +1,10 @@
 #include "StyleAssembler.h"
-#include "../assembly/selector/express/SelectorParserExpress.h"
-#include "../cssom/style/CSSStyleSheet.h"
-#include "../cssom/rule/CSSStyleRule.h"
-#include "../html/element/pseudo/PseudoBeforeElement.h"
-#include "../html/element/pseudo/PseudoAfterElement.h"
-#include "../dom/node/Document.h"
+#include "../../assembly/selector/express/SelectorParserExpress.h"
+#include "../../cssom/style/CSSStyleSheet.h"
+#include "../../cssom/rule/CSSStyleRule.h"
+#include "../../html/element/pseudo/PseudoBeforeElement.h"
+#include "../../html/element/pseudo/PseudoAfterElement.h"
+#include "../../dom/node/Document.h"
 
 #include <omp.h>
 

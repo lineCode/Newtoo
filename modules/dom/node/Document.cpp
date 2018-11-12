@@ -9,7 +9,7 @@
 #include "../../assembly/html/HTMLParser.h"
 #include "../../assembly/builder/ElementBuilder.h"
 #include "../../html/element/HTMLElement.h"
-#include "../../style/StyleAssembler.h"
+#include "../../styling/misc/StyleAssembler.h"
 
 namespace Newtoo
 {

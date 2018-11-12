@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../CSSOMString.h"
-#include "../../style/StyleMetrics.h"
 
 #include <vector>
 

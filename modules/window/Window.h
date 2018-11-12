@@ -4,7 +4,7 @@
 #include "../dom/node/Document.h"
 #include "../cssom/media/MediaQueryList.h"
 #include "../cssom/misc/ScrollBehavior.h"
-#include "../style/StyleAssembler.h"
+#include "../styling/misc/StyleAssembler.h"
 #include "Location.h"
 #include "Console.h"
 #include "History.h"

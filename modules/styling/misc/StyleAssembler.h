@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../dom/node/Element.h"
-#include "../cssom/style/StyleSheetListReflect.h"
+#include "../../dom/node/Element.h"
+#include "../../cssom/style/StyleSheetListReflect.h"
 
 namespace Newtoo
 {

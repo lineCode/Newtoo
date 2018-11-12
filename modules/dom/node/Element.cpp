@@ -1,7 +1,7 @@
 #include "Element.h"
 #include "Text.h"
 #include "Document.h"
-#include "../../style/StyleAssembler.h"
+#include "../../styling/misc/StyleAssembler.h"
 #include "../../assembly/selector/express/SelectorParserExpress.h"
 #include "../../assembly/html/HTMLSerializer.h"
 #include "../../assembly/html/HTMLParser.h"

@@ -9,7 +9,6 @@
 #include "../reflect/DOMStringMap.h"
 #include "../DOMString.h"
 #include "../geometry/DOMRect.h"
-#include "../../style/StyleMetrics.h"
 #include "Node.h"
 
 
