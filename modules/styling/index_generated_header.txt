@@ -1,0 +1,3485 @@
+#pragma once
+
+class StyleMetrics
+{
+public:
+    StyleMetrics(CSSStyleDeclaration* decl);
+    StyleMetrics(StyleMetrics& ref);
+    StyleMetrics();
+
+    const short Inherit = 0x7FFD;
+
+    const short Initial = 0x7FFE;
+
+    const short Unset = 0x7FFF;
+
+    unsigned long length();
+
+    DOMString item(unsigned long index);
+
+    DOMString getPropertyValue(DOMString propertyID);
+
+    void setPropertyValue(DOMString propertyID, DOMString value);
+
+    const char& NoKeyword = 0x7FFA;
+
+    static CSSOMString keywordToString(short value);
+
+    static short keywordFromString(CSSOMString str);
+
+    static bool isKeyword(CSSOMString str);
+
+
+
+protected:
+
+};
+
+enum class Unit
+{
+    In,
+    Cm,
+    Mm,
+    Q,
+    Pt,
+    Pc,
+    Px,
+    Deg,
+    Grad,
+    Rad,
+    Turn""Percentages,
+    Rem,
+    Em,
+    Ex,
+    Ch,
+    Vw,
+    Vh,
+    Vmin,
+    Vmax,
+    Fr
+};
+
+class NumericValue
+{
+public:
+    NumericValue(double aValue, Unit aUnit);
+    NumericValue(NumericValue& ref);
+    NumericValue();
+
+    double value() const;
+    void setValue(double aValue);
+
+    Unit unit() const;
+    void setUnit(Unit aUnit);
+
+    double toPx(double relativeValue = 0);
+
+    CSSOMString toString();
+
+    static NumericValue fromString(CSSOMString str);
+
+
+
+protected:
+    double mValue;
+    Unit mUnit;
+
+};
+
+enum TimeUnit
+{
+    Minutes,
+    Seconds,
+    Milliseconds
+};
+
+class PeriodValue
+{
+public:
+    PeriodValue(unsigned long aNumber, TimeUnit aUnit);
+    PeriodValue(PeriodValue& ref);
+    PeriodValue();
+
+    double number() const;
+    void setNumber(double aNumber);
+
+    TimeUnit unit() const;
+    void setUnit(TimeUnit aUnit);
+
+    unsigned long toMilliseconds();
+
+    CSSOMString toString();
+
+    static PeriodValue fromString(CSSOMString str);
+
+
+
+protected:
+    double mNumber;
+    TimeUnit mUnit;
+
+};
+
+enum class ColorKeyword
+{
+    AliceBlue,
+    AntiqueWhite,
+    Aqua,
+    Aquamarine,
+    Azure,
+    Beige,
+    Bisque,
+    Black,
+    BlanchedAlmond,
+    Blue,
+    BlueViolet,
+    Brown,
+    BurlyWood,
+    CadetBlue,
+    Chartreuse,
+    Chocolate,
+    Coral,
+    CornflowerBlue,
+    Cornsilk,
+    Crimson,
+    Aqua,
+    DarkBlue,
+    DarkCyan,
+    DarkGoldenrod,
+    DarkGray,
+    DarkGreen,
+    DarkKhaki,
+    DarkMagenta,
+    DarkOliveGreen,
+    DarkOrange,
+    DarkOrchid,
+    DarkRed,
+    DarkSalmon,
+    DarkSeaGreen,
+    DarkSlateBlue,
+    DarkSlateGray,
+    DarkTurquoise,
+    DarkViolet,
+    DeepPink,
+    DeepSkyBlue,
+    DimGray,
+    DodgerBlue,
+    Firebrick,
+    FloralWhite,
+    ForestGreen,
+    Fuchsia,
+    Gainsboro,
+    GhostWhite,
+    Gold,
+    Goldenrod,
+    Gray,
+    Green,
+    GreenYellow,
+    Honeydew,
+    HotPink,
+    IndianRed,
+    Indigo,
+    Ivory,
+    Khaki,
+    Lavender,
+    LavenderBlush,
+    LawnGreen,
+    LemonChiffon,
+    LightBlue,
+    LightCoral,
+    LightCyan,
+    LightGoldenrodYellow,
+    LightGreen,
+    LightGray,
+    LightPink,
+    LightSalmon,
+    LightSeaGreen,
+    LightSkyBlue,
+    LightSlateGray,
+    LightSteelBlue,
+    LightYellow,
+    Lime,
+    LimeGreen,
+    Linen,
+    Fuchsia,
+    Maroon,
+    MediumAquamarine,
+    MediumBlue,
+    MediumOrchid,
+    MediumPurple,
+    MediumSeaGreen,
+    MediumSlateBlue,
+    MediumSpringGreen,
+    MediumTurquoise,
+    MediumVioletRed,
+    MidnightBlue,
+    MintCream,
+    MistyRose,
+    Moccasin,
+    NavajoWhite,
+    Navy,
+    OldLace,
+    Olive,
+    OliveDrab,
+    Orange,
+    OrangeRed,
+    Orchid,
+    PaleGoldenrod,
+    PaleGreen,
+    PaleTurquoise,
+    PaleVioletRed,
+    PapayaWhip,
+    PeachPuff,
+    Peru,
+    Pink,
+    Plum,
+    PowderBlue,
+    Purple,
+    Red,
+    RosyBrown,
+    RoyalBlue,
+    SaddleBrown,
+    Salmon,
+    SandyBrown,
+    SeaGreen,
+    SeaShell,
+    Sienna,
+    Silver,
+    SkyBlue,
+    SlateBlue,
+    SlateGray,
+    Snow,
+    SpringGreen,
+    SteelBlue,
+    Tan,
+    Teal,
+    Thistle,
+    Tomato,
+    Turquoise,
+    Violet,
+    Wheat,
+    White,
+    WhiteSmoke,
+    Yellow,
+    YellowGreen,
+    Specified
+};
+
+class ColorValue
+{
+public:
+    ColorValue(ColorKeyword aKeyword);
+    ColorValue(CSSOMString hex);
+    ColorValue(unsigned char aRed, unsigned char aGreen, unsigned char aBlue);
+    ColorValue(unsigned char aRed, unsigned char aGreen, unsigned char aBlue, unsigned char aAlpha);
+    ColorValue(ColorValue& ref);
+    ColorValue();
+
+    ColorKeyword keyword() const;
+    void setKeyword(ColorKeyword aKeyword);
+
+    long color() const;
+    void setColor(long aColor);
+
+    unsigned char red();
+    void setRed(unsigned char aRed);
+
+    unsigned char green();
+    void setGreen(unsigned char aGreen);
+
+    unsigned char blue();
+    void setBlue(unsigned char aBlue);
+
+    unsigned char alpha() const;
+    void setAlpha(unsigned char aAlpha);
+
+    CSSOMString toString();
+
+    static ColorValue fromString(CSSOMString str);
+
+
+
+protected:
+    ColorKeyword mKeyword;
+    long mColor;
+    unsigned char mAlpha;
+
+};
+
+class IntegerValue
+{
+public:
+    IntegerValue(short aKeyword  = 0);
+    IntegerValue(IntegerValue& ref);
+    IntegerValue();
+
+    short keyword() const;
+    void setKeyword(short aKeyword);
+
+    long value() const;
+    void setValue(long aValue);
+
+    CSSOMString toString();
+
+    static IntegerValue fromString(CSSOMString str);
+
+
+
+protected:
+    short mKeyword;
+    long mValue;
+
+};
+
+class FloatValue
+{
+public:
+    FloatValue(short aKeyword  = 0);
+    FloatValue(FloatValue& ref);
+    FloatValue();
+
+    short keyword() const;
+    void setKeyword(short aKeyword);
+
+    double value() const;
+    void setValue(double aValue);
+
+    CSSOMString toString();
+
+    static IntegerValue fromString(CSSOMString str);
+
+
+
+protected:
+    short mKeyword;
+    double mValue;
+
+};
+
+class StringValue
+{
+public:
+    StringValue(short aKeyword  = 0);
+    StringValue(StringValue& ref);
+    StringValue();
+
+    short keyword() const;
+    void setKeyword(short aKeyword);
+
+    CSSOMString value() const;
+    void setValue(CSSOMString aValue);
+
+    CSSOMString toString();
+
+    static StringValue fromString(CSSOMString str);
+
+
+
+protected:
+    short mKeyword;
+    CSSOMString mValue;
+
+};
+
+enum class AlignContent
+{
+    FlexStart,
+    FlexEnd,
+    Center,
+    SpaceBetween,
+    SpaceAround,
+    SpaceEvenly,
+    Stretch
+};
+
+enum class AlignItems
+{
+    FlexStart,
+    FlexEnd,
+    Center,
+    Baseline,
+    Stretch
+};
+
+enum class AlignSelf
+{
+    Auto,
+    FlexStart,
+    FlexEnd,
+    Center,
+    Baseline,
+    Stretch
+};
+
+enum class AnimationDirection
+{
+    Normal,
+    Reverse,
+    Alternate,
+    AlternateReverse
+};
+
+enum class AnimationFillMode
+{
+    None,
+    Forwards,
+    Backwards,
+    Both
+};
+
+enum class AnimationPlayState
+{
+    Paused,
+    Running
+};
+
+enum class AnimationTimingFunctionType
+{
+    Ease,
+    EaseIn,
+    EaseOut,
+    EaseInOut,
+    Linear,
+    StepStart,
+    StepEnd,
+    Steps,
+    CubicBezier,
+    
+};
+
+class CubicBezierFunction
+{
+public:
+    CubicBezierFunction(CubicBezierFunction& ref);
+    CubicBezierFunction();
+
+    double item(unsigned long index);
+
+    unsigned long length();
+
+    void add(double number);
+
+    void remove(unsigned long index);
+
+    CSSOMString toString();
+
+
+
+protected:
+
+};
+
+class AnimationTimingFunction
+{
+public:
+    AnimationTimingFunction(AnimationTimingFunctionType keyword);
+    AnimationTimingFunction(CubicBezierFunction aCubicBezierFunction);
+    AnimationTimingFunction(unsigned long aSteps);
+    AnimationTimingFunction(AnimationTimingFunction& ref);
+    AnimationTimingFunction();
+
+    AnimationTimingFunctionType type() const;
+    void setType(AnimationTimingFunctionType aType);
+
+    CubicBezierFunction& cubicBezierFunction();
+
+    unsigned long steps() const;
+    void setSteps(unsigned long aSteps);
+
+    CSSOMString toString();
+
+    static AnimationTimingFunction fromString(CSSOMString str);
+
+
+
+protected:
+    AnimationTimingFunctionType mType;
+    CubicBezierFunction mCubicBezierFunction;
+    unsigned long mSteps;
+
+};
+
+enum class BackfaceVisibility
+{
+    Visible,
+    Hidden
+};
+
+enum class BackgroundAttachmentAxis
+{
+    Fixed,
+    Scroll,
+    Local
+};
+
+enum class BackgroundClip
+{
+    PaddingBox,
+    BorderBox,
+    ContentBox
+};
+
+enum class BackgroundImageType
+{
+    Url,
+    None
+};
+
+class BackgroundImage
+{
+public:
+    BackgroundImage(USVString aUrl]);
+    BackgroundImage(BackgroundImage& ref);
+    BackgroundImage();
+
+    BackgroundImageType type() const;
+    void setType(BackgroundImageType aType);
+
+    USVString url() const;
+    void setUrl(USVString aUrl);
+
+    CSSOMString toString();
+
+    static BackgroundImage fromString(CSSOMString str);
+
+
+
+protected:
+    BackgroundImageType mType;
+    USVString mUrl;
+
+};
+
+enum class BackgroundOriginAxis
+{
+    PaddingBox,
+    BorderBox,
+    ContentBox
+};
+
+enum class BackgroundPositionType
+{
+    Left,
+    Center,
+    Right,
+    Top,
+    Bottom,
+    Number
+};
+
+class BackgroundPositionAxis
+{
+public:
+    BackgroundPositionAxis(BackgroundPositionType keyword);
+    BackgroundPositionAxis(NumericValue aNumber);
+    BackgroundPositionAxis(BackgroundPositionAxis& ref);
+    BackgroundPositionAxis();
+
+    BackgroundPositionType type() const;
+    void setType(BackgroundPositionType aType);
+
+    NumericValue& number();
+    void setNumber(NumericValue& aNumber);
+
+    CSSOMString toString();
+
+    static BackgroundPositionAxis fromString(CSSOMString str);
+
+
+
+protected:
+    BackgroundPositionType mType;
+    NumericValue mNumber;
+
+};
+
+enum class BackgroundRepeatAxisType
+{
+    NoRepeat,
+    Repeat,
+    RepeatX,
+    RepeatY,
+    Space,
+    Round,
+    Amount
+};
+
+class BackgroundRepeatAxis
+{
+public:
+    BackgroundRepeatAxis(BackgroundRepeatAxisType keyword);
+    BackgroundRepeatAxis(unsigned long aAmount);
+    BackgroundRepeatAxis(BackgroundRepeatAxis& ref);
+    BackgroundRepeatAxis();
+
+    BackgroundRepeatAxisType type() const;
+    void setType(BackgroundRepeatAxisType aType);
+
+    unsigned long amount() const;
+    void setAmount(unsigned long aAmount);
+
+    CSSOMString toString();
+
+
+
+protected:
+    BackgroundRepeatAxisType mType;
+    unsigned long mAmount;
+
+};
+
+class BackgroundRepeat
+{
+public:
+    BackgroundRepeat(short aKeyword);
+    BackgroundRepeat(BackgroundRepeatAxis aX);
+    BackgroundRepeat(BackgroundRepeatAxis aX, BackgroundRepeatAxis aY);
+    BackgroundRepeat(BackgroundRepeat& ref);
+    BackgroundRepeat();
+
+    short keyword() const;
+    void setKeyword(short aKeyword);
+
+    BackgroundRepeatAxis& x();
+    void setX(BackgroundRepeatAxis& aX);
+
+    BackgroundRepeatAxis& y();
+    void setY(BackgroundRepeatAxis& aY);
+
+    CSSOMString toString();
+
+    static BackgroundRepeat fromString(CSSOMString str);
+
+
+
+protected:
+    short mKeyword;
+    BackgroundRepeatAxis mX;
+    BackgroundRepeatAxis mY;
+
+};
+
+enum class BackgroundSizeType
+{
+    Auto,
+    Cover,
+    Contain,
+    Number
+};
+
+class BackgroundSizeAxis
+{
+public:
+    BackgroundSizeAxis(BackgroundSizeType keyword);
+    BackgroundSizeAxis(NumericValue aNumber);
+    BackgroundSizeAxis(BackgroundSizeAxis& ref);
+    BackgroundSizeAxis();
+
+    BackgroundSizeType type() const;
+    void setType(BackgroundSizeType aType);
+
+    NumericValue& number();
+    void setNumber(NumericValue& aNumber);
+
+    CSSOMString toString();
+
+
+
+protected:
+    BackgroundSizeType mType;
+    NumericValue mNumber;
+
+};
+
+class BackgroundSize
+{
+public:
+    BackgroundSize(short keyword);
+    BackgroundSize(BackgroundSizeAxis aX);
+    BackgroundSize(BackgroundSizeAxis aX, BackgroundSizeAxis aY);
+    BackgroundSize(BackgroundSize& ref);
+    BackgroundSize();
+
+    short aKeyword() const;
+    void setAKeyword(short aAKeyword);
+
+    BackgroundSizeAxis& x();
+    void setX(BackgroundSizeAxis& aX);
+
+    BackgroundSizeAxis& y();
+    void setY(BackgroundSizeAxis& aY);
+
+    CSSOMString toString();
+
+    static BackgroundSize fromString(CSSOMString str);
+
+
+
+protected:
+    short mAKeyword;
+    BackgroundSizeAxis mX;
+    BackgroundSizeAxis mY;
+
+};
+
+enum class BorderStyle
+{
+    None,
+    Hidden,
+    Dotted,
+    Dashed,
+    Solid,
+    Double,
+    Groove,
+    Ridge,
+    Inset,
+    Outset
+};
+
+class BorderRadius
+{
+public:
+    BorderRadius(short aKeyword);
+    BorderRadius(NumericValue aVertical);
+    BorderRadius(NumericValue aVertical, NumericValue aHorizontal);
+    BorderRadius(BorderRadius& ref);
+    BorderRadius();
+
+    short keyword() const;
+    void setKeyword(short aKeyword);
+
+    NumericValue& vertical();
+    void setVertical(NumericValue& aVertical);
+
+    NumericValue& horizontal();
+    void setHorizontal(NumericValue& aHorizontal);
+
+    CSSOMString toString();
+
+    static BorderRadius fromString(CSSOMString str);
+
+
+
+protected:
+    short mKeyword;
+    NumericValue mVertical;
+    NumericValue mHorizontal;
+
+};
+
+enum class BorderCollapse
+{
+    Collapse,
+    Separate
+};
+
+typedef BorderRadius BorderSpacing;
+
+enum class BoxSizing
+{
+    ContentBox,
+    BorderBox
+};
+
+class Shadow
+{
+public:
+    Shadow(bool aInset, long aOffsetX, long aOffsetY, unsigned long aBlur, long aStretch, ColorValue aColor);
+    Shadow(Shadow& ref);
+    Shadow();
+
+    bool& inset();
+    void setInset(bool& aInset);
+
+    long offsetX() const;
+    void setOffsetX(long aOffsetX);
+
+    long offsetY() const;
+    void setOffsetY(long aOffsetY);
+
+    unsigned long blur() const;
+    void setBlur(unsigned long aBlur);
+
+    long stretch() const;
+    void setStretch(long aStretch);
+
+    ColorValue& color();
+    void setColor(ColorValue& aColor);
+
+
+
+protected:
+    bool mInset;
+    long mOffsetX;
+    long mOffsetY;
+    unsigned long mBlur;
+    long mStretch;
+    ColorValue mColor;
+
+};
+
+class ShadowList
+{
+public:
+    ShadowList(ShadowList& ref);
+    ShadowList();
+
+    Shadow* item(unsigned long index);
+
+    unsigned long length();
+
+    void add(Shadow shadow);
+
+    void remove(unsigned long index);
+
+
+
+protected:
+
+};
+
+enum class BoxShadowType
+{
+    None,
+    Specified
+};
+
+class BoxShadow
+{
+public:
+    BoxShadow(BoxShadow& ref);
+    BoxShadow();
+
+    BoxShadowType type() const;
+    void setType(BoxShadowType aType);
+
+    ShadowList& shadows();
+
+    CSSOMString toString();
+
+    static BoxShadow fromString(CSSOMString str);
+
+
+
+protected:
+    BoxShadowType mType;
+    ShadowList mShadows;
+
+};
+
+enum class CaptionSide
+{
+    Top,
+    Bottom,
+    Left,
+    Right
+};
+
+enum class Clear
+{
+    None,
+    Left,
+    Right,
+    Both
+};
+
+enum class ClipType
+{
+    Auto,
+    Specified
+};
+
+class Rect
+{
+public:
+    Rect(long aY1, long aX2, long aY2, long aX1);
+    Rect(Rect& ref);
+    Rect();
+
+    const long Auto = -1;
+
+    long y1() const;
+    void setY1(long aY1);
+
+    long x2() const;
+    void setX2(long aX2);
+
+    long y2() const;
+    void setY2(long aY2);
+
+    long x1() const;
+    void setX1(long aX1);
+
+
+
+protected:
+    long mY1;
+    long mX2;
+    long mY2;
+    long mX1;
+
+};
+
+class Clip
+{
+public:
+    Clip(Rect aRect);
+    Clip(Clip& ref);
+    Clip();
+
+    ClipType type() const;
+    void setType(ClipType aType);
+
+    Rect& rect();
+    void setRect(Rect& aRect);
+
+    CSSOMString toString();
+
+    static Clip fromString(CSSOMString str);
+
+
+
+protected:
+    ClipType mType;
+    Rect mRect;
+
+};
+
+enum class ColumnSpan
+{
+    One,
+    All
+};
+
+typedef BorderStyle ColumnRuleStyle;
+
+enum class CounterType
+{
+    None,
+    Specified
+};
+
+class Counter
+{
+public:
+    Counter(CSSOMString identifer);
+    Counter(Counter& ref);
+    Counter();
+
+    CounterType type() const;
+    void setType(CounterType aType);
+
+    CSSOMString identifer() const;
+    void setIdentifer(CSSOMString aIdentifer);
+
+    CSSOMString toString();
+
+    static Counter fromString(CSSOMString str);
+
+
+
+protected:
+    CounterType mType;
+    CSSOMString mIdentifer;
+
+};
+
+enum class CursorVariant
+{
+    Auto,
+    Crosshair,
+    Default,
+    EResize,
+    Help,
+    Move,
+    NResize,
+    NeResize,
+    NwResize,
+    Pointer,
+    Progress,
+    SResize,
+    SeResize,
+    SwResize,
+    Text,
+    WResize,
+    Wait,
+    Url
+};
+
+class Cursor
+{
+public:
+    Cursor(CursorVariant aVariant);
+    Cursor(CSSOMString aUrl);
+    Cursor(Cursor& ref);
+    Cursor();
+
+    CursorVariant variant() const;
+    void setVariant(CursorVariant aVariant);
+
+    CSSOMString url() const;
+    void setUrl(CSSOMString aUrl);
+
+    CSSOMString toString();
+
+    static Cursor fromString(CSSOMString str);
+
+
+
+protected:
+    CursorVariant mVariant;
+    CSSOMString mUrl;
+
+};
+
+enum class Direction
+{
+    Ltr,
+    Rtl
+};
+
+enum class Display
+{
+    Block,
+    Inline,
+    Flow,
+    FlowRoot,
+    Table,
+    Flex,
+    Grid,
+    ListItem,
+    TableRowGroup,
+    TableHeaderGroup,
+    TableFooterGroup,
+    TableRow,
+    TableCell,
+    TableColumnGroup,
+    TableColumn,
+    TableCaption,
+    Contents,
+    None,
+    InlineBlock,
+    InlineTable,
+    InlineFlex,
+    InlineGrid
+};
+
+enum class EmptyCells
+{
+    Show,
+    Hide
+};
+
+enum class FlexBasisType
+{
+    Auto,
+    Fill,
+    MaxContent,
+    MinContent,
+    FitContent,
+    Content,
+    Number
+};
+
+class FlexBasis
+{
+public:
+    FlexBasis(FlexBasisType keyword);
+    FlexBasis(NumericValue aNumber);
+    FlexBasis(FlexBasis& ref);
+    FlexBasis();
+
+    FlexBasisType type() const;
+    void setType(FlexBasisType aType);
+
+    NumericValue& number();
+    void setNumber(NumericValue& aNumber);
+
+    CSSOMString toString();
+
+    static FlexBasis fromString(CSSOMString str);
+
+
+
+protected:
+    FlexBasisType mType;
+    NumericValue mNumber;
+
+};
+
+enum class FlexDirection
+{
+    Row,
+    RowReverse,
+    Column,
+    ColumnReverse
+};
+
+enum class FlexWrap
+{
+    Nowrap,
+    Wrap,
+    WrapReverse
+};
+
+enum class Float
+{
+    Left,
+    Right,
+    None
+};
+
+enum class FontOptionKeywordValue
+{
+    NumberInsteadOfKeyword,
+    On,
+    Off
+};
+
+class OpenTypeFontOption
+{
+public:
+    OpenTypeFontOption(CSSOMString id, FontOptionKeywordValue keyword);
+    OpenTypeFontOption(CSSOMString id, long num);
+    OpenTypeFontOption(OpenTypeFontOption& ref);
+    OpenTypeFontOption();
+
+    CSSOMString optionID() const;
+    void setOptionID(CSSOMString aOptionID);
+
+    FontOptionKeywordValue keywordValue() const;
+    void setKeywordValue(FontOptionKeywordValue aKeywordValue);
+
+    long value() const;
+    void setValue(long aValue);
+
+
+
+protected:
+    CSSOMString mOptionID;
+    FontOptionKeywordValue mKeywordValue;
+    long mValue;
+
+};
+
+class OpenTypeFontOptionList
+{
+public:
+    OpenTypeFontOptionList(OpenTypeFontOptionList& ref);
+    OpenTypeFontOptionList();
+
+    OpenTypeFontOption* item(unsigned long index);
+
+    unsigned long length();
+
+    void add(OpenTypeFontOption option);
+
+    void remove(unsigned long index);
+
+
+
+protected:
+
+};
+
+enum class FontFeatureSettingsType
+{
+    Specified
+};
+
+class FontFeatureSettings
+{
+public:
+    FontFeatureSettings(FontFeatureSettingsType keyword);
+    FontFeatureSettings(FontFeatureSettings& ref);
+    FontFeatureSettings();
+
+    FontFeatureSettingsType type() const;
+
+    OpenTypeFontOptionList& options();
+
+    CSSOMString toString();
+
+    static FontFeatureSettings fromString(CSSOMString str);
+
+
+
+protected:
+    FontFeatureSettingsType mType;
+    OpenTypeFontOptionList mOptions;
+
+};
+
+enum class FontKerning
+{
+    Auto,
+    Normal,
+    None
+};
+
+enum class FontStretch
+{
+    UltraCondensed,
+    ExtraCondensed,
+    Condensed,
+    SemiCondensed,
+    Normal,
+    SemiExpanded,
+    Expanded,
+    ExtraExpanded,
+    UltraExpanded
+};
+
+enum class FontStyle
+{
+    Normal,
+    Italic,
+    Oblique
+};
+
+enum class FontVariant
+{
+    Normal,
+    SmallCaps
+};
+
+enum class FontWeightType
+{
+    Normal,
+    Bold,
+    Bolder,
+    Lighter,
+    Number
+};
+
+class FontWeight
+{
+public:
+    FontWeight(FontWeightType keyword);
+    FontWeight(unsigned long aNumber);
+    FontWeight(FontWeight& ref);
+    FontWeight();
+
+    FontWeightType type() const;
+    void setType(FontWeightType aType);
+
+    unsigned long number() const;
+    void setNumber(unsigned long aNumber);
+
+    CSSOMString toString();
+
+    static FontWeight fromString(CSSOMString str);
+
+
+
+protected:
+    FontWeightType mType;
+    unsigned long mNumber;
+
+};
+
+enum class Hyphens
+{
+    None,
+    Manual,
+    Auto
+};
+
+enum class JustifyContent
+{
+    FlexStart,
+    FlexEnd,
+    Center,
+    SpaceBetween,
+    SpaceAround,
+    SpaceEvenly,
+    Stretch
+};
+
+enum class JustifyItems
+{
+    FlexStart,
+    FlexEnd,
+    Center,
+    Baseline,
+    Stretch
+};
+
+enum class JustifySelf
+{
+    Auto,
+    FlexStart,
+    FlexEnd,
+    Center,
+    Baseline,
+    Stretch
+};
+
+enum class LetterSpacingType
+{
+    Normal,
+    Number
+};
+
+class LetterSpacing
+{
+public:
+    LetterSpacing(LetterSpacingType keyword);
+    LetterSpacing(NumericValue aNumber);
+    LetterSpacing(LetterSpacing& ref);
+    LetterSpacing();
+
+    LetterSpacingType type() const;
+    void setType(LetterSpacingType aType);
+
+    NumericValue& number();
+    void setNumber(NumericValue& aNumber);
+
+    CSSOMString toString();
+
+    static LetterSpacing fromString(CSSOMString str);
+
+
+
+protected:
+    LetterSpacingType mType;
+    NumericValue mNumber;
+
+};
+
+typedef LetterSpacing LineHeight;
+
+enum class LineBreak
+{
+    Auto,
+    Loose,
+    Normal,
+    Strict
+};
+
+typedef BackgroundImage ListStyleImage;
+
+enum class ListStylePosition
+{
+    Inside,
+    Outside
+};
+
+enum class ListStyleType
+{
+    Circle,
+    Disc,
+    Square,
+    Armenian,
+    Decimal,
+    DecimalLeadingZero,
+    Georgian,
+    LowerAlpha,
+    LowerGreek,
+    LowerLatin,
+    LowerRoman,
+    UpperAlpha,
+    UpperLatin,
+    UpperRoman,
+    None
+};
+
+typedef BorderStyle OutlineStyle;
+
+enum class OverflowWrap
+{
+    Normal,
+    BreakWord
+};
+
+enum class Overflow
+{
+    Auto,
+    Hidden,
+    Scroll,
+    Visible
+};
+
+enum class PageBreakAfter
+{
+    Always,
+    Auto,
+    Avoid,
+    Left,
+    Right
+};
+
+typedef PageBreakAfter PageBreakBefore;
+
+enum class PageBreakInside
+{
+    Auto,
+    Avoid
+};
+
+enum class PerspectiveType
+{
+    None,
+    Number
+};
+
+class Perspective
+{
+public:
+    Perspective(PerspectiveType keyword);
+    Perspective(NumericValue aNumber);
+    Perspective(Perspective& ref);
+    Perspective();
+
+    PerspectiveType type() const;
+    void setType(PerspectiveType aType);
+
+    NumericValue& number();
+    void setNumber(NumericValue& aNumber);
+
+    CSSOMString toString();
+
+    static NumericValue fromString(CSSOMString str);
+
+
+
+protected:
+    PerspectiveType mType;
+    NumericValue mNumber;
+
+};
+
+enum class PerspectiveOriginType
+{
+    Left,
+    Center,
+    Right,
+    Top,
+    Bottom,
+    Number
+};
+
+class PerspectiveOriginAxis
+{
+public:
+    PerspectiveOriginAxis(PerspectiveOriginType keyword);
+    PerspectiveOriginAxis(NumericValue aNumber);
+    PerspectiveOriginAxis(PerspectiveOriginAxis& ref);
+    PerspectiveOriginAxis();
+
+    PerspectiveOriginType type() const;
+    void setType(PerspectiveOriginType aType);
+
+    NumericValue& number();
+    void setNumber(NumericValue& aNumber);
+
+    CSSOMString toString();
+
+
+
+protected:
+    PerspectiveOriginType mType;
+    NumericValue mNumber;
+
+};
+
+class PerspectiveOrigin
+{
+public:
+    PerspectiveOrigin(short keyword);
+    PerspectiveOrigin(PerspectiveOriginAxis aX);
+    PerspectiveOrigin(PerspectiveOriginAxis aX, PerspectiveOriginAxis aY);
+    PerspectiveOrigin(PerspectiveOrigin& ref);
+    PerspectiveOrigin();
+
+    short aKeyword() const;
+    void setAKeyword(short aAKeyword);
+
+    PerspectiveOriginAxis& x();
+    void setX(PerspectiveOriginAxis& aX);
+
+    PerspectiveOriginAxis& y();
+    void setY(PerspectiveOriginAxis& aY);
+
+    CSSOMString toString();
+
+    static PerspectiveOrigin fromString(CSSOMString str);
+
+
+
+protected:
+    short mAKeyword;
+    PerspectiveOriginAxis mX;
+    PerspectiveOriginAxis mY;
+
+};
+
+enum class Position
+{
+    Absolute,
+    Fixed,
+    Relative,
+    Static,
+    Sticky
+};
+
+enum class QuotesType
+{
+    None,
+    Specified
+};
+
+class Quotes
+{
+public:
+    Quotes(QuotesType keyword);
+    Quotes(signed char aAfter);
+    Quotes(signed char aAfter, signed char aBefore);
+    Quotes(Quotes& ref);
+    Quotes();
+
+    QuotesType aType() const;
+    void setAType(QuotesType aAType);
+
+    signed char after() const;
+    void setAfter(signed char aAfter);
+
+    signed char before() const;
+    void setBefore(signed char aBefore);
+
+    CSSOMString toString();
+
+    static Quotes fromString(CSSOMString str);
+
+
+
+protected:
+    QuotesType mAType;
+    signed char mAfter;
+    signed char mBefore;
+
+};
+
+enum class Resize
+{
+    None,
+    Both,
+    Horizontal,
+    Vertical
+};
+
+enum class SizeType
+{
+    Left,
+    Center,
+    Right,
+    Top,
+    Bottom,
+    Number
+};
+
+class SizeOf
+{
+public:
+    SizeOf(SizeType keyword);
+    SizeOf(NumericValue aNumber);
+    SizeOf(SizeOf& ref);
+    SizeOf();
+
+    SizeType type() const;
+    void setType(SizeType aType);
+
+    NumericValue& number();
+    void setNumber(NumericValue& aNumber);
+
+    CSSOMString toString();
+
+
+
+protected:
+    SizeType mType;
+    NumericValue mNumber;
+
+};
+
+class Size
+{
+public:
+    Size(short keyword);
+    Size(SizeOf aWidth);
+    Size(SizeOf aWidth, SizeOf aHeight);
+    Size(Size& ref);
+    Size();
+
+    short aKeyword() const;
+    void setAKeyword(short aAKeyword);
+
+    SizeOf& width();
+    void setWidth(SizeOf& aWidth);
+
+    SizeOf& height();
+    void setHeight(SizeOf& aHeight);
+
+    CSSOMString toString();
+
+    static Size fromString(CSSOMString str);
+
+
+
+protected:
+    short mAKeyword;
+    SizeOf mWidth;
+    SizeOf mHeight;
+
+};
+
+enum class TableLayout
+{
+    Auto,
+    Fixed
+};
+
+enum class TextAlign
+{
+    Center,
+    Justify,
+    Left,
+    Right,
+    Start,
+    End
+};
+
+enum class TextDecoration
+{
+    LineThrough,
+    Overline,
+    Underline,
+    None
+};
+
+enum class TextOverflow
+{
+    Clip,
+    Ellipsis
+};
+
+typedef BoxShadow TextShadow;
+
+enum class TextTransform
+{
+    Capitalize,
+    Lowercase,
+    Uppercase,
+    None
+};
+
+class TransformOrigin
+{
+public:
+    TransformOrigin(short keyword);
+    TransformOrigin(PerspectiveOriginAxis aX);
+    TransformOrigin(PerspectiveOriginAxis aX, PerspectiveOriginAxis aY);
+    TransformOrigin(PerspectiveOriginAxis aX, PerspectiveOriginAxis aY, PerspectiveOriginAxis aZ);
+    TransformOrigin(TransformOrigin& ref);
+    TransformOrigin();
+
+    short aKeyword() const;
+    void setAKeyword(short aAKeyword);
+
+    PerspectiveOriginAxis& x();
+    void setX(PerspectiveOriginAxis& aX);
+
+    PerspectiveOriginAxis& y();
+    void setY(PerspectiveOriginAxis& aY);
+
+    PerspectiveOriginAxis& z();
+    void setZ(PerspectiveOriginAxis& aZ);
+
+    CSSOMString toString();
+
+    static TransformOrigin fromString(CSSOMString str);
+
+
+
+protected:
+    short mAKeyword;
+    PerspectiveOriginAxis mX;
+    PerspectiveOriginAxis mY;
+    PerspectiveOriginAxis mZ;
+
+};
+
+enum class TransformStyle
+{
+    Flat,
+    Preserve3d
+};
+
+enum class TransformType
+{
+    None,
+    Specified
+};
+
+class TransformModifier
+{
+public:
+    TransformModifier(unsigned short type);
+    TransformModifier(TransformModifier& ref);
+    TransformModifier();
+
+    const unsigned short TRANSFORM_MATRIX = 1;
+
+    const unsigned short TRANSFORM_ROTATE = 2;
+
+    const unsigned short TRANSFORM_SCALE = 3;
+
+    const unsigned short TRANSFORM_SCALE_X = 4;
+
+    const unsigned short TRANSFORM_SCALE_Y = 5;
+
+    const unsigned short TRANSFORM_SKEW_X = 6;
+
+    const unsigned short TRANSFORM_SKEW_Y = 7;
+
+    const unsigned short TRANSFORM_TRANSLATE = 8;
+
+    const unsigned short TRANSFORM_TRANSLATE_X = 9;
+
+    const unsigned short TRANSFORM_TRANSLATE_Y = 10;
+
+    unsigned short transformType() const;
+
+    Transform* owner() const;
+
+    CSSOMString toString();
+
+    void remove();
+
+
+
+protected:
+    unsigned short mTransformType;
+    Transform* mOwner;
+
+};
+
+class TransformMatrix : public TransformModifier
+{
+public:
+    TransformMatrix(double aA, double aB, double aC, double aD, double aTx, double aTy);
+    TransformMatrix(TransformMatrix& ref);
+    TransformMatrix();
+
+    double a() const;
+    void setA(double aA);
+
+    double b() const;
+    void setB(double aB);
+
+    double c() const;
+    void setC(double aC);
+
+    double d() const;
+    void setD(double aD);
+
+    double tx() const;
+    void setTx(double aTx);
+
+    double ty() const;
+    void setTy(double aTy);
+
+    static TransformMatrix fromString(CSSOMString str);
+
+
+
+protected:
+    double mA;
+    double mB;
+    double mC;
+    double mD;
+    double mTx;
+    double mTy;
+
+};
+
+class TransformRotate : public TransformModifier
+{
+public:
+    TransformRotate(NumericValue aAngle);
+    TransformRotate(TransformRotate& ref);
+    TransformRotate();
+
+    NumericValue& angle();
+    void setAngle(NumericValue& aAngle);
+
+    static TransformRotate fromString(CSSOMString str);
+
+
+
+protected:
+    NumericValue mAngle;
+
+};
+
+class TransformScale : public TransformModifier
+{
+public:
+    TransformScale(double aSx, double aSy = 0);
+    TransformScale(TransformScale& ref);
+    TransformScale();
+
+    double sx() const;
+    void setSx(double aSx);
+
+    double sy() const;
+    void setSy(double aSy);
+
+    static TransformScale fromString(CSSOMString str);
+
+
+
+protected:
+    double mSx;
+    double mSy;
+
+};
+
+class TransformScaleX : public TransformModifier
+{
+public:
+    TransformScaleX(double aSx);
+    TransformScaleX(TransformScaleX& ref);
+    TransformScaleX();
+
+    double sx() const;
+    void setSx(double aSx);
+
+    static TransformScaleX fromString(CSSOMString str);
+
+
+
+protected:
+    double mSx;
+
+};
+
+class TransformScaleY : public TransformModifier
+{
+public:
+    TransformScaleY(double aSy);
+    TransformScaleY(TransformScaleY& ref);
+    TransformScaleY();
+
+    double sy() const;
+    void setSy(double aSy);
+
+    static TransformScaleY fromString(CSSOMString str);
+
+
+
+protected:
+    double mSy;
+
+};
+
+class TransformSkewX : public TransformModifier
+{
+public:
+    TransformSkewX(NumericValue aAngle);
+    TransformSkewX(TransformSkewX& ref);
+    TransformSkewX();
+
+    NumericValue& angle();
+    void setAngle(NumericValue& aAngle);
+
+    static TransformSkewX fromString(CSSOMString str);
+
+
+
+protected:
+    NumericValue mAngle;
+
+};
+
+class TransformSkewY : public TransformModifier
+{
+public:
+    TransformSkewY(NumericValue aAngle);
+    TransformSkewY(TransformSkewY& ref);
+    TransformSkewY();
+
+    NumericValue& angle();
+    void setAngle(NumericValue& aAngle);
+
+    static TransformSkewY fromString(CSSOMString str);
+
+
+
+protected:
+    NumericValue mAngle;
+
+};
+
+class TransformTranslate : public TransformModifier
+{
+public:
+    TransformTranslate(double aTx, double aTy = 0);
+    TransformTranslate(TransformTranslate& ref);
+    TransformTranslate();
+
+    double tx() const;
+    void setTx(double aTx);
+
+    double ty() const;
+    void setTy(double aTy);
+
+    static TransformTranslate fromString(CSSOMString str);
+
+
+
+protected:
+    double mTx;
+    double mTy;
+
+};
+
+class TransformTranslateX : public TransformModifier
+{
+public:
+    TransformTranslateX(double aTx);
+    TransformTranslateX(TransformTranslateX& ref);
+    TransformTranslateX();
+
+    double tx() const;
+    void setTx(double aTx);
+
+    static TransformTranslateX fromString(CSSOMString str);
+
+
+
+protected:
+    double mTx;
+
+};
+
+class TransformTranslateY : public TransformModifier
+{
+public:
+    TransformTranslateY(double aTy);
+    TransformTranslateY(TransformTranslateY& ref);
+    TransformTranslateY();
+
+    double ty() const;
+    void setTy(double aTy);
+
+    static TransformTranslateY fromString(CSSOMString str);
+
+
+
+protected:
+    double mTy;
+
+};
+
+class TransformList
+{
+public:
+    TransformList(TransformList& ref);
+    TransformList();
+
+    TransformModifier* item(unsigned long index);
+
+    unsigned long length();
+
+    void appendModifier(TransformModifier* modifier);
+
+    TransformModifier* removeModifier(unsigned long index);
+
+
+
+protected:
+
+};
+
+class Transform
+{
+public:
+    Transform(TransformType keyword);
+    Transform(Transform& ref);
+    Transform();
+
+    TransformType type() const;
+    void setType(TransformType aType);
+
+    TransformList& modifiers();
+
+    CSSOMString toString();
+
+    static Transform fromString(CSSOMString str);
+
+
+
+protected:
+    TransformType mType;
+    TransformList mModifiers;
+
+};
+
+enum class TransitionPropertyType
+{
+    None,
+    All,
+    Specified
+};
+
+class PropertyList
+{
+public:
+    PropertyList(PropertyList& ref);
+    PropertyList();
+
+    CSSOMString item(unsigned long index);
+
+    unsigned long length();
+
+    void add(CSSOMString property);
+
+    void remove(unsigned long index);
+
+    CSSOMString toString();
+
+
+
+protected:
+
+};
+
+class TransitionProperty
+{
+public:
+    TransitionProperty(TransitionPropertyType keyword);
+    TransitionProperty(TransitionProperty& ref);
+    TransitionProperty();
+
+    TransitionPropertyType type() const;
+    void setType(TransitionPropertyType aType);
+
+    PropertyList& properties();
+    void setProperties(PropertyList& aProperties);
+
+
+
+protected:
+    TransitionPropertyType mType;
+    PropertyList mProperties;
+
+};
+
+typedef AnimationTimingFunction TransitionTimingFunction;
+
+enum class UnicodeBidi
+{
+    Normal,
+    Embed,
+    BidiOverride
+};
+
+enum class VerticalAlignType
+{
+    Baseline,
+    Bottom,
+    Middle,
+    Sub,
+    Super,
+    TextBottom,
+    TextTop,
+    top
+};
+
+class VerticalAlign
+{
+public:
+    VerticalAlign(VerticalAlignType keyword);
+    VerticalAlign(NumericValue aNumber);
+    VerticalAlign(VerticalAlign& ref);
+    VerticalAlign();
+
+    VerticalAlignType type() const;
+    void setType(VerticalAlignType aType);
+
+    NumericValue& number();
+    void setNumber(NumericValue& aNumber);
+
+    CSSOMString toString();
+
+    static VerticalAlign fromString(CSSOMString str);
+
+
+
+protected:
+    VerticalAlignType mType;
+    NumericValue mNumber;
+
+};
+
+enum class Visibility
+{
+    Visible,
+    Hidden,
+    Collapse
+};
+
+enum class WhiteSpace
+{
+    Normal,
+    Nowrap,
+    Pre,
+    PreLine,
+    PreWrap
+};
+
+typedef LineBreak WordBreak;
+
+typedef LetterSpacing WordSpacing;
+
+enum class WordWrap
+{
+    Normal,
+    BreakWord
+};
+
+enum class TextAnchor
+{
+    Start,
+    Middle,
+    End
+};
+
+enum class FillRule
+{
+    Nonzero,
+    Evenodd
+};
+
+typedef BackgroundImage Marker;
+
+enum class RadiusAxisType
+{
+    None,
+    Number
+};
+
+class RadiusAxis
+{
+public:
+    RadiusAxis(RadiusAxisType keyword);
+    RadiusAxis(NumericValue aNumber);
+    RadiusAxis(RadiusAxis& ref);
+    RadiusAxis();
+
+    RadiusAxisType type() const;
+    void setType(RadiusAxisType aType);
+
+    NumericValue& number();
+    void setNumber(NumericValue& aNumber);
+
+    CSSOMString toString();
+
+    static RadiusAxis fromString(CSSOMString str);
+
+
+
+protected:
+    RadiusAxisType mType;
+    NumericValue mNumber;
+
+};
+
+enum class PathDataType
+{
+    None,
+    Specified
+};
+
+class PathData
+{
+public:
+    PathData(PathDataType keyword);
+    PathData(CSSOMString aPath);
+    PathData(PathData& ref);
+    PathData();
+
+    PathDataType type() const;
+    void setType(PathDataType aType);
+
+    CSSOMString path() const;
+    void setPath(CSSOMString aPath);
+
+    CSSOMString toString();
+
+    static PathData fromString(CSSOMString str);
+
+
+
+protected:
+    PathDataType mType;
+    CSSOMString mPath;
+
+};
+
+class Dasharray
+{
+public:
+    Dasharray(Dasharray& ref);
+    Dasharray();
+
+    NumericValue item(unsigned long index);
+
+    unsigned long length();
+
+    void add(NumericValue property);
+
+    void remove(unsigned long index);
+
+    CSSOMString toString();
+
+    static Dasharray fromString(CSSOMString str);
+
+
+
+protected:
+
+};
+
+enum class StrokeLinecap
+{
+    Butt,
+    Round,
+    Square
+};
+
+enum class StrokeLinejoin
+{
+    Miter,
+    MiterClip,
+    Round,
+    Bevel,
+    Arcs
+};
+
+class ElementStyleMetrics : public StyleMetrics
+{
+public:
+    ElementStyleMetrics(CSSStyleDeclaration* decl);
+    ElementStyleMetrics(ElementStyleMetrics& ref);
+    ElementStyleMetrics();
+
+    const AnimationIterationCount& Infinite = -1;
+
+    AlignContent alignContent() const;
+    void setAlignContent(AlignContent aAlignContent);
+
+    AlignItems alignItems() const;
+    void setAlignItems(AlignItems aAlignItems);
+
+    AlignSelf alignSelf() const;
+    void setAlignSelf(AlignSelf aAlignSelf);
+
+    PeriodValue& animationDelay();
+    void setAnimationDelay(PeriodValue& aAnimationDelay);
+
+    AnimationDirection animationDirection() const;
+    void setAnimationDirection(AnimationDirection aAnimationDirection);
+
+    PeriodValue& animationDuration();
+    void setAnimationDuration(PeriodValue& aAnimationDuration);
+
+    AnimationFillMode animationFillMode() const;
+    void setAnimationFillMode(AnimationFillMode aAnimationFillMode);
+
+    IntegerValue& animationIterationCount();
+    void setAnimationIterationCount(IntegerValue& aAnimationIterationCount);
+
+    StringValue& animationName();
+    void setAnimationName(StringValue& aAnimationName);
+
+    AnimationPlayState animationPlayState() const;
+    void setAnimationPlayState(AnimationPlayState aAnimationPlayState);
+
+    AnimationTimingFunction& animationTimingFunction();
+    void setAnimationTimingFunction(AnimationTimingFunction& aAnimationTimingFunction);
+
+    BackfaceVisibility backfaceVisibility() const;
+    void setBackfaceVisibility(BackfaceVisibility aBackfaceVisibility);
+
+    BackgroundAttachment& backgroundAttachment();
+    void setBackgroundAttachment(BackgroundAttachment& aBackgroundAttachment);
+
+    BackgroundClip backgroundClip() const;
+    void setBackgroundClip(BackgroundClip aBackgroundClip);
+
+    ColorValue& backgroundColor();
+    void setBackgroundColor(ColorValue& aBackgroundColor);
+
+    BackgroundImage& backgroundImage();
+    void setBackgroundImage(BackgroundImage& aBackgroundImage);
+
+    BackgroundOriginAxis backgroundOriginX() const;
+    void setBackgroundOriginX(BackgroundOriginAxis aBackgroundOriginX);
+
+    BackgroundOriginAxis backgroundOriginY() const;
+    void setBackgroundOriginY(BackgroundOriginAxis aBackgroundOriginY);
+
+    BackgroundPositionAxis& backgroundPositionX();
+    void setBackgroundPositionX(BackgroundPositionAxis& aBackgroundPositionX);
+
+    BackgroundPositionAxis& backgroundPositionY();
+    void setBackgroundPositionY(BackgroundPositionAxis& aBackgroundPositionY);
+
+    BackgroundRepeat& backgroundRepeat();
+    void setBackgroundRepeat(BackgroundRepeat& aBackgroundRepeat);
+
+    BackgroundSize& backgroundSize();
+    void setBackgroundSize(BackgroundSize& aBackgroundSize);
+
+    ColorValue& borderBottomColor();
+    void setBorderBottomColor(ColorValue& aBorderBottomColor);
+
+    BorderRadius& borderBottomLeftRadius();
+    void setBorderBottomLeftRadius(BorderRadius& aBorderBottomLeftRadius);
+
+    BorderRadius& borderBottomRightRadius();
+    void setBorderBottomRightRadius(BorderRadius& aBorderBottomRightRadius);
+
+    BorderStyle borderBottomStyle() const;
+    void setBorderBottomStyle(BorderStyle aBorderBottomStyle);
+
+    NumericValue& borderBottomWidth();
+    void setBorderBottomWidth(NumericValue& aBorderBottomWidth);
+
+    BorderCollapse borderCollapse() const;
+    void setBorderCollapse(BorderCollapse aBorderCollapse);
+
+    ColorValue& borderLeftColor();
+    void setBorderLeftColor(ColorValue& aBorderLeftColor);
+
+    BorderStyle borderLeftStyle() const;
+    void setBorderLeftStyle(BorderStyle aBorderLeftStyle);
+
+    NumericValue& borderLeftWidth();
+    void setBorderLeftWidth(NumericValue& aBorderLeftWidth);
+
+    ColorValue& borderRightColor();
+    void setBorderRightColor(ColorValue& aBorderRightColor);
+
+    BorderStyle borderRightStyle() const;
+    void setBorderRightStyle(BorderStyle aBorderRightStyle);
+
+    NumericValue& borderRightWidth();
+    void setBorderRightWidth(NumericValue& aBorderRightWidth);
+
+    BorderSpacing& borderSpacing();
+    void setBorderSpacing(BorderSpacing& aBorderSpacing);
+
+    BorderStyle borderTopColor() const;
+    void setBorderTopColor(BorderStyle aBorderTopColor);
+
+    BorderRadius& borderTopLeftRadius();
+    void setBorderTopLeftRadius(BorderRadius& aBorderTopLeftRadius);
+
+    BorderRadius& borderTopRightRadius();
+    void setBorderTopRightRadius(BorderRadius& aBorderTopRightRadius);
+
+    BorderStyle borderTopStyle() const;
+    void setBorderTopStyle(BorderStyle aBorderTopStyle);
+
+    NumericValue& borderTopWidth();
+    void setBorderTopWidth(NumericValue& aBorderTopWidth);
+
+    NumericValue& bottom();
+    void setBottom(NumericValue& aBottom);
+
+    BoxShadow& boxShadow();
+    void setBoxShadow(BoxShadow& aBoxShadow);
+
+    BoxSizing boxSizing() const;
+    void setBoxSizing(BoxSizing aBoxSizing);
+
+    CaptionSide captionSide() const;
+    void setCaptionSide(CaptionSide aCaptionSide);
+
+    ColorValue& caretColor();
+    void setCaretColor(ColorValue& aCaretColor);
+
+    Clear clear() const;
+    void setClear(Clear aClear);
+
+    Clip& clip();
+    void setClip(Clip& aClip);
+
+    ColorValue& color();
+    void setColor(ColorValue& aColor);
+
+    IntegerValue& columnCount();
+    void setColumnCount(IntegerValue& aColumnCount);
+
+    columnFill& columnFill();
+    void setColumnFill(columnFill& aColumnFill);
+
+    NumericValue& columnGap();
+    void setColumnGap(NumericValue& aColumnGap);
+
+    ColorValue& columnRuleColor();
+    void setColumnRuleColor(ColorValue& aColumnRuleColor);
+
+    ColumnRuleStyle& columnRuleStyle();
+    void setColumnRuleStyle(ColumnRuleStyle& aColumnRuleStyle);
+
+    NumericValue& columnRuleWidth();
+    void setColumnRuleWidth(NumericValue& aColumnRuleWidth);
+
+    ColumnSpan columnSpan() const;
+    void setColumnSpan(ColumnSpan aColumnSpan);
+
+    IntegerValue& columnWidth();
+    void setColumnWidth(IntegerValue& aColumnWidth);
+
+    Counter& counterIncrement();
+    void setCounterIncrement(Counter& aCounterIncrement);
+
+    Counter& counterReset();
+    void setCounterReset(Counter& aCounterReset);
+
+    Cursor& cursor();
+    void setCursor(Cursor& aCursor);
+
+    Direction direction() const;
+    void setDirection(Direction aDirection);
+
+    Display display() const;
+    void setDisplay(Display aDisplay);
+
+    EmptyCells emptyCells() const;
+    void setEmptyCells(EmptyCells aEmptyCells);
+
+    FlexBasis& flexBasis();
+    void setFlexBasis(FlexBasis& aFlexBasis);
+
+    FlexDirection flexDirection() const;
+    void setFlexDirection(FlexDirection aFlexDirection);
+
+    IntegerValue& flexGrow();
+    void setFlexGrow(IntegerValue& aFlexGrow);
+
+    IntegerValue& flexShrink();
+    void setFlexShrink(IntegerValue& aFlexShrink);
+
+    FlexWrap flexWrap() const;
+    void setFlexWrap(FlexWrap aFlexWrap);
+
+    Float cssFloat() const;
+    void setCssFloat(Float aCssFloat);
+
+    StringValue& fontFamily();
+    void setFontFamily(StringValue& aFontFamily);
+
+    FontFeatureSettings& fontFeatureSettings();
+    void setFontFeatureSettings(FontFeatureSettings& aFontFeatureSettings);
+
+    FontKerning fontKerning() const;
+    void setFontKerning(FontKerning aFontKerning);
+
+    NumericValue& fontSize();
+    void setFontSize(NumericValue& aFontSize);
+
+    FontStretch fontStretch() const;
+    void setFontStretch(FontStretch aFontStretch);
+
+    FontStyle fontStyle() const;
+    void setFontStyle(FontStyle aFontStyle);
+
+    FontVariant fontVariant() const;
+    void setFontVariant(FontVariant aFontVariant);
+
+    FontWeight& fontWeight();
+    void setFontWeight(FontWeight& aFontWeight);
+
+    NumericValue& height();
+    void setHeight(NumericValue& aHeight);
+
+    Hyphens hyphens() const;
+    void setHyphens(Hyphens aHyphens);
+
+    JustifyContent justifyContent() const;
+    void setJustifyContent(JustifyContent aJustifyContent);
+
+    JustifyItems justifyItems() const;
+    void setJustifyItems(JustifyItems aJustifyItems);
+
+    JustifySelf justifySelf() const;
+    void setJustifySelf(JustifySelf aJustifySelf);
+
+    NumericValue& left();
+    void setLeft(NumericValue& aLeft);
+
+    LetterSpacing& letterSpacing();
+    void setLetterSpacing(LetterSpacing& aLetterSpacing);
+
+    LineBreak lineBreak() const;
+    void setLineBreak(LineBreak aLineBreak);
+
+    LineHeight& lineHeight();
+    void setLineHeight(LineHeight& aLineHeight);
+
+    ListStyleImage& listStyleImage();
+    void setListStyleImage(ListStyleImage& aListStyleImage);
+
+    ListStylePosition listStylePosition() const;
+    void setListStylePosition(ListStylePosition aListStylePosition);
+
+    ListStyleType listStyleType() const;
+    void setListStyleType(ListStyleType aListStyleType);
+
+    NumericValue& marginBottom();
+    void setMarginBottom(NumericValue& aMarginBottom);
+
+    NumericValue& marginLeft();
+    void setMarginLeft(NumericValue& aMarginLeft);
+
+    NumericValue& marginRight();
+    void setMarginRight(NumericValue& aMarginRight);
+
+    NumericValue& marginTop();
+    void setMarginTop(NumericValue& aMarginTop);
+
+    NumericValue& maxHeight();
+    void setMaxHeight(NumericValue& aMaxHeight);
+
+    NumericValue& maxWidth();
+    void setMaxWidth(NumericValue& aMaxWidth);
+
+    NumericValue& minHeight();
+    void setMinHeight(NumericValue& aMinHeight);
+
+    NumericValue& minWidth();
+    void setMinWidth(NumericValue& aMinWidth);
+
+    FloatValue& opacity();
+    void setOpacity(FloatValue& aOpacity);
+
+    ColorValue& outlineColor();
+    void setOutlineColor(ColorValue& aOutlineColor);
+
+    NumericValue& outlineOffset();
+    void setOutlineOffset(NumericValue& aOutlineOffset);
+
+    OutlineStyle& outlineStyle();
+    void setOutlineStyle(OutlineStyle& aOutlineStyle);
+
+    NumericValue& outlineWidth();
+    void setOutlineWidth(NumericValue& aOutlineWidth);
+
+    OverflowWrap overflowWrap() const;
+    void setOverflowWrap(OverflowWrap aOverflowWrap);
+
+    Overflow overflowX() const;
+    void setOverflowX(Overflow aOverflowX);
+
+    Overflow overflowY() const;
+    void setOverflowY(Overflow aOverflowY);
+
+    NumericValue& paddingBottom();
+    void setPaddingBottom(NumericValue& aPaddingBottom);
+
+    NumericValue& paddingLeft();
+    void setPaddingLeft(NumericValue& aPaddingLeft);
+
+    NumericValue& paddingRight();
+    void setPaddingRight(NumericValue& aPaddingRight);
+
+    NumericValue& paddingTop();
+    void setPaddingTop(NumericValue& aPaddingTop);
+
+    PageBreakAfter pageBreakAfter() const;
+    void setPageBreakAfter(PageBreakAfter aPageBreakAfter);
+
+    PageBreakBefore& pageBreakBefore();
+    void setPageBreakBefore(PageBreakBefore& aPageBreakBefore);
+
+    PageBreakInside pageBreakInside() const;
+    void setPageBreakInside(PageBreakInside aPageBreakInside);
+
+    Perspective& perspective();
+    void setPerspective(Perspective& aPerspective);
+
+    PerspectiveOrigin& perspectiveOrigin();
+    void setPerspectiveOrigin(PerspectiveOrigin& aPerspectiveOrigin);
+
+    Position position() const;
+    void setPosition(Position aPosition);
+
+    Quotes& quotes();
+    void setQuotes(Quotes& aQuotes);
+
+    Resize resize() const;
+    void setResize(Resize aResize);
+
+    NumericValue& right();
+    void setRight(NumericValue& aRight);
+
+    Size& size();
+    void setSize(Size& aSize);
+
+    IntegerValue& tabSize();
+    void setTabSize(IntegerValue& aTabSize);
+
+    TableLayout tableLayout() const;
+    void setTableLayout(TableLayout aTableLayout);
+
+    TextAlign textAlign() const;
+    void setTextAlign(TextAlign aTextAlign);
+
+    TextDecoration textDecoration() const;
+    void setTextDecoration(TextDecoration aTextDecoration);
+
+    NumericValue& textIndent();
+    void setTextIndent(NumericValue& aTextIndent);
+
+    TextOverflow textOverflow() const;
+    void setTextOverflow(TextOverflow aTextOverflow);
+
+    TextShadow& textShadow();
+    void setTextShadow(TextShadow& aTextShadow);
+
+    TextTransform textTransform() const;
+    void setTextTransform(TextTransform aTextTransform);
+
+    NumericValue& top();
+    void setTop(NumericValue& aTop);
+
+    TransformOrigin& transformOrigin();
+    void setTransformOrigin(TransformOrigin& aTransformOrigin);
+
+    TransformStyle transformStyle() const;
+    void setTransformStyle(TransformStyle aTransformStyle);
+
+    Transform& transform();
+    void setTransform(Transform& aTransform);
+
+    PeriodValue& transitionDelay();
+    void setTransitionDelay(PeriodValue& aTransitionDelay);
+
+    PeriodValue& transitionDuration();
+    void setTransitionDuration(PeriodValue& aTransitionDuration);
+
+    TransitionProperty& transitionProperty();
+    void setTransitionProperty(TransitionProperty& aTransitionProperty);
+
+    TransitionTimingFunction& transitionTimingFunction();
+    void setTransitionTimingFunction(TransitionTimingFunction& aTransitionTimingFunction);
+
+    UnicodeBidi unicodeBidi() const;
+    void setUnicodeBidi(UnicodeBidi aUnicodeBidi);
+
+    VerticalAlign& verticalAlign();
+    void setVerticalAlign(VerticalAlign& aVerticalAlign);
+
+    Visibility visibility() const;
+    void setVisibility(Visibility aVisibility);
+
+    WhiteSpace whiteSpace() const;
+    void setWhiteSpace(WhiteSpace aWhiteSpace);
+
+    IntegerValue& widows();
+    void setWidows(IntegerValue& aWidows);
+
+    NumericValue& width();
+    void setWidth(NumericValue& aWidth);
+
+    WordBreak& wordBreak();
+    void setWordBreak(WordBreak& aWordBreak);
+
+    WordSpacing& wordSpacing();
+    void setWordSpacing(WordSpacing& aWordSpacing);
+
+    WordWrap wordWrap() const;
+    void setWordWrap(WordWrap aWordWrap);
+
+    IntegerValue& zIndex();
+    void setZIndex(IntegerValue& aZIndex);
+
+
+
+protected:
+    AlignContent mAlignContent;
+    AlignItems mAlignItems;
+    AlignSelf mAlignSelf;
+    PeriodValue mAnimationDelay;
+    AnimationDirection mAnimationDirection;
+    PeriodValue mAnimationDuration;
+    AnimationFillMode mAnimationFillMode;
+    IntegerValue mAnimationIterationCount;
+    StringValue mAnimationName;
+    AnimationPlayState mAnimationPlayState;
+    AnimationTimingFunction mAnimationTimingFunction;
+    BackfaceVisibility mBackfaceVisibility;
+    BackgroundAttachment mBackgroundAttachment;
+    BackgroundClip mBackgroundClip;
+    ColorValue mBackgroundColor;
+    BackgroundImage mBackgroundImage;
+    BackgroundOriginAxis mBackgroundOriginX;
+    BackgroundOriginAxis mBackgroundOriginY;
+    BackgroundPositionAxis mBackgroundPositionX;
+    BackgroundPositionAxis mBackgroundPositionY;
+    BackgroundRepeat mBackgroundRepeat;
+    BackgroundSize mBackgroundSize;
+    ColorValue mBorderBottomColor;
+    BorderRadius mBorderBottomLeftRadius;
+    BorderRadius mBorderBottomRightRadius;
+    BorderStyle mBorderBottomStyle;
+    NumericValue mBorderBottomWidth;
+    BorderCollapse mBorderCollapse;
+    ColorValue mBorderLeftColor;
+    BorderStyle mBorderLeftStyle;
+    NumericValue mBorderLeftWidth;
+    ColorValue mBorderRightColor;
+    BorderStyle mBorderRightStyle;
+    NumericValue mBorderRightWidth;
+    BorderSpacing mBorderSpacing;
+    BorderStyle mBorderTopColor;
+    BorderRadius mBorderTopLeftRadius;
+    BorderRadius mBorderTopRightRadius;
+    BorderStyle mBorderTopStyle;
+    NumericValue mBorderTopWidth;
+    NumericValue mBottom;
+    BoxShadow mBoxShadow;
+    BoxSizing mBoxSizing;
+    CaptionSide mCaptionSide;
+    ColorValue mCaretColor;
+    Clear mClear;
+    Clip mClip;
+    ColorValue mColor;
+    IntegerValue mColumnCount;
+    columnFill mColumnFill;
+    NumericValue mColumnGap;
+    ColorValue mColumnRuleColor;
+    ColumnRuleStyle mColumnRuleStyle;
+    NumericValue mColumnRuleWidth;
+    ColumnSpan mColumnSpan;
+    IntegerValue mColumnWidth;
+    Counter mCounterIncrement;
+    Counter mCounterReset;
+    Cursor mCursor;
+    Direction mDirection;
+    Display mDisplay;
+    EmptyCells mEmptyCells;
+    FlexBasis mFlexBasis;
+    FlexDirection mFlexDirection;
+    IntegerValue mFlexGrow;
+    IntegerValue mFlexShrink;
+    FlexWrap mFlexWrap;
+    Float mCssFloat;
+    StringValue mFontFamily;
+    FontFeatureSettings mFontFeatureSettings;
+    FontKerning mFontKerning;
+    NumericValue mFontSize;
+    FontStretch mFontStretch;
+    FontStyle mFontStyle;
+    FontVariant mFontVariant;
+    FontWeight mFontWeight;
+    NumericValue mHeight;
+    Hyphens mHyphens;
+    JustifyContent mJustifyContent;
+    JustifyItems mJustifyItems;
+    JustifySelf mJustifySelf;
+    NumericValue mLeft;
+    LetterSpacing mLetterSpacing;
+    LineBreak mLineBreak;
+    LineHeight mLineHeight;
+    ListStyleImage mListStyleImage;
+    ListStylePosition mListStylePosition;
+    ListStyleType mListStyleType;
+    NumericValue mMarginBottom;
+    NumericValue mMarginLeft;
+    NumericValue mMarginRight;
+    NumericValue mMarginTop;
+    NumericValue mMaxHeight;
+    NumericValue mMaxWidth;
+    NumericValue mMinHeight;
+    NumericValue mMinWidth;
+    FloatValue mOpacity;
+    ColorValue mOutlineColor;
+    NumericValue mOutlineOffset;
+    OutlineStyle mOutlineStyle;
+    NumericValue mOutlineWidth;
+    OverflowWrap mOverflowWrap;
+    Overflow mOverflowX;
+    Overflow mOverflowY;
+    NumericValue mPaddingBottom;
+    NumericValue mPaddingLeft;
+    NumericValue mPaddingRight;
+    NumericValue mPaddingTop;
+    PageBreakAfter mPageBreakAfter;
+    PageBreakBefore mPageBreakBefore;
+    PageBreakInside mPageBreakInside;
+    Perspective mPerspective;
+    PerspectiveOrigin mPerspectiveOrigin;
+    Position mPosition;
+    Quotes mQuotes;
+    Resize mResize;
+    NumericValue mRight;
+    Size mSize;
+    IntegerValue mTabSize;
+    TableLayout mTableLayout;
+    TextAlign mTextAlign;
+    TextDecoration mTextDecoration;
+    NumericValue mTextIndent;
+    TextOverflow mTextOverflow;
+    TextShadow mTextShadow;
+    TextTransform mTextTransform;
+    NumericValue mTop;
+    TransformOrigin mTransformOrigin;
+    TransformStyle mTransformStyle;
+    Transform mTransform;
+    PeriodValue mTransitionDelay;
+    PeriodValue mTransitionDuration;
+    TransitionProperty mTransitionProperty;
+    TransitionTimingFunction mTransitionTimingFunction;
+    UnicodeBidi mUnicodeBidi;
+    VerticalAlign mVerticalAlign;
+    Visibility mVisibility;
+    WhiteSpace mWhiteSpace;
+    IntegerValue mWidows;
+    NumericValue mWidth;
+    WordBreak mWordBreak;
+    WordSpacing mWordSpacing;
+    WordWrap mWordWrap;
+    IntegerValue mZIndex;
+
+};
+
+class FirstLetterStyleMetrics : public StyleMetrics
+{
+public:
+    FirstLetterStyleMetrics(CSSStyleDeclaration* decl);
+    FirstLetterStyleMetrics(FirstLetterStyleMetrics& ref);
+    FirstLetterStyleMetrics();
+
+    BackgroundAttachment& backgroundAttachment();
+    void setBackgroundAttachment(BackgroundAttachment& aBackgroundAttachment);
+
+    BackgroundClip backgroundClip() const;
+    void setBackgroundClip(BackgroundClip aBackgroundClip);
+
+    ColorValue& backgroundColor();
+    void setBackgroundColor(ColorValue& aBackgroundColor);
+
+    BackgroundImage& backgroundImage();
+    void setBackgroundImage(BackgroundImage& aBackgroundImage);
+
+    BackgroundOriginAxis backgroundOriginX() const;
+    void setBackgroundOriginX(BackgroundOriginAxis aBackgroundOriginX);
+
+    BackgroundOriginAxis backgroundOriginY() const;
+    void setBackgroundOriginY(BackgroundOriginAxis aBackgroundOriginY);
+
+    BackgroundPositionAxis& backgroundPositionX();
+    void setBackgroundPositionX(BackgroundPositionAxis& aBackgroundPositionX);
+
+    BackgroundPositionAxis& backgroundPositionY();
+    void setBackgroundPositionY(BackgroundPositionAxis& aBackgroundPositionY);
+
+    BackgroundRepeat& backgroundRepeat();
+    void setBackgroundRepeat(BackgroundRepeat& aBackgroundRepeat);
+
+    BackgroundSize& backgroundSize();
+    void setBackgroundSize(BackgroundSize& aBackgroundSize);
+
+    ColorValue& borderBottomColor();
+    void setBorderBottomColor(ColorValue& aBorderBottomColor);
+
+    BorderRadius& borderBottomLeftRadius();
+    void setBorderBottomLeftRadius(BorderRadius& aBorderBottomLeftRadius);
+
+    BorderRadius& borderBottomRightRadius();
+    void setBorderBottomRightRadius(BorderRadius& aBorderBottomRightRadius);
+
+    BorderStyle borderBottomStyle() const;
+    void setBorderBottomStyle(BorderStyle aBorderBottomStyle);
+
+    NumericValue& borderBottomWidth();
+    void setBorderBottomWidth(NumericValue& aBorderBottomWidth);
+
+    BorderCollapse borderCollapse() const;
+    void setBorderCollapse(BorderCollapse aBorderCollapse);
+
+    ColorValue& borderLeftColor();
+    void setBorderLeftColor(ColorValue& aBorderLeftColor);
+
+    BorderStyle borderLeftStyle() const;
+    void setBorderLeftStyle(BorderStyle aBorderLeftStyle);
+
+    NumericValue& borderLeftWidth();
+    void setBorderLeftWidth(NumericValue& aBorderLeftWidth);
+
+    ColorValue& borderRightColor();
+    void setBorderRightColor(ColorValue& aBorderRightColor);
+
+    BorderStyle borderRightStyle() const;
+    void setBorderRightStyle(BorderStyle aBorderRightStyle);
+
+    NumericValue& borderRightWidth();
+    void setBorderRightWidth(NumericValue& aBorderRightWidth);
+
+    BorderSpacing& borderSpacing();
+    void setBorderSpacing(BorderSpacing& aBorderSpacing);
+
+    BorderStyle borderTopColor() const;
+    void setBorderTopColor(BorderStyle aBorderTopColor);
+
+    BorderRadius& borderTopLeftRadius();
+    void setBorderTopLeftRadius(BorderRadius& aBorderTopLeftRadius);
+
+    BorderRadius& borderTopRightRadius();
+    void setBorderTopRightRadius(BorderRadius& aBorderTopRightRadius);
+
+    BorderStyle borderTopStyle() const;
+    void setBorderTopStyle(BorderStyle aBorderTopStyle);
+
+    NumericValue& borderTopWidth();
+    void setBorderTopWidth(NumericValue& aBorderTopWidth);
+
+    BoxShadow& boxShadow();
+    void setBoxShadow(BoxShadow& aBoxShadow);
+
+    ColorValue& color();
+    void setColor(ColorValue& aColor);
+
+    Float cssFloat() const;
+    void setCssFloat(Float aCssFloat);
+
+    StringValue& fontFamily();
+    void setFontFamily(StringValue& aFontFamily);
+
+    FontFeatureSettings& fontFeatureSettings();
+    void setFontFeatureSettings(FontFeatureSettings& aFontFeatureSettings);
+
+    FontKerning fontKerning() const;
+    void setFontKerning(FontKerning aFontKerning);
+
+    NumericValue& fontSize();
+    void setFontSize(NumericValue& aFontSize);
+
+    FontStretch fontStretch() const;
+    void setFontStretch(FontStretch aFontStretch);
+
+    FontStyle fontStyle() const;
+    void setFontStyle(FontStyle aFontStyle);
+
+    FontVariant fontVariant() const;
+    void setFontVariant(FontVariant aFontVariant);
+
+    FontWeight& fontWeight();
+    void setFontWeight(FontWeight& aFontWeight);
+
+    LetterSpacing& letterSpacing();
+    void setLetterSpacing(LetterSpacing& aLetterSpacing);
+
+    LineHeight& lineHeight();
+    void setLineHeight(LineHeight& aLineHeight);
+
+    NumericValue& marginBottom();
+    void setMarginBottom(NumericValue& aMarginBottom);
+
+    NumericValue& marginLeft();
+    void setMarginLeft(NumericValue& aMarginLeft);
+
+    NumericValue& marginRight();
+    void setMarginRight(NumericValue& aMarginRight);
+
+    NumericValue& marginTop();
+    void setMarginTop(NumericValue& aMarginTop);
+
+    NumericValue& paddingBottom();
+    void setPaddingBottom(NumericValue& aPaddingBottom);
+
+    NumericValue& paddingLeft();
+    void setPaddingLeft(NumericValue& aPaddingLeft);
+
+    NumericValue& paddingRight();
+    void setPaddingRight(NumericValue& aPaddingRight);
+
+    NumericValue& paddingTop();
+    void setPaddingTop(NumericValue& aPaddingTop);
+
+    TextDecoration textDecoration() const;
+    void setTextDecoration(TextDecoration aTextDecoration);
+
+    TextShadow& textShadow();
+    void setTextShadow(TextShadow& aTextShadow);
+
+    TextTransform textTransform() const;
+    void setTextTransform(TextTransform aTextTransform);
+
+    VerticalAlign& verticalAlign();
+    void setVerticalAlign(VerticalAlign& aVerticalAlign);
+
+    WordSpacing& wordSpacing();
+    void setWordSpacing(WordSpacing& aWordSpacing);
+
+
+
+protected:
+    BackgroundAttachment mBackgroundAttachment;
+    BackgroundClip mBackgroundClip;
+    ColorValue mBackgroundColor;
+    BackgroundImage mBackgroundImage;
+    BackgroundOriginAxis mBackgroundOriginX;
+    BackgroundOriginAxis mBackgroundOriginY;
+    BackgroundPositionAxis mBackgroundPositionX;
+    BackgroundPositionAxis mBackgroundPositionY;
+    BackgroundRepeat mBackgroundRepeat;
+    BackgroundSize mBackgroundSize;
+    ColorValue mBorderBottomColor;
+    BorderRadius mBorderBottomLeftRadius;
+    BorderRadius mBorderBottomRightRadius;
+    BorderStyle mBorderBottomStyle;
+    NumericValue mBorderBottomWidth;
+    BorderCollapse mBorderCollapse;
+    ColorValue mBorderLeftColor;
+    BorderStyle mBorderLeftStyle;
+    NumericValue mBorderLeftWidth;
+    ColorValue mBorderRightColor;
+    BorderStyle mBorderRightStyle;
+    NumericValue mBorderRightWidth;
+    BorderSpacing mBorderSpacing;
+    BorderStyle mBorderTopColor;
+    BorderRadius mBorderTopLeftRadius;
+    BorderRadius mBorderTopRightRadius;
+    BorderStyle mBorderTopStyle;
+    NumericValue mBorderTopWidth;
+    BoxShadow mBoxShadow;
+    ColorValue mColor;
+    Float mCssFloat;
+    StringValue mFontFamily;
+    FontFeatureSettings mFontFeatureSettings;
+    FontKerning mFontKerning;
+    NumericValue mFontSize;
+    FontStretch mFontStretch;
+    FontStyle mFontStyle;
+    FontVariant mFontVariant;
+    FontWeight mFontWeight;
+    LetterSpacing mLetterSpacing;
+    LineHeight mLineHeight;
+    NumericValue mMarginBottom;
+    NumericValue mMarginLeft;
+    NumericValue mMarginRight;
+    NumericValue mMarginTop;
+    NumericValue mPaddingBottom;
+    NumericValue mPaddingLeft;
+    NumericValue mPaddingRight;
+    NumericValue mPaddingTop;
+    TextDecoration mTextDecoration;
+    TextShadow mTextShadow;
+    TextTransform mTextTransform;
+    VerticalAlign mVerticalAlign;
+    WordSpacing mWordSpacing;
+
+};
+
+class FirstLineStyleMetrics : public StyleMetrics
+{
+public:
+    FirstLineStyleMetrics(CSSStyleDeclaration* decl);
+    FirstLineStyleMetrics(FirstLineStyleMetrics& ref);
+    FirstLineStyleMetrics();
+
+    BackgroundAttachment& backgroundAttachment();
+    void setBackgroundAttachment(BackgroundAttachment& aBackgroundAttachment);
+
+    BackgroundClip backgroundClip() const;
+    void setBackgroundClip(BackgroundClip aBackgroundClip);
+
+    ColorValue& backgroundColor();
+    void setBackgroundColor(ColorValue& aBackgroundColor);
+
+    BackgroundImage& backgroundImage();
+    void setBackgroundImage(BackgroundImage& aBackgroundImage);
+
+    BackgroundOriginAxis backgroundOriginX() const;
+    void setBackgroundOriginX(BackgroundOriginAxis aBackgroundOriginX);
+
+    BackgroundOriginAxis backgroundOriginY() const;
+    void setBackgroundOriginY(BackgroundOriginAxis aBackgroundOriginY);
+
+    BackgroundPositionAxis& backgroundPositionX();
+    void setBackgroundPositionX(BackgroundPositionAxis& aBackgroundPositionX);
+
+    BackgroundPositionAxis& backgroundPositionY();
+    void setBackgroundPositionY(BackgroundPositionAxis& aBackgroundPositionY);
+
+    BackgroundRepeat& backgroundRepeat();
+    void setBackgroundRepeat(BackgroundRepeat& aBackgroundRepeat);
+
+    BackgroundSize& backgroundSize();
+    void setBackgroundSize(BackgroundSize& aBackgroundSize);
+
+    ColorValue& color();
+    void setColor(ColorValue& aColor);
+
+    StringValue& fontFamily();
+    void setFontFamily(StringValue& aFontFamily);
+
+    FontFeatureSettings& fontFeatureSettings();
+    void setFontFeatureSettings(FontFeatureSettings& aFontFeatureSettings);
+
+    FontKerning fontKerning() const;
+    void setFontKerning(FontKerning aFontKerning);
+
+    NumericValue& fontSize();
+    void setFontSize(NumericValue& aFontSize);
+
+    FontStretch fontStretch() const;
+    void setFontStretch(FontStretch aFontStretch);
+
+    FontStyle fontStyle() const;
+    void setFontStyle(FontStyle aFontStyle);
+
+    FontVariant fontVariant() const;
+    void setFontVariant(FontVariant aFontVariant);
+
+    FontWeight& fontWeight();
+    void setFontWeight(FontWeight& aFontWeight);
+
+    LetterSpacing& letterSpacing();
+    void setLetterSpacing(LetterSpacing& aLetterSpacing);
+
+    LineHeight& lineHeight();
+    void setLineHeight(LineHeight& aLineHeight);
+
+    TextDecoration textDecoration() const;
+    void setTextDecoration(TextDecoration aTextDecoration);
+
+    TextShadow& textShadow();
+    void setTextShadow(TextShadow& aTextShadow);
+
+    TextTransform textTransform() const;
+    void setTextTransform(TextTransform aTextTransform);
+
+    VerticalAlign& verticalAlign();
+    void setVerticalAlign(VerticalAlign& aVerticalAlign);
+
+    WordSpacing& wordSpacing();
+    void setWordSpacing(WordSpacing& aWordSpacing);
+
+
+
+protected:
+    BackgroundAttachment mBackgroundAttachment;
+    BackgroundClip mBackgroundClip;
+    ColorValue mBackgroundColor;
+    BackgroundImage mBackgroundImage;
+    BackgroundOriginAxis mBackgroundOriginX;
+    BackgroundOriginAxis mBackgroundOriginY;
+    BackgroundPositionAxis mBackgroundPositionX;
+    BackgroundPositionAxis mBackgroundPositionY;
+    BackgroundRepeat mBackgroundRepeat;
+    BackgroundSize mBackgroundSize;
+    ColorValue mColor;
+    StringValue mFontFamily;
+    FontFeatureSettings mFontFeatureSettings;
+    FontKerning mFontKerning;
+    NumericValue mFontSize;
+    FontStretch mFontStretch;
+    FontStyle mFontStyle;
+    FontVariant mFontVariant;
+    FontWeight mFontWeight;
+    LetterSpacing mLetterSpacing;
+    LineHeight mLineHeight;
+    TextDecoration mTextDecoration;
+    TextShadow mTextShadow;
+    TextTransform mTextTransform;
+    VerticalAlign mVerticalAlign;
+    WordSpacing mWordSpacing;
+
+};
+
+class SelectionStyleMetrics : public StyleMetrics
+{
+public:
+    SelectionStyleMetrics(CSSStyleDeclaration* decl);
+    SelectionStyleMetrics(SelectionStyleMetrics& ref);
+    SelectionStyleMetrics();
+
+    ColorValue& backgroundColor();
+    void setBackgroundColor(ColorValue& aBackgroundColor);
+
+    ColorValue& caretColor();
+    void setCaretColor(ColorValue& aCaretColor);
+
+    ColorValue& color();
+    void setColor(ColorValue& aColor);
+
+    Cursor& cursor();
+    void setCursor(Cursor& aCursor);
+
+    ColorValue& outlineColor();
+    void setOutlineColor(ColorValue& aOutlineColor);
+
+    NumericValue& outlineOffset();
+    void setOutlineOffset(NumericValue& aOutlineOffset);
+
+    OutlineStyle& outlineStyle();
+    void setOutlineStyle(OutlineStyle& aOutlineStyle);
+
+    NumericValue& outlineWidth();
+    void setOutlineWidth(NumericValue& aOutlineWidth);
+
+    TextDecoration textDecoration() const;
+    void setTextDecoration(TextDecoration aTextDecoration);
+
+    TextShadow& textShadow();
+    void setTextShadow(TextShadow& aTextShadow);
+
+
+
+protected:
+    ColorValue mBackgroundColor;
+    ColorValue mCaretColor;
+    ColorValue mColor;
+    Cursor mCursor;
+    ColorValue mOutlineColor;
+    NumericValue mOutlineOffset;
+    OutlineStyle mOutlineStyle;
+    NumericValue mOutlineWidth;
+    TextDecoration mTextDecoration;
+    TextShadow mTextShadow;
+
+};
+
+class SVGElementStyleMetrics : public StyleMetrics
+{
+public:
+    SVGElementStyleMetrics(CSSStyleDeclaration* decl);
+    SVGElementStyleMetrics(SVGElementStyleMetrics& ref);
+    SVGElementStyleMetrics();
+
+    ColorValue& color();
+    void setColor(ColorValue& aColor);
+
+    Cursor& cursor();
+    void setCursor(Cursor& aCursor);
+
+    Direction direction() const;
+    void setDirection(Direction aDirection);
+
+    StringValue& fontFamily();
+    void setFontFamily(StringValue& aFontFamily);
+
+    FontFeatureSettings& fontFeatureSettings();
+    void setFontFeatureSettings(FontFeatureSettings& aFontFeatureSettings);
+
+    FontKerning fontKerning() const;
+    void setFontKerning(FontKerning aFontKerning);
+
+    NumericValue& fontSize();
+    void setFontSize(NumericValue& aFontSize);
+
+    FontStretch fontStretch() const;
+    void setFontStretch(FontStretch aFontStretch);
+
+    FontStyle fontStyle() const;
+    void setFontStyle(FontStyle aFontStyle);
+
+    FontVariant fontVariant() const;
+    void setFontVariant(FontVariant aFontVariant);
+
+    FontWeight& fontWeight();
+    void setFontWeight(FontWeight& aFontWeight);
+
+    LetterSpacing& letterSpacing();
+    void setLetterSpacing(LetterSpacing& aLetterSpacing);
+
+    LineHeight& lineHeight();
+    void setLineHeight(LineHeight& aLineHeight);
+
+    FloatValue& opacity();
+    void setOpacity(FloatValue& aOpacity);
+
+    TextDecoration textDecoration() const;
+    void setTextDecoration(TextDecoration aTextDecoration);
+
+    TextOverflow textOverflow() const;
+    void setTextOverflow(TextOverflow aTextOverflow);
+
+    TextShadow& textShadow();
+    void setTextShadow(TextShadow& aTextShadow);
+
+    TextTransform textTransform() const;
+    void setTextTransform(TextTransform aTextTransform);
+
+    NumericValue& top();
+    void setTop(NumericValue& aTop);
+
+    TransformOrigin& transformOrigin();
+    void setTransformOrigin(TransformOrigin& aTransformOrigin);
+
+    Transform& transform();
+    void setTransform(Transform& aTransform);
+
+    UnicodeBidi unicodeBidi() const;
+    void setUnicodeBidi(UnicodeBidi aUnicodeBidi);
+
+    VerticalAlign& verticalAlign();
+    void setVerticalAlign(VerticalAlign& aVerticalAlign);
+
+    Visibility visibility() const;
+    void setVisibility(Visibility aVisibility);
+
+    WhiteSpace whiteSpace() const;
+    void setWhiteSpace(WhiteSpace aWhiteSpace);
+
+    WordSpacing& wordSpacing();
+    void setWordSpacing(WordSpacing& aWordSpacing);
+
+    TextAnchor textAnchor() const;
+    void setTextAnchor(TextAnchor aTextAnchor);
+
+    NumericValue& cx();
+    void setCx(NumericValue& aCx);
+
+    NumericValue& cy();
+    void setCy(NumericValue& aCy);
+
+    NumericValue& height();
+    void setHeight(NumericValue& aHeight);
+
+    NumericValue& width();
+    void setWidth(NumericValue& aWidth);
+
+    NumericValue& x();
+    void setX(NumericValue& aX);
+
+    NumericValue& y();
+    void setY(NumericValue& aY);
+
+    NumericValue& r();
+    void setR(NumericValue& aR);
+
+    RadiusAxis& rx();
+    void setRx(RadiusAxis& aRx);
+
+    RadiusAxis& ry();
+    void setRy(RadiusAxis& aRy);
+
+    PathData& d();
+    void setD(PathData& aD);
+
+    ColorValue& fill();
+    void setFill(ColorValue& aFill);
+
+    FloatValue& fillOpacity();
+    void setFillOpacity(FloatValue& aFillOpacity);
+
+    FillRule fillRule() const;
+    void setFillRule(FillRule aFillRule);
+
+    RadiusAxis& rx();
+    void setRx(RadiusAxis& aRx);
+
+    RadiusAxis& ry();
+    void setRy(RadiusAxis& aRy);
+
+    Marker& markerStart();
+    void setMarkerStart(Marker& aMarkerStart);
+
+    Marker& markerMid();
+    void setMarkerMid(Marker& aMarkerMid);
+
+    Marker& markerEnd();
+    void setMarkerEnd(Marker& aMarkerEnd);
+
+    ColorValue& stroke();
+    void setStroke(ColorValue& aStroke);
+
+    Dasharray& strokeDasharray();
+    void setStrokeDasharray(Dasharray& aStrokeDasharray);
+
+    NumericValue& strokeDashoffset();
+    void setStrokeDashoffset(NumericValue& aStrokeDashoffset);
+
+    ColorValue& strokeLinecap();
+    void setStrokeLinecap(ColorValue& aStrokeLinecap);
+
+    ColorValue& strokeLinejoin();
+    void setStrokeLinejoin(ColorValue& aStrokeLinejoin);
+
+    IntegerValue& strokeMitterlimit();
+    void setStrokeMitterlimit(IntegerValue& aStrokeMitterlimit);
+
+    FloatValue& strokeOpacity();
+    void setStrokeOpacity(FloatValue& aStrokeOpacity);
+
+    IntegerValue& strokeWidth();
+    void setStrokeWidth(IntegerValue& aStrokeWidth);
+
+
+
+protected:
+    ColorValue mColor;
+    Cursor mCursor;
+    Direction mDirection;
+    StringValue mFontFamily;
+    FontFeatureSettings mFontFeatureSettings;
+    FontKerning mFontKerning;
+    NumericValue mFontSize;
+    FontStretch mFontStretch;
+    FontStyle mFontStyle;
+    FontVariant mFontVariant;
+    FontWeight mFontWeight;
+    LetterSpacing mLetterSpacing;
+    LineHeight mLineHeight;
+    FloatValue mOpacity;
+    TextDecoration mTextDecoration;
+    TextOverflow mTextOverflow;
+    TextShadow mTextShadow;
+    TextTransform mTextTransform;
+    NumericValue mTop;
+    TransformOrigin mTransformOrigin;
+    Transform mTransform;
+    UnicodeBidi mUnicodeBidi;
+    VerticalAlign mVerticalAlign;
+    Visibility mVisibility;
+    WhiteSpace mWhiteSpace;
+    WordSpacing mWordSpacing;
+    TextAnchor mTextAnchor;
+    NumericValue mCx;
+    NumericValue mCy;
+    NumericValue mHeight;
+    NumericValue mWidth;
+    NumericValue mX;
+    NumericValue mY;
+    NumericValue mR;
+    RadiusAxis mRx;
+    RadiusAxis mRy;
+    PathData mD;
+    ColorValue mFill;
+    FloatValue mFillOpacity;
+    FillRule mFillRule;
+    RadiusAxis mRx;
+    RadiusAxis mRy;
+    Marker mMarkerStart;
+    Marker mMarkerMid;
+    Marker mMarkerEnd;
+    ColorValue mStroke;
+    Dasharray mStrokeDasharray;
+    NumericValue mStrokeDashoffset;
+    ColorValue mStrokeLinecap;
+    ColorValue mStrokeLinejoin;
+    IntegerValue mStrokeMitterlimit;
+    FloatValue mStrokeOpacity;
+    IntegerValue mStrokeWidth;
+
+};
+
