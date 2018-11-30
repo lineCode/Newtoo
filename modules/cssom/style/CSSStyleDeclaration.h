@@ -1,5 +1,7 @@
 #pragma once
 
+#define n2_cssstyledeclaration
+
 #include "../CSSOMString.h"
 
 #include <vector>
