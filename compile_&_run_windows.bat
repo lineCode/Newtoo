@@ -1,3 +1,3 @@
 @echo off
-nim compile --passL=-lstdc++ --run src/Newtoo.nim
+nim compile --threads:on --passL=-lstdc++ --run src/Newtoo.nim
 pause

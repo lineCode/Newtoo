@@ -1,5 +1,7 @@
 # Newtoo
 
-import html/HTMLParserState
+include html/HTMLParser
 
-echo "There is nothing"
+let html: string = "<html><head><title>Untitled</title></head><body><h1>Table of contents</h1><ul></ul></body></html>"
+
+echo html
