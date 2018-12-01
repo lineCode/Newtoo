@@ -1,9 +1,12 @@
 include HTMLParserData
 
 proc run*(data: var HTMLParserData) =
-    while data.state == Reception:
+    while true:
         if data.proceed == false:
+            if(data.state != Reception): break
             continue
+
+        let sign: char = data.reference[data.index.int]
 
         # code ...
 
