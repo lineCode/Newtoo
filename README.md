@@ -1,4 +1,4 @@
-![Newtoo](http://newtoo.ru/resources/github/banner.png?u=7)
+![Newtoo](http://newtoo.ru/resources/github/banner_new_year.png?u=0)
 
 # Intelligent & fast web browser engine
 
@@ -10,7 +10,7 @@ Newtoo attempts to show a page before it is completely loaded.
 
 ## It's history starts Today
 
-Newtoo is all new web browser engine written from scratch in [Nim](https://nim-lang.org).
+Newtoo is all new web browser engine written from scratch in С++.
 Its goal is to do similar things differently and to be different.
 
 # HTML5 & CSS Support
@@ -20,7 +20,7 @@ Its goal is to do similar things differently and to be different.
 Learn about supported **web technologies** at <http:/newtoo.ru/html5-support> (RU)
 
 # Integrated to Magenta
-![https://github.com/FlightBlaze/Newtoo/releases](http://newtoo.ru/resources/github/magenta-introducing.png?u=1)
+![https://github.com/FlightBlaze/Newtoo/releases](http://newtoo.ru/resources/github/magenta-introducing.png?u=1)  
 Magenta is the all new & smart web browser written in C++ with new user experience.  Magenta uses Newtoo to display web pages.
 
 

@@ -1,2 +1,5 @@
 # .gitignore
-
+Debug/*
+Newtoo.cpp
+pch.cpp
+pch.h
