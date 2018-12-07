@@ -20,8 +20,8 @@ Its goal is to do similar things differently and to be different.
 Learn about supported **web technologies** at <http:/newtoo.ru/html5-support> (RU)
 
 # Integrated to Magenta
-![https://github.com/FlightBlaze/Newtoo/releases](http://newtoo.ru/resources/github/magenta-introducing.png?u=1)  
-Magenta is the all new & smart web browser written in C++ with new user experience.  Magenta uses Newtoo to display web pages.
+![https://github.com/FlightBlaze/Newtoo/releases](http://newtoo.ru/resources/github/magenta-macos-preview.png?u=0)  
+Magenta is the all new web browser written in C++ with new user experience.  Magenta uses Newtoo to display web pages.
 
 
 Download lastest release for [Windows](https://github.com/FlightBlaze/Newtoo/releases) or macOS platform.
