@@ -7,6 +7,11 @@ namespace newtoo
 	{
 	}
 
+	bool ht_token::has_attributes()
+	{
+		return attributes.begin != 0 and attributes.end != 0
+	}
+
 	bool ht_token::is_inline()
 	{
 		return flag == ht_flag_close_inline or flag == ht_flag_close_self_inline or flag == ht_flag_open_inline;

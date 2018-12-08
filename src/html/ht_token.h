@@ -34,6 +34,7 @@ namespace newtoo
 		boundary attributes;
 		ht_active_id_table& globalnames;
 
+		bool has_attributes();
 		bool is_inline();
 		bool is_open();
 	};

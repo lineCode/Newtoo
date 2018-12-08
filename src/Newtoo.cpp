@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "html/ht_token.h"
+#include "html/ht_parser_output.h"
 
 namespace newtoo
 {

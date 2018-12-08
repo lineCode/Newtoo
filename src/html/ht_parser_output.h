@@ -1,4 +1,4 @@
-#prama once
+#pragma once
 
 #include "ht_token.h"
 
@@ -17,6 +17,9 @@ namespace newtoo
 		ht_parser_output();
 	private:
 		std::vector<ht_token> tokens;
+		std::vector<ht_token*> inline_token_buff;
 		ht_token* last_open_tag_token;
+
+		void close_all_inline_tags();
 	};
 }
