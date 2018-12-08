@@ -6,4 +6,3 @@ add_executable(
     Newtoo 
         "src/Newtoo.cpp"
 )
-

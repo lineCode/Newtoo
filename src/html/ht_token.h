@@ -4,19 +4,20 @@
 
 namespace newtoo
 {
-	struct ht_active_id_table;
-
 	enum ht_flag {
 		ht_flag_not_a_tag,
 		ht_flag_open,
+		ht_flag_open_inline,
 		ht_flag_close_self,
+		ht_flag_close_self_inline,
+		ht_flag_close_self_auto,
+		ht_flag_close_inline,
 		ht_flag_close
 	};
 
 	const int ht_global_prefix = -1;
 
-	struct boundary
-	{
+	struct boundary {
 		char* begin;
 		char* end;
 	};
@@ -30,8 +31,10 @@ namespace newtoo
 		long prefix;
 		unsigned int id;
 		short flag;
-		char* attr_begin;
-		char* attr_end;
+		boundary attributes;
 		ht_active_id_table& globalnames;
+
+		bool is_inline();
+		bool is_open();
 	};
 }

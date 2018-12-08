@@ -1,0 +1,6 @@
+#prama once
+
+namespace newtoo
+{
+
+}
