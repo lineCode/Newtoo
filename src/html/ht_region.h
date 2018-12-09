@@ -4,13 +4,13 @@
 
 namespace newtoo
 {
-	enum ht_pallete {
-		ht_pallete_text,
-		ht_pallete_only_text,
-		ht_pallete_id_or_prefix,
-		ht_pallete_id,
-		ht_pallete_after,
-		ht_pallete_after_in_quotes
+	enum ht_pattern {
+		ht_pattern_text,
+		ht_pattern_only_text,
+		ht_pattern_id_or_prefix,
+		ht_pattern_id,
+		ht_pattern_after,
+		ht_pattern_after_in_quotes
 	};
 
 	struct ht_only_text_close_tag_index {
@@ -22,7 +22,7 @@ namespace newtoo
 	};
 
 	struct ht_region {
-		ht_pallete pallete;
+		ht_pattern pattern;
 		std::string text;
 		char quotes;
 		ht_region();

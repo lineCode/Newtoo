@@ -35,35 +35,35 @@ namespace newtoo
 
 		char sign = reference[pos];
 
-		switch (region.pallete)
+		switch (region.pattern)
 		{
-			case ht_pallete_text:
+			case ht_pattern_text:
 			{
 				if (sign == '<') {
 					submit_token();
 					token().flag = ht_flag_open;
-					region.pallete = ht_pallete_id_or_prefix;
+					region.pattern = ht_pattern_id_or_prefix;
 				}
 				break;
 			}
-			case ht_pallete_only_text:
+			case ht_pattern_only_text:
 			{
 				if (pos == only_text_close_tag_index.pos) {
 					submit_token();
 					token().flag = ht_flag_open;
-					region.pallete = ht_pallete_id_or_prefix;
+					region.pattern = ht_pattern_id_or_prefix;
 				}
 				break;
 			}
-			case ht_pallete_id_or_prefix:
+			case ht_pattern_id_or_prefix:
 			{
 				if (sign == ':') {
 					token().prefix = globalnames.nameIdentifer(region.text);
-					region.pallete = ht_pallete_id;
+					region.pattern = ht_pattern_id;
 					region.text.clear();
 				} else if (sign == ' ')
 				{
-					region.pallete = ht_pallete_after;
+					region.pattern = ht_pattern_after;
 					token().attributes.begin = &reference[pos];
 					token().attributes.end = &reference[pos];
 					token().id = identify(region.text, token().is_inline, token().flag);
@@ -78,11 +78,11 @@ namespace newtoo
 				}
 				break;
 			}
-			case ht_pallete_id:
+			case ht_pattern_id:
 			{
 				if (sign == ' ')
 				{
-					region.pallete = ht_pallete_after;
+					region.pattern = ht_pattern_after;
 					token().attributes.begin = &reference[pos];
 					token().attributes.end = &reference[pos];
 					token().id = identify(region.text, token().is_inline, token().flag);
@@ -92,11 +92,11 @@ namespace newtoo
 					region.text += sign;
 				break;
 			}
-			case ht_pallete_after:
+			case ht_pattern_after:
 			{
 				if (sign == '\"' || sign == '\'')
 				{
-					region.pallete = ht_pallete_after_in_quotes;
+					region.pattern = ht_pattern_after_in_quotes;
 					region.quotes = sign;
 				}
 				else if (sign == '/')
@@ -107,22 +107,22 @@ namespace newtoo
 				{
 					//TODO: script id instead of 0 and style id instead of 1
 					if (token().id == 0 || token().id == 1) {
-						region.pallete = ht_pallete_only_text;
+						region.pattern = ht_pattern_only_text;
 						only_text_close_tag_index.tag_id = token().id;
 						only_text_close_tag_index.index(reference, pos);
 					}
 					else {
-						region.pallete = ht_pallete_text;
+						region.pattern = ht_pattern_text;
 					}
 					token().attributes.end = token().flag != ht_flag_close_self ? &reference[pos - 1] : &reference[pos - 2];
 					submit_token();
 				}
 				break;
 			}
-			case ht_pallete_after_in_quotes:
+			case ht_pattern_after_in_quotes:
 			{
 				if (sign == region.quotes)
-					region.pallete = ht_pallete_after;
+					region.pattern = ht_pattern_after;
 				break;
 			}
 		}

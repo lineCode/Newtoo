@@ -12,7 +12,7 @@ namespace newtoo
 	{
 	}
 
-	ht_region::ht_region() : pallete(ht_pallete_text), quotes(0)
+	ht_region::ht_region() : pattern(ht_pattern_text), quotes(0)
 	{
 	}
 }
