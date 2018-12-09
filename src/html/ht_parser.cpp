@@ -59,7 +59,7 @@ namespace newtoo
 	bool ht_parser::proceed()
 	{
 		if (pos == reference.size())
-			return m_state != ht_parser_working;
+			return m_state == ht_parser_working;
 
 		char sign = reference[pos];
 

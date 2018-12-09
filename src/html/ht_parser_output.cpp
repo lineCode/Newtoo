@@ -33,6 +33,9 @@ namespace newtoo
 		bool is_inline = token_instance.is_inline;
 		bool is_open = token_instance.is_open();
 
+		if (token_instance.id == ht_text && token_instance.begin == token_instance.end)
+			return;
+
 		if (!is_inline)
 		{
 			if (is_open)
