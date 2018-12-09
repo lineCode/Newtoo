@@ -1,4 +1,5 @@
 #include "ht_active_id_table.h"
+#include "ht_token.h"
 
 namespace newtoo
 {

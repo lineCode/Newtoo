@@ -2,7 +2,17 @@
 
 namespace newtoo
 {
-	ht_region::ht_region() :pallete(ht_pallete_text), quotes(0)
+	void
+	ht_only_text_close_tag_index::index(std::string& reference, size_t start)
+	{
+		pos = reference.find(tag_id == 0 ? "</script>" : "</style>", start);
+	}
+
+	ht_only_text_close_tag_index::ht_only_text_close_tag_index() :pos(std::string::npos)
+	{
+	}
+
+	ht_region::ht_region() : pallete(ht_pallete_text), quotes(0)
 	{
 	}
 }

@@ -30,7 +30,7 @@ namespace newtoo
 	void
 	ht_parser_output::append(ht_token token_instance)
 	{
-		bool is_inline = token_instance.is_inline();
+		bool is_inline = token_instance.is_inline;
 		bool is_open = token_instance.is_open();
 
 		if (!is_inline)
@@ -44,6 +44,7 @@ namespace newtoo
 				if (add_close_token(&token_instance, last_open_tag_token, is_open))
 				{
 					ht_token close_token;
+					close_token.is_inline = false;
 					close_token.flag = ht_flag_close;
 					close_token.id = last_open_tag_token->id;
 					close_token.prefix = last_open_tag_token->prefix;
@@ -88,7 +89,7 @@ namespace newtoo
 		for (size_t i = 0; i < inline_token_buff.size(); i++) {
 			ht_token& inline_token = *inline_token_buff[i];
 			ht_token close_token;
-			close_token.flag = ht_flag_close_inline;
+			close_token.is_inline = true;
 			close_token.id = inline_token.id;
 			close_token.prefix = inline_token.prefix;
 			close_token.globalnames = inline_token.globalnames;

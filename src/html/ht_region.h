@@ -13,6 +13,14 @@ namespace newtoo
 		ht_pallete_after_in_quotes
 	};
 
+	struct ht_only_text_close_tag_index {
+		short tag_id; // 0 = script, 1 = style
+		size_t pos;
+
+		void index(std::string& reference, size_t start);
+		ht_only_text_close_tag_index();
+	};
+
 	struct ht_region {
 		ht_pallete pallete;
 		std::string text;

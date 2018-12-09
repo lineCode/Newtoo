@@ -10,5 +10,5 @@ namespace newtoo
 		ht_document_type
 	};
 
-	ht_identifer identify(std::string namestr);
+	ht_identifer identify(std::string namestr, bool& is_inline_field, short& flag_field);
 }

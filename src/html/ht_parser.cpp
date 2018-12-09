@@ -7,6 +7,7 @@ namespace newtoo
 	}
 
 	void ht_parser::submit_token() {
+		token().end -= 1;
 		output.append(token());
 		delete token_ptr;
 		token_ptr = new ht_token(&reference[pos + 1], &globalnames);
@@ -38,32 +39,90 @@ namespace newtoo
 		{
 			case ht_pallete_text:
 			{
-
+				if (sign == '<') {
+					submit_token();
+					token().flag = ht_flag_open;
+					region.pallete = ht_pallete_id_or_prefix;
+				}
 				break;
 			}
 			case ht_pallete_only_text:
 			{
-				
+				if (pos == only_text_close_tag_index.pos) {
+					submit_token();
+					token().flag = ht_flag_open;
+					region.pallete = ht_pallete_id_or_prefix;
+				}
 				break;
 			}
 			case ht_pallete_id_or_prefix:
 			{
-
+				if (sign == ':') {
+					token().prefix = globalnames.nameIdentifer(region.text);
+					region.pallete = ht_pallete_id;
+					region.text.clear();
+				} else if (sign == ' ')
+				{
+					region.pallete = ht_pallete_after;
+					token().attributes.begin = &reference[pos];
+					token().attributes.end = &reference[pos];
+					token().id = identify(region.text, token().is_inline, token().flag);
+					region.text.clear();
+				}
+				else if (sign == '/' && region.text.empty()) {
+					token().flag = ht_flag_close;
+				}
+				else
+				{
+					region.text += sign;
+				}
 				break;
 			}
 			case ht_pallete_id:
 			{
-
+				if (sign == ' ')
+				{
+					region.pallete = ht_pallete_after;
+					token().attributes.begin = &reference[pos];
+					token().attributes.end = &reference[pos];
+					token().id = identify(region.text, token().is_inline, token().flag);
+					region.text.clear();
+				}
+				else
+					region.text += sign;
 				break;
 			}
 			case ht_pallete_after:
 			{
-
+				if (sign == '\"' || sign == '\'')
+				{
+					region.pallete = ht_pallete_after_in_quotes;
+					region.quotes = sign;
+				}
+				else if (sign == '/')
+				{
+					token().flag = ht_flag_close_self;
+				}
+				else if (sign == '>')
+				{
+					//TODO: script id instead of 0 and style id instead of 1
+					if (token().id == 0 || token().id == 1) {
+						region.pallete = ht_pallete_only_text;
+						only_text_close_tag_index.tag_id = token().id;
+						only_text_close_tag_index.index(reference, pos);
+					}
+					else {
+						region.pallete = ht_pallete_text;
+					}
+					token().attributes.end = token().flag != ht_flag_close_self ? &reference[pos - 1] : &reference[pos - 2];
+					submit_token();
+				}
 				break;
 			}
 			case ht_pallete_after_in_quotes:
 			{
-
+				if (sign == region.quotes)
+					region.pallete = ht_pallete_after;
 				break;
 			}
 		}

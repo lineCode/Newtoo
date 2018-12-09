@@ -20,6 +20,7 @@ namespace newtoo
 		ht_token* token_ptr;
 		ht_parser_output& output;
 		ht_active_id_table globalnames;
+		ht_only_text_close_tag_index only_text_close_tag_index;
 
 		ht_token& token();
 
