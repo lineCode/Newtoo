@@ -2,13 +2,13 @@
 
 namespace newtoo
 {
-	ht_token::ht_token() : begin(0), end(0), prefix(ht_global_prefix), id((ht_identifer)0), flag(ht_flag_not_a_tag),
+	ht_token::ht_token() : begin(0), end(0), prefix(ht_global_prefix), id((ht_identifier)0), flag(ht_flag_not_a_tag),
 		globalnames(0)
 	{
 	}
 
 	ht_token::ht_token(char* begin_, ht_active_id_table* globalnames_)
-		:begin(begin_), end(begin_), prefix(ht_global_prefix), id((ht_identifer)0), flag(ht_flag_not_a_tag),
+		:begin(begin_), end(begin_), prefix(ht_global_prefix), id((ht_identifier)0), flag(ht_flag_not_a_tag),
 		globalnames(globalnames_)
 	{
 	}

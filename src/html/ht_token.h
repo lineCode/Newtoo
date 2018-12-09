@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ht_active_id_table.h"
-#include "ht_identifer.h"
+#include "ht_identifier.h"
 
 namespace newtoo
 {
@@ -28,7 +28,7 @@ namespace newtoo
 		char* begin;
 		char* end;
 		long prefix;
-		ht_identifer id;
+		ht_identifier id;
 		short flag;
 		boundary attributes;
 		ht_active_id_table* globalnames;

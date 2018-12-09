@@ -14,7 +14,8 @@ bin/debug_x86/CMakeFiles/*
 bin/debug_x64/CMakeFiles/*
 bin/x86/CMakeFiles/*
 bin/x64/CMakeFiles/*
-!bin/debug_x86/Newtoo.exe
-!bin/debug_x64/Newtoo.exe
-!bin/x86/Newtoo.exe
-!bin/x64/Newtoo.exe
+#!bin/debug_x86/Newtoo.exe
+#!bin/debug_x64/Newtoo.exe
+#!bin/x86/Newtoo.exe
+#!bin/x64/Newtoo.exe
+bin/*

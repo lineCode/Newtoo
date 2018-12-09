@@ -22,8 +22,7 @@ namespace newtoo
 
 	void ht_parser::submit_tag_token()
 	{
-		//TODO: script id instead of 0 and style id instead of 1
-		if (token().id == 0 || token().id == 1) {
+		if (token().id == ht_id_tag_script || token().id == ht_id_tag_style) {
 			region.pattern = ht_pattern_only_text;
 			only_text_close_tag_index.tag_id = token().id;
 			only_text_close_tag_index.index(reference, pos);

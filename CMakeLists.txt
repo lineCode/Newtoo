@@ -7,8 +7,8 @@ add_executable(
          src/Newtoo.cpp
 		 src/html/ht_active_id_table.cpp
 		 src/html/ht_active_id_table.h
-		 src/html/ht_identifer.cpp
-		 src/html/ht_identifer.h
+		 src/html/ht_identifier.cpp
+		 src/html/ht_identifier.h
 		 src/html/ht_parser.cpp
 		 src/html/ht_parser.h
 		 src/html/ht_parser_output.cpp

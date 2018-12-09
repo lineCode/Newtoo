@@ -1,5 +1,5 @@
 #include "ht_parser_output.h"
-#include "ht_identifer.h"
+#include "ht_identifier.h"
 
 namespace newtoo
 {
@@ -33,7 +33,7 @@ namespace newtoo
 		bool is_inline = token_instance.is_inline;
 		bool is_open = token_instance.is_open();
 
-		if (token_instance.id == ht_text && token_instance.begin == token_instance.end)
+		if (token_instance.id == ht_id_text && token_instance.begin == token_instance.end)
 			return;
 
 		if (!is_inline)
@@ -41,7 +41,7 @@ namespace newtoo
 			if (is_open)
 				close_all_inline_tags();
 
-			if (last_open_tag_token != 0 && token_instance.id != ht_text
+			if (last_open_tag_token != 0 && token_instance.id != ht_id_text
 				&& last_open_tag_token->flag == ht_flag_close_self_auto)
 			{
 				if (add_close_token(&token_instance, last_open_tag_token, is_open))
