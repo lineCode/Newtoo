@@ -53,6 +53,7 @@ namespace newtoo
 	}
 
 	void ht_parser::pushChunk(std::string chunk) {
+		seen_last_augments = false;
 		reference += chunk;
 	}
 
@@ -60,6 +61,8 @@ namespace newtoo
 	{
 		if (pos == reference.size())
 			return m_state == ht_parser_working;
+
+		bool seen_last_augments_c = seen_last_augments;
 
 		char sign = reference[pos];
 
@@ -76,6 +79,9 @@ namespace newtoo
 			}
 			case ht_pattern_only_text:
 			{
+				if (!seen_last_augments_c && pos == std::string::npos)
+					only_text_close_tag_index.index(reference, pos);
+
 				if (pos == only_text_close_tag_index.pos) {
 					submit_token();
 					token().flag = ht_flag_open;
@@ -143,7 +149,9 @@ namespace newtoo
 				break;
 			}
 		}
-
+		if (seen_last_augments_c == false) {
+			seen_last_augments = true;
+		}
 		pos++;
 		token().end++;
 		return true;

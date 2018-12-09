@@ -21,6 +21,7 @@ namespace newtoo
 		ht_parser_output& output;
 		ht_active_id_table globalnames;
 		ht_only_text_close_tag_index only_text_close_tag_index;
+		bool seen_last_augments;
 
 		ht_token& token();
 
