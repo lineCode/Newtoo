@@ -24,7 +24,11 @@ namespace newtoo
 
 		ht_token& token();
 
+		void complete_tag_token();
+		void submit_tag_token();
 		void submit_token();
+
+		void set_pattern_after();
 
 	public:
 		ht_parser(ht_parser_output& output_);

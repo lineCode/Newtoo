@@ -6,11 +6,39 @@ namespace newtoo
 		return *token_ptr;
 	}
 
+	void ht_parser::complete_tag_token() {
+		token().attributes.begin = &reference[pos];
+		token().attributes.end = &reference[pos];
+		token().id = identify(region.text, token().is_inline, token().flag);
+		region.text.clear();
+	}
+
 	void ht_parser::submit_token() {
 		token().end -= 1;
 		output.append(token());
 		delete token_ptr;
 		token_ptr = new ht_token(&reference[pos + 1], &globalnames);
+	}
+
+	void ht_parser::submit_tag_token()
+	{
+		//TODO: script id instead of 0 and style id instead of 1
+		if (token().id == 0 || token().id == 1) {
+			region.pattern = ht_pattern_only_text;
+			only_text_close_tag_index.tag_id = token().id;
+			only_text_close_tag_index.index(reference, pos);
+		}
+		else {
+			region.pattern = ht_pattern_text;
+		}
+		token().attributes.end = token().flag != ht_flag_close_self ? &reference[pos - 1] : &reference[pos - 2];
+		submit_token();
+	}
+
+	void ht_parser::set_pattern_after()
+	{
+		region.pattern = ht_pattern_after;
+		complete_tag_token();
 	}
 
 	ht_parser::ht_parser(ht_parser_output& output_)
@@ -63,14 +91,14 @@ namespace newtoo
 					region.text.clear();
 				} else if (sign == ' ')
 				{
-					region.pattern = ht_pattern_after;
-					token().attributes.begin = &reference[pos];
-					token().attributes.end = &reference[pos];
-					token().id = identify(region.text, token().is_inline, token().flag);
-					region.text.clear();
+					set_pattern_after();
 				}
 				else if (sign == '/' && region.text.empty()) {
 					token().flag = ht_flag_close;
+				}
+				else if (sign == '>') {
+					complete_tag_token();
+					submit_tag_token();
 				}
 				else
 				{
@@ -82,11 +110,11 @@ namespace newtoo
 			{
 				if (sign == ' ')
 				{
-					region.pattern = ht_pattern_after;
-					token().attributes.begin = &reference[pos];
-					token().attributes.end = &reference[pos];
-					token().id = identify(region.text, token().is_inline, token().flag);
-					region.text.clear();
+					set_pattern_after();
+				}
+				else if (sign == '>') {
+					complete_tag_token();
+					submit_tag_token();
 				}
 				else
 					region.text += sign;
@@ -103,19 +131,8 @@ namespace newtoo
 				{
 					token().flag = ht_flag_close_self;
 				}
-				else if (sign == '>')
-				{
-					//TODO: script id instead of 0 and style id instead of 1
-					if (token().id == 0 || token().id == 1) {
-						region.pattern = ht_pattern_only_text;
-						only_text_close_tag_index.tag_id = token().id;
-						only_text_close_tag_index.index(reference, pos);
-					}
-					else {
-						region.pattern = ht_pattern_text;
-					}
-					token().attributes.end = token().flag != ht_flag_close_self ? &reference[pos - 1] : &reference[pos - 2];
-					submit_token();
+				else if (sign == '>') {
+					submit_tag_token();
 				}
 				break;
 			}
