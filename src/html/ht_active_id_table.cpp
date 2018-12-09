@@ -6,7 +6,7 @@ namespace newtoo
 		if (recently_name == name)
 			return recently_id;
 
-		for (size_t i = 0; i < list.size; i++)
+		for (size_t i = 0; i < list.size(); i++)
 			if (list[i] == name)
 				return i;
 

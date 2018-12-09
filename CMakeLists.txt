@@ -4,5 +4,17 @@ project(Newtoo)
 
 add_executable(
     Newtoo 
-        "src/Newtoo.cpp"
+         src/Newtoo.cpp
+		 src/html/ht_active_id_table.cpp
+		 src/html/ht_active_id_table.h
+		 src/html/ht_identifer.cpp
+		 src/html/ht_identifer.h
+		 src/html/ht_parser.cpp
+		 src/html/ht_parser.h
+		 src/html/ht_parser_output.cpp
+		 src/html/ht_parser_output.h
+		 src/html/ht_region.cpp
+		 src/html/ht_region.h
+		 src/html/ht_token.cpp
+		 src/html/ht_token.h
 )

@@ -24,7 +24,8 @@ namespace newtoo
 
 	struct ht_token
 	{
-		ht_token(char* begin_, ht_active_id_table& globalnames_);
+		ht_token();
+		ht_token(char* begin_, ht_active_id_table* globalnames_);
 
 		char* begin;
 		char* end;
@@ -32,7 +33,7 @@ namespace newtoo
 		unsigned int id;
 		short flag;
 		boundary attributes;
-		ht_active_id_table& globalnames;
+		ht_active_id_table* globalnames;
 
 		bool has_attributes();
 		bool is_inline();

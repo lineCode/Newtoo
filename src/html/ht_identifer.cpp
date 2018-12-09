@@ -1,9 +1,9 @@
-#include "ht_identifer.cpp"
+#include "ht_identifer.h"
 
 namespace newtoo
 {
 	ht_identifer identify(std::string namestr)
 	{
-		return 10; // TODO
+		return (ht_identifer)10; // TODO
 	}
 }

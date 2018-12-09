@@ -8,7 +8,7 @@ namespace newtoo
 		ht_pallete_text,
 		ht_pallete_only_text,
 		ht_pallete_id_or_prefix,
-		ht_pallete_prefix,
+		ht_pallete_id,
 		ht_pallete_after,
 		ht_pallete_after_in_quotes
 	};
