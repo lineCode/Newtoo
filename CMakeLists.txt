@@ -17,4 +17,5 @@ add_executable(
 		 src/html/ht_region.h
 		 src/html/ht_token.cpp
 		 src/html/ht_token.h
+		 src/utils/string_switch.h
 )
