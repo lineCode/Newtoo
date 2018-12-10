@@ -36,6 +36,14 @@ namespace newtoo
 		if (token_instance.id == ht_id_text && token_instance.begin == token_instance.end)
 			return;
 
+		/* К тегу, который сам закрывается по-умолчанию, нельзя добавить закрывающийся тег, 
+		*/
+		if (tokens.size() > 1 && token_instance.id == tokens[tokens.size() - 2].id
+			&& tokens[tokens.size() - 2].flag == ht_flag_close_self
+			&& tokens[tokens.size() - 2].flag_taken_by_user == false) {
+				return;
+		}
+
 		if (!is_inline)
 		{
 			if (is_open)
@@ -73,7 +81,8 @@ namespace newtoo
 				last_open_tag_token = 0;
 				inline_token_buff.clear();
 			}
-		} else if (token_instance.flag == ht_flag_close_self_auto)
+		} else if (last_open_tag_token != 0 && last_open_tag_token->flag ==
+			ht_flag_close_self_auto)
 		{
 			if (is_open)
 				inline_token_buff.push_back(&tokens[size() - 1]);

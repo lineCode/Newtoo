@@ -99,6 +99,7 @@ namespace newtoo
 					set_pattern_after();
 				}
 				else if (sign == '/' && region.text.empty()) {
+					token().flag_taken_by_user = true;
 					token().flag = ht_flag_close;
 				}
 				else if (sign == '>') {
@@ -134,6 +135,7 @@ namespace newtoo
 				}
 				else if (sign == '/')
 				{
+					token().flag_taken_by_user = true;
 					token().flag = ht_flag_close_self;
 				}
 				else if (sign == '>') {

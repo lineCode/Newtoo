@@ -30,6 +30,7 @@ namespace newtoo
 		long prefix;
 		ht_identifier id;
 		short flag;
+		bool flag_taken_by_user;
 		boundary attributes;
 		ht_active_id_table* globalnames;
 		bool is_inline;

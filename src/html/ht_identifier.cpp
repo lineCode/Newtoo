@@ -22,20 +22,20 @@ namespace newtoo
 
 		string_switch(namestr)
 		{
-			string_case("a") : { return ht_id_tag_a; break; }
+			string_case("a") : { is_inline_field = true; return ht_id_tag_a; break; }
 			string_case("abbr") : { return ht_id_tag_abbr; break; }
-			string_case("address") : { return ht_id_tag_address; break; }
+			string_case("address") : { is_inline_field = true; return ht_id_tag_address; break; }
 			string_case("area") : { return ht_id_tag_area; break; }
 			string_case("article") : { return ht_id_tag_article; break; }
 			string_case("aside") : { return ht_id_tag_aside; break; }
 			string_case("audio") : { return ht_id_tag_audio; break; }
-			string_case("b") : { return ht_id_tag_b; break; }
-			string_case("base") : { return ht_id_tag_base; break; }
+			string_case("b") : { is_inline_field = true; return ht_id_tag_b; break; }
+			string_case("base") : { flag_field = (ht_flag)ht_flag_close_self; return ht_id_tag_base; break; }
 			string_case("bdi") : { return ht_id_tag_bdi; break; }
 			string_case("bdo") : { return ht_id_tag_bdo; break; }
 			string_case("lockquote") : { return ht_id_tag_blockquote; break; }
 			string_case("body") : { return ht_id_tag_body; break; }
-			string_case("br") : { return ht_id_tag_br; break; }
+			string_case("br") : { flag_field = (ht_flag)ht_flag_close_self; return ht_id_tag_br; break; }
 			string_case("button") : { return ht_id_tag_button; break; }
 			string_case("canvas") : { return ht_id_tag_canvas; break; }
 			string_case("caption") : { return ht_id_tag_caption; break; }
@@ -60,31 +60,31 @@ namespace newtoo
 			string_case("figure") : { return ht_id_tag_figure; break; }
 			string_case("footer") : { return ht_id_tag_footer; break; }
 			string_case("form") : { return ht_id_tag_form; break; }
-			string_case("h1") : { return ht_id_tag_h1; break; }
-			string_case("h2") : { return ht_id_tag_h2; break; }
-			string_case("h3") : { return ht_id_tag_h3; break; }
-			string_case("h4") : { return ht_id_tag_h4; break; }
-			string_case("h5") : { return ht_id_tag_h5; break; }
-			string_case("h6") : { return ht_id_tag_h6; break; }
+			string_case("h1") : { is_inline_field = true; return ht_id_tag_h1; break; }
+			string_case("h2") : { is_inline_field = true; return ht_id_tag_h2; break; }
+			string_case("h3") : { is_inline_field = true; return ht_id_tag_h3; break; }
+			string_case("h4") : { is_inline_field = true; return ht_id_tag_h4; break; }
+			string_case("h5") : { is_inline_field = true; return ht_id_tag_h5; break; }
+			string_case("h6") : { is_inline_field = true; return ht_id_tag_h6; break; }
 			string_case("head") : { return ht_id_tag_head; break; }
 			string_case("header") : { return ht_id_tag_header; break; }
 			string_case("hgroup") : { return ht_id_tag_hgroup; break; }
-			string_case("hr") : { return ht_id_tag_hr; break; }
+			string_case("hr") : { flag_field = (ht_flag)ht_flag_close_self; return ht_id_tag_hr; break; }
 			string_case("html") : { return ht_id_tag_html; break; }
-			string_case("i") : { return ht_id_tag_i; break; }
+			string_case("i") : { is_inline_field = true; return ht_id_tag_i; break; }
 			string_case("iframe") : { return ht_id_tag_iframe; break; }
-			string_case("img") : { return ht_id_tag_img; break; }
-			string_case("input") : { return ht_id_tag_input; break; }
+			string_case("img") : { flag_field = (ht_flag)ht_flag_close_self; return ht_id_tag_img; break; }
+			string_case("input") : { flag_field = (ht_flag)ht_flag_close_self; return ht_id_tag_input; break; }
 			string_case("ins") : { return ht_id_tag_ins; break; }
 			string_case("kbd") : { return ht_id_tag_kbd; break; }
-			string_case("label") : { return ht_id_tag_label; break; }
+			string_case("label") : { is_inline_field = true; return ht_id_tag_label; break; }
 			string_case("legend") : { return ht_id_tag_legend; break; }
-			string_case("li") : { return ht_id_tag_li; break; }
-			string_case("link") : { return ht_id_tag_link; break; }
+			string_case("li") : { flag_field = (ht_flag)ht_flag_close_self_auto; return ht_id_tag_li; break; }
+			string_case("link") : { flag_field = (ht_flag)ht_flag_close_self; return ht_id_tag_link; break; }
 			string_case("map") : { return ht_id_tag_map; break; }
 			string_case("mark") : { return ht_id_tag_mark; break; }
 			string_case("menu") : { return ht_id_tag_menu; break; }
-			string_case("meta") : { return ht_id_tag_meta; break; }
+			string_case("meta") : { flag_field = (ht_flag)ht_flag_close_self; return ht_id_tag_meta; break; }
 			string_case("meter") : { return ht_id_tag_meter; break; }
 			string_case("nav") : { return ht_id_tag_nav; break; }
 			string_case("noscript") : { return ht_id_tag_noscript; break; }
@@ -93,28 +93,28 @@ namespace newtoo
 			string_case("optgroup") : { return ht_id_tag_optgroup; break; }
 			string_case("option") : { return ht_id_tag_option; break; }
 			string_case("output") : { return ht_id_tag_output; break; }
-			string_case("p") : { return ht_id_tag_p; break; }
+			string_case("p") : { flag_field = (ht_flag)ht_flag_close_self_auto; return ht_id_tag_p; break; }
 			string_case("param") : { return ht_id_tag_param; break; }
-			string_case("pre") : { return ht_id_tag_pre; break; }
+			string_case("pre") : { is_inline_field = true; return ht_id_tag_pre; break; }
 			string_case("progress") : { return ht_id_tag_progress; break; }
 			string_case("q") : { return ht_id_tag_q; break; }
 			string_case("rp") : { return ht_id_tag_rp; break; }
 			string_case("rt") : { return ht_id_tag_rt; break; }
 			string_case("ruby") : { return ht_id_tag_ruby; break; }
-			string_case("s") : { return ht_id_tag_s; break; }
+			string_case("s") : { is_inline_field = true; return ht_id_tag_s; break; }
 			string_case("samp") : { return ht_id_tag_samp; break; }
 			string_case("script") : { return ht_id_tag_script; break; }
 			string_case("section") : { return ht_id_tag_section; break; }
 			string_case("select") : { return ht_id_tag_select; break; }
 			string_case("small") : { return ht_id_tag_small; break; }
 			string_case("source") : { return ht_id_tag_source; break; }
-			string_case("span") : { return ht_id_tag_span; break; }
-			string_case("strike") : { return ht_id_tag_strike; break; }
-			string_case("strong") : { return ht_id_tag_strong; break; }
+			string_case("span") : { is_inline_field = true; return ht_id_tag_span; break; }
+			string_case("strike") : { is_inline_field = true; return ht_id_tag_strike; break; }
+			string_case("strong") : { is_inline_field = true; return ht_id_tag_strong; break; }
 			string_case("style") : { return ht_id_tag_style; break; }
-			string_case("sub") : { return ht_id_tag_sub; break; }
+			string_case("sub") : { is_inline_field = true; return ht_id_tag_sub; break; }
 			string_case("summary") : { return ht_id_tag_summary; break; }
-			string_case("sup") : { return ht_id_tag_sup; break; }
+			string_case("sup") : { is_inline_field = true; return ht_id_tag_sup; break; }
 			string_case("table") : { return ht_id_tag_table; break; }
 			string_case("tbody") : { return ht_id_tag_tbody; break; }
 			string_case("td") : { return ht_id_tag_td; break; }
@@ -126,7 +126,7 @@ namespace newtoo
 			string_case("title") : { return ht_id_tag_title; break; }
 			string_case("tr") : { return ht_id_tag_tr; break; }
 			string_case("track") : { return ht_id_tag_track; break; }
-			string_case("u") : { return ht_id_tag_u; break; }
+			string_case("u") : { is_inline_field = true; return ht_id_tag_u; break; }
 			string_case("ul") : { return ht_id_tag_ul; break; }
 			string_case("var") : { return ht_id_tag_var; break; }
 			string_case("video") : { return ht_id_tag_video; break; }
