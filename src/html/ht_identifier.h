@@ -201,4 +201,5 @@ namespace newtoo
 	};
 
 	ht_identifier identify(std::string namestr, bool& is_inline_field, short& flag_field);
+	std::string ht_identifier_to_string(ht_identifier id);
 }
