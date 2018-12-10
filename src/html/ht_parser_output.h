@@ -18,8 +18,10 @@ namespace newtoo
 	private:
 		std::vector<ht_token> tokens;
 		std::vector<ht_token*> inline_token_buff;
-		ht_token* last_open_tag_token;
+		long last_open_tag_index;
+		ht_token* last_open_tag_token();
 
 		void close_all_inline_tags();
+		void close_tag(ht_token* token);
 	};
 }

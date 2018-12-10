@@ -2,6 +2,8 @@
 #include "ht_token.h"
 #include "../utils/string_switch.h"
 
+#define set_flag_field(short_val) if((ht_flag)flag_field == ht_flag_open) flag_field = (ht_flag)short_val
+
 namespace newtoo
 {
 
@@ -30,12 +32,12 @@ namespace newtoo
 			string_case("aside") : { return ht_id_tag_aside; break; }
 			string_case("audio") : { return ht_id_tag_audio; break; }
 			string_case("b") : { is_inline_field = true; return ht_id_tag_b; break; }
-			string_case("base") : { flag_field = (ht_flag)ht_flag_close_self; return ht_id_tag_base; break; }
+			string_case("base") : { set_flag_field(ht_flag_close_self); return ht_id_tag_base; break; }
 			string_case("bdi") : { return ht_id_tag_bdi; break; }
 			string_case("bdo") : { return ht_id_tag_bdo; break; }
 			string_case("lockquote") : { return ht_id_tag_blockquote; break; }
 			string_case("body") : { return ht_id_tag_body; break; }
-			string_case("br") : { flag_field = (ht_flag)ht_flag_close_self; return ht_id_tag_br; break; }
+			string_case("br") : { set_flag_field(ht_flag_close_self); return ht_id_tag_br; break; }
 			string_case("button") : { return ht_id_tag_button; break; }
 			string_case("canvas") : { return ht_id_tag_canvas; break; }
 			string_case("caption") : { return ht_id_tag_caption; break; }
@@ -69,22 +71,22 @@ namespace newtoo
 			string_case("head") : { return ht_id_tag_head; break; }
 			string_case("header") : { return ht_id_tag_header; break; }
 			string_case("hgroup") : { return ht_id_tag_hgroup; break; }
-			string_case("hr") : { flag_field = (ht_flag)ht_flag_close_self; return ht_id_tag_hr; break; }
+			string_case("hr") : { set_flag_field(ht_flag_close_self); return ht_id_tag_hr; break; }
 			string_case("html") : { return ht_id_tag_html; break; }
 			string_case("i") : { is_inline_field = true; return ht_id_tag_i; break; }
 			string_case("iframe") : { return ht_id_tag_iframe; break; }
-			string_case("img") : { flag_field = (ht_flag)ht_flag_close_self; return ht_id_tag_img; break; }
-			string_case("input") : { flag_field = (ht_flag)ht_flag_close_self; return ht_id_tag_input; break; }
+			string_case("img") : { set_flag_field(ht_flag_close_self); return ht_id_tag_img; break; }
+			string_case("input") : { set_flag_field(ht_flag_close_self); return ht_id_tag_input; break; }
 			string_case("ins") : { return ht_id_tag_ins; break; }
 			string_case("kbd") : { return ht_id_tag_kbd; break; }
 			string_case("label") : { is_inline_field = true; return ht_id_tag_label; break; }
 			string_case("legend") : { return ht_id_tag_legend; break; }
-			string_case("li") : { flag_field = (ht_flag)ht_flag_close_self_auto; return ht_id_tag_li; break; }
-			string_case("link") : { flag_field = (ht_flag)ht_flag_close_self; return ht_id_tag_link; break; }
+			string_case("li") : { set_flag_field(ht_flag_close_self_auto); return ht_id_tag_li; break; }
+			string_case("link") : { set_flag_field(ht_flag_close_self); return ht_id_tag_link; break; }
 			string_case("map") : { return ht_id_tag_map; break; }
 			string_case("mark") : { return ht_id_tag_mark; break; }
 			string_case("menu") : { return ht_id_tag_menu; break; }
-			string_case("meta") : { flag_field = (ht_flag)ht_flag_close_self; return ht_id_tag_meta; break; }
+			string_case("meta") : { set_flag_field(ht_flag_close_self); return ht_id_tag_meta; break; }
 			string_case("meter") : { return ht_id_tag_meter; break; }
 			string_case("nav") : { return ht_id_tag_nav; break; }
 			string_case("noscript") : { return ht_id_tag_noscript; break; }
@@ -93,7 +95,7 @@ namespace newtoo
 			string_case("optgroup") : { return ht_id_tag_optgroup; break; }
 			string_case("option") : { return ht_id_tag_option; break; }
 			string_case("output") : { return ht_id_tag_output; break; }
-			string_case("p") : { flag_field = (ht_flag)ht_flag_close_self_auto; return ht_id_tag_p; break; }
+			string_case("p") : { set_flag_field(ht_flag_close_self_auto); return ht_id_tag_p; break; }
 			string_case("param") : { return ht_id_tag_param; break; }
 			string_case("pre") : { is_inline_field = true; return ht_id_tag_pre; break; }
 			string_case("progress") : { return ht_id_tag_progress; break; }

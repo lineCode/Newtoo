@@ -1,4 +1,5 @@
 #include "ht_parser.h"
+#include <iostream>
 
 namespace newtoo
 {
@@ -22,7 +23,8 @@ namespace newtoo
 
 	void ht_parser::submit_tag_token()
 	{
-		if (token().id == ht_id_tag_script || token().id == ht_id_tag_style) {
+		if (token().id == ht_id_tag_script && token().is_open()
+	     || token().id == ht_id_tag_style && token().is_open()) {
 			region.pattern = ht_pattern_only_text;
 			only_text_close_tag_index.tag_id = token().id;
 			only_text_close_tag_index.index(reference, pos);
@@ -98,9 +100,14 @@ namespace newtoo
 				{
 					set_pattern_after();
 				}
-				else if (sign == '/' && region.text.empty()) {
-					token().flag_taken_by_user = true;
-					token().flag = ht_flag_close;
+				else if (sign == '/') {
+					if (region.text.empty()) {
+						token().flag_taken_by_user = true;
+						token().flag = ht_flag_close;
+					} else {
+						token().flag_taken_by_user = true;
+						token().flag = ht_flag_close_self;
+					}
 				}
 				else if (sign == '>') {
 					complete_tag_token();
@@ -117,6 +124,15 @@ namespace newtoo
 				if (sign == ' ')
 				{
 					set_pattern_after();
+				}
+				else if (sign == '/') {
+					if (region.text.empty()) {
+						token().flag_taken_by_user = true;
+						token().flag = ht_flag_close;
+					} else {
+						token().flag_taken_by_user = true;
+						token().flag = ht_flag_close_self;
+					}
 				}
 				else if (sign == '>') {
 					complete_tag_token();

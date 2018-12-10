@@ -1,5 +1,6 @@
 #include "ht_parser_output.h"
 #include "ht_identifier.h"
+#include <iostream>
 
 namespace newtoo
 {
@@ -38,51 +39,55 @@ namespace newtoo
 
 		/* К тегу, который сам закрывается по-умолчанию, нельзя добавить закрывающийся тег, 
 		*/
-		if (tokens.size() > 1 && token_instance.id == tokens[tokens.size() - 2].id
+		if (!is_open && tokens.size() > 1 && token_instance.id == tokens[tokens.size() - 2].id
 			&& tokens[tokens.size() - 2].flag == ht_flag_close_self
 			&& tokens[tokens.size() - 2].flag_taken_by_user == false) {
 				return;
 		}
 
-		if (!is_inline)
+		if (!is_inline && token_instance.id != ht_id_text)
 		{
+			if (last_open_tag_index == -1 || last_open_tag_token()->flag != ht_flag_close_self_auto)
+				goto after_pre_check;
+
 			if (is_open)
 				close_all_inline_tags();
 
-			if (last_open_tag_token != 0 && token_instance.id != ht_id_text
-				&& last_open_tag_token->flag == ht_flag_close_self_auto)
-			{
-				if (add_close_token(&token_instance, last_open_tag_token, is_open))
-				{
-					ht_token close_token;
-					close_token.is_inline = false;
-					close_token.flag = ht_flag_close;
-					close_token.id = last_open_tag_token->id;
-					close_token.prefix = last_open_tag_token->prefix;
-					close_token.globalnames = last_open_tag_token->globalnames;
-					tokens.push_back(close_token);
-				}
-				last_open_tag_token = 0;
-				inline_token_buff.clear();
+			else if (token_instance.id == last_open_tag_token()->id) {
+				last_open_tag_index = 0;
+				goto after_pre_check;
 			}
+
+			if (add_close_token(&token_instance, last_open_tag_token(), is_open))
+			{
+				close_tag(last_open_tag_token());
+			}
+			last_open_tag_index = 0;
+			inline_token_buff.clear();
 
 		} // end !is_inline
 
+	after_pre_check:
+
 		tokens.push_back(token_instance);
 
-		if (!is_inline)
+		if (token_instance.flag == ht_flag_close_self) {
+			close_tag(&token_instance);
+		}
+
+		if (!is_inline && token_instance.id != ht_id_text)
 		{
 			if (is_open)
 			{
-				last_open_tag_token = &tokens[size() - 1];
+				last_open_tag_index = size() - 1;
 				inline_token_buff.clear();
 			} else
 			{
-				last_open_tag_token = 0;
+				last_open_tag_index = -1;
 				inline_token_buff.clear();
 			}
-		} else if (last_open_tag_token != 0 && last_open_tag_token->flag ==
-			ht_flag_close_self_auto)
+		} else if (last_open_tag_index != -1 && last_open_tag_token()->flag ==
+			ht_flag_close_self_auto && token_instance.id != ht_id_text)
 		{
 			if (is_open)
 				inline_token_buff.push_back(&tokens[size() - 1]);
@@ -91,8 +96,12 @@ namespace newtoo
 		}
 	}
 
-	ht_parser_output::ht_parser_output() : index(0), last_open_tag_token(0)
+	ht_parser_output::ht_parser_output() : index(0), last_open_tag_index(-1)
 	{
+	}
+
+	ht_token* ht_parser_output::last_open_tag_token() {
+		return last_open_tag_index == -1 ? 0 : &tokens[last_open_tag_index];
 	}
 
 	void
@@ -108,5 +117,15 @@ namespace newtoo
 			tokens.push_back(close_token);
 		}
 		inline_token_buff.clear();
+	}
+
+	void
+	ht_parser_output::close_tag(ht_token* token) {
+		ht_token close_token;
+		close_token.flag = ht_flag_close;
+		close_token.id = token->id;
+		close_token.prefix = token->prefix;
+		close_token.globalnames = token->globalnames;
+		tokens.push_back(close_token);
 	}
 }
