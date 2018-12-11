@@ -34,6 +34,8 @@ namespace newtoo
 		bool is_inline = token_instance.is_inline;
 		bool is_open = token_instance.is_open();
 
+		/* Пустой текст не принимается
+		*/
 		if (token_instance.id == ht_id_text && token_instance.begin == token_instance.end)
 			return;
 
@@ -45,27 +47,36 @@ namespace newtoo
 				return;
 		}
 
+		/* Теги в карантине добавляются после строчных тегов
+		*/
+		if (quarantine) {
+			add_after_inline_scope.push_back(token_instance);
+			if (!is_open && quarantine_end_token_instance.id == token_instance.id)
+				quarantine = false;
+			return;
+		}
+
 		if (!is_inline && token_instance.id != ht_id_text)
 		{
 			if (last_open_tag_index == -1 || last_open_tag_token()->flag != ht_flag_close_self_auto)
 				goto after_pre_check;
 
-			if (is_open)
-				close_all_inline_tags();
-
-			else if (token_instance.id == last_open_tag_token()->id) {
-				last_open_tag_index = 0;
-				goto after_pre_check;
+			if (inline_tag_level == 0) {
+				if (add_close_token(&token_instance, last_open_tag_token(), is_open)) {
+					close_tag(last_open_tag_token());
+					last_open_tag_index = -1;
+					for (size_t i = 0; i < add_after_inline_scope.size(); i++)
+						append(add_after_inline_scope[i]);
+				} else {
+					last_open_tag_index = -1;
+				}
+			} else {
+				add_after_inline_scope.push_back(token_instance);
+				quarantine_end_token_instance = token_instance;
+				quarantine = true;
+				return;
 			}
-
-			if (add_close_token(&token_instance, last_open_tag_token(), is_open))
-			{
-				close_tag(last_open_tag_token());
-			}
-			last_open_tag_index = 0;
-			inline_token_buff.clear();
-
-		} // end !is_inline
+		}
 
 	after_pre_check:
 
@@ -75,48 +86,32 @@ namespace newtoo
 			close_tag(&token_instance);
 		}
 
-		if (!is_inline && token_instance.id != ht_id_text)
+		if (!is_inline && token_instance.id != ht_id_text && inline_tag_level == 0)
 		{
 			if (is_open)
 			{
 				last_open_tag_index = size() - 1;
-				inline_token_buff.clear();
 			} else
 			{
 				last_open_tag_index = -1;
-				inline_token_buff.clear();
 			}
 		} else if (last_open_tag_index != -1 && last_open_tag_token()->flag ==
 			ht_flag_close_self_auto && token_instance.id != ht_id_text)
 		{
 			if (is_open)
-				inline_token_buff.push_back(&tokens[size() - 1]);
+				inline_tag_level++;
 			else
-				inline_token_buff.pop_back();
+				inline_tag_level--;
 		}
 	}
 
-	ht_parser_output::ht_parser_output() : index(0), last_open_tag_index(-1)
+	ht_parser_output::ht_parser_output() : index(0), quarantine(false),
+		inline_tag_level(0), last_open_tag_index(-1)
 	{
 	}
 
 	ht_token* ht_parser_output::last_open_tag_token() {
 		return last_open_tag_index == -1 ? 0 : &tokens[last_open_tag_index];
-	}
-
-	void
-	ht_parser_output::close_all_inline_tags()
-	{
-		for (size_t i = 0; i < inline_token_buff.size(); i++) {
-			ht_token& inline_token = *inline_token_buff[i];
-			ht_token close_token;
-			close_token.is_inline = true;
-			close_token.id = inline_token.id;
-			close_token.prefix = inline_token.prefix;
-			close_token.globalnames = inline_token.globalnames;
-			tokens.push_back(close_token);
-		}
-		inline_token_buff.clear();
 	}
 
 	void

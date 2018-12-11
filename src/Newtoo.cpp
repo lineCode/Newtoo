@@ -10,7 +10,7 @@ int main()
 {
 	newtoo::ht_parser_output output;
 	newtoo::ht_parser parser(output);
-	parser.pushChunk("<html><p>Hello!</html>");
+	parser.pushChunk("<html><p>He<span>l<div>lo</div>!</span>o!</html>");
 	parser.finish();
 	while (parser.proceed())
 	{}

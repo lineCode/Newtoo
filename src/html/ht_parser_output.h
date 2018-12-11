@@ -17,11 +17,14 @@ namespace newtoo
 		ht_parser_output();
 	private:
 		std::vector<ht_token> tokens;
-		std::vector<ht_token*> inline_token_buff;
+		std::vector<ht_token> add_after_inline_scope;
+		ht_token quarantine_end_token_instance;
+		bool quarantine;
+
+		unsigned long inline_tag_level;
 		long last_open_tag_index;
 		ht_token* last_open_tag_token();
 
-		void close_all_inline_tags();
 		void close_tag(ht_token* token);
 	};
 }
