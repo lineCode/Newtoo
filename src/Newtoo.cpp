@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 
 #include "html/ht_parser.h"
 
@@ -10,7 +10,7 @@ int main()
 {
 	newtoo::ht_parser_output output;
 	newtoo::ht_parser parser(output);
-	parser.pushChunk("<html><p>He<span>l<div>lo</div>!</span>o!</html>");
+	parser.pushChunk("<!doctype html><html>Hello!</html>");
 	parser.finish();
 	while (parser.proceed())
 	{}
@@ -19,7 +19,12 @@ int main()
 	{
 		if (output[i]->flag == newtoo::ht_flag_close)
 			std::cout << "/";
-		std::cout << newtoo::ht_identifier_to_string(output[i]->id);
+		if(output[i]->id != newtoo::ht_id_text)
+			std::cout << newtoo::ht_identifier_to_string(output[i]->id);
+		else {
+			for (size_t c = output[i]->begin; c < output[i]->end; c++)
+				std::cout << parser.text()[c];
+		}
 		if (output[i]->flag == newtoo::ht_flag_close_self && output[i]->flag_taken_by_user) {
 			std::cout << "/";
 		}

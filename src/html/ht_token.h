@@ -5,6 +5,9 @@
 
 namespace newtoo
 {
+	typedef unsigned long ht_pos;
+	const ht_pos ht_unset_pos = 2147483647;
+	
 	enum ht_flag {
 		ht_flag_not_a_tag,
 		ht_flag_open,
@@ -16,17 +19,18 @@ namespace newtoo
 	const int ht_global_prefix = -1;
 
 	struct boundary {
-		char* begin;
-		char* end;
+		ht_pos begin;
+		ht_pos end;
+		boundary();
 	};
 
 	struct ht_token
 	{
 		ht_token();
-		ht_token(char* begin_, ht_active_id_table* globalnames_);
+		ht_token(ht_pos begin_, ht_active_id_table* globalnames_);
 
-		char* begin;
-		char* end;
+		ht_pos begin;
+		ht_pos end;
 		long prefix;
 		ht_identifier id;
 		short flag;

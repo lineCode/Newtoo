@@ -35,10 +35,12 @@ namespace newtoo
 		ht_parser(ht_parser_output& output_);
 		~ht_parser();
 
+		std::string& text();
+
 		void pushChunk(std::string chunk);
 		bool proceed();
 
-		ht_parser_state state();
+		ht_parser_state state() const;
 		void finish();
 		void abort();
 	};

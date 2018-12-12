@@ -8,17 +8,18 @@ namespace newtoo
 	}
 
 	void ht_parser::complete_tag_token() {
-		token().attributes.begin = &reference[pos];
-		token().attributes.end = &reference[pos];
+		token().attributes.begin = pos;
+		token().attributes.end = pos;
 		token().id = identify(region.text, token().is_inline, token().flag);
 		region.text.clear();
 	}
 
 	void ht_parser::submit_token() {
-		token().end -= 1;
+		if(token().end != 0)
+			token().end -= 1;
 		output.append(token());
 		delete token_ptr;
-		token_ptr = new ht_token(&reference[pos + 1], &globalnames);
+		token_ptr = new ht_token(pos + 1, &globalnames);
 	}
 
 	void ht_parser::submit_tag_token()
@@ -32,7 +33,7 @@ namespace newtoo
 		else {
 			region.pattern = ht_pattern_text;
 		}
-		token().attributes.end = token().flag != ht_flag_close_self ? &reference[pos - 1] : &reference[pos - 2];
+		token().attributes.end = token().flag != ht_flag_close_self ? pos - 1 : pos - 2;
 		submit_token();
 	}
 
@@ -44,13 +45,17 @@ namespace newtoo
 
 	ht_parser::ht_parser(ht_parser_output& output_)
 		: m_state(ht_parser_working), pos(0), region(),
-		token_ptr(new ht_token(&reference[0], &globalnames)), output(output_)
+		token_ptr(new ht_token(0, &globalnames)), output(output_)
 	{
 	}
 
 	ht_parser::~ht_parser()
 	{
 		delete token_ptr;
+	}
+
+	std::string& ht_parser::text() {
+		return reference;
 	}
 
 	void ht_parser::pushChunk(std::string chunk) {
@@ -174,7 +179,7 @@ namespace newtoo
 		return true;
 	}
 
-	ht_parser_state ht_parser::state() {
+	ht_parser_state ht_parser::state() const {
 		return m_state;
 	}
 
