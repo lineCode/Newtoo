@@ -11,7 +11,7 @@ int main()
 {
 	newtoo::ht_parser_output output;
 	newtoo::ht_parser parser(output);
-	parser.pushChunk("<!doctype html><html as:ndd = 'asd' ar=11>Hello!</html>");
+	parser.pushChunk("<!doctype html><html as:ndd = 'asd' required ar=11>Hello!</html>");
 	parser.finish();
 	while (parser.proceed())
 	{}

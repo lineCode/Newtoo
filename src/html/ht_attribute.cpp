@@ -70,6 +70,7 @@ namespace newtoo
 					else if (sign != ' ') {
 						pattern = name_or_prefix;
 						attr->value = "true";
+						text += sign;
 						add_to_list();
 					}
 					break;
