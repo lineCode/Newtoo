@@ -27,7 +27,7 @@ namespace newtoo
 	struct ht_token
 	{
 		ht_token();
-		ht_token(ht_pos begin_, ht_active_id_table* globalnames_);
+		ht_token(ht_pos begin_);
 
 		ht_pos begin;
 		ht_pos end;
@@ -36,7 +36,6 @@ namespace newtoo
 		short flag;
 		bool flag_taken_by_user;
 		boundary attributes;
-		ht_active_id_table* globalnames;
 		bool is_inline;
 
 		bool has_attributes();

@@ -19,7 +19,7 @@ namespace newtoo
 			token().end -= 1;
 		output.append(token());
 		delete token_ptr;
-		token_ptr = new ht_token(pos + 1, &globalnames);
+		token_ptr = new ht_token(pos + 1);
 	}
 
 	void ht_parser::submit_tag_token()
@@ -45,7 +45,7 @@ namespace newtoo
 
 	ht_parser::ht_parser(ht_parser_output& output_)
 		: m_state(ht_parser_working), pos(0), region(),
-		token_ptr(new ht_token(0, &globalnames)), output(output_)
+		token_ptr(new ht_token(0)), output(output_)
 	{
 	}
 

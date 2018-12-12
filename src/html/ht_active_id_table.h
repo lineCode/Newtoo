@@ -14,6 +14,7 @@ namespace newtoo
 		ht_keyword_list list;
 
 		long nameIdentifer(std::string name);
+		std::string toString(long id);
 
 	private:
 		std::string recently_name;

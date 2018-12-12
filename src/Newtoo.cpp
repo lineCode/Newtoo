@@ -1,5 +1,6 @@
 ﻿#include <iostream>
 
+#include "html/ht_attribute.h"
 #include "html/ht_parser.h"
 
 namespace newtoo
@@ -10,7 +11,7 @@ int main()
 {
 	newtoo::ht_parser_output output;
 	newtoo::ht_parser parser(output);
-	parser.pushChunk("<!doctype html><html>Hello!</html>");
+	parser.pushChunk("<!doctype html><html as:ndd = 'asd' ar=11>Hello!</html>");
 	parser.finish();
 	while (parser.proceed())
 	{}
@@ -29,6 +30,12 @@ int main()
 			std::cout << "/";
 		}
 		std::cout << "; ";
+	}
+
+	std::cout << "\n\n";
+	newtoo::ht_attribute_list attr_list = newtoo::parse_attributes_scope(output[1]->attributes, parser.text());
+	for (size_t i = 0; i < attr_list.size(); i++) {
+		std::cout << attr_list[i].prefix << ":" << attr_list[i].name << "=" << attr_list[i].value << " ";
 	}
 
 	std::cout << "\n\nHappy new year!\n";

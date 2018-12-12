@@ -14,4 +14,11 @@ namespace newtoo
 		list.push_back(name);
 		return list.size() - 1;
 	}
+
+	std::string ht_active_id_table::toString(long id) {
+		if (id > list.size() - 1 || id < 0) {
+			return "";
+		}
+		return list[id];
+	}
 }

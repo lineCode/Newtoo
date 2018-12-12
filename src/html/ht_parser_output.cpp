@@ -120,7 +120,6 @@ namespace newtoo
 		close_token.flag = ht_flag_close;
 		close_token.id = token->id;
 		close_token.prefix = token->prefix;
-		close_token.globalnames = token->globalnames;
 		tokens.push_back(close_token);
 	}
 }

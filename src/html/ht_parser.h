@@ -15,7 +15,7 @@ namespace newtoo
 	{
 		std::string reference;
 		ht_parser_state m_state;
-		unsigned long pos;
+		size_t pos;
 		ht_region region;
 		ht_token* token_ptr;
 		ht_parser_output& output;
