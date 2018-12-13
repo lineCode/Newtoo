@@ -2,6 +2,7 @@
 
 #include "html/ht_attribute.h"
 #include "html/ht_parser.h"
+#include "utils/garbage_collector.h"
 
 namespace newtoo
 {
@@ -39,6 +40,9 @@ int main()
 	}
 
 	std::cout << "\n\nHappy new year!\n";
+
+	newtoo::GC.collect();
+
 	while (true) // pause
 	{}
     return 0;
