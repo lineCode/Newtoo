@@ -46,7 +46,7 @@ namespace newtoo
 		//sweep
 		for (size_t i = 0; i < reflists.size(); i++)
 		{
-			if(!heap[i]->__marked)
+			if(heap[i]->__marked == 0)
 				delete heap[i];
 		}
 
@@ -54,5 +54,6 @@ namespace newtoo
 
 	void garbage_collector::Register(reference_list* reflist) {
 		reflists.push_back(reflist);
+		reflist->__registered = 1;
 	}
 }
