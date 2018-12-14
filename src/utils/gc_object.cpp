@@ -1,5 +1,6 @@
 #include "gc_object.h"
 #include "garbage_collector.h"
+#include <iostream>
 
 namespace newtoo
 {
@@ -19,33 +20,33 @@ namespace newtoo
 		list.push_back(ref);
 	}
 
-	reference_list::reference_list() : __registered(0)
+	reference_list::reference_list() : __gc(0)
 	{
 	}
 
 	reference_list::~reference_list()
 	{
-		if (__registered == 0)
+		if (__gc == 0)
 			return;
 
-		for (size_t i = 0; i < GC.reflists.size(); i++) {
-			if (GC.reflists[i] == this) {
-				GC.reflists.erase(GC.reflists.begin() + i);
+		for (size_t i = 0; i < __gc->reflists.size(); i++) {
+			if (__gc->reflists[i] == this) {
+				__gc->reflists.erase(__gc->reflists.begin() + i);
 				break;
 			}
 		}
 	}
 
-	gc_object::gc_object() : __marked(0)
+	gc_object::gc_object(requires_gc) : __gc(GC), __marked(0)
 	{
-		GC.heap.push_back(this);
+		GC->heap.push_back(this);
 	}
 
 	gc_object::~gc_object()
 	{
-		for (size_t i = 0; i < GC.heap.size(); i++) {
-			if (GC.heap[i] == this) {
-				GC.heap.erase(GC.heap.begin() + i);
+		for (size_t i = 0; i < __gc->heap.size(); i++) {
+			if (__gc->heap[i] == this) {
+				__gc->heap.erase(__gc->heap.begin() + i);
 				break;
 			}
 		}

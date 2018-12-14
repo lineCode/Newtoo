@@ -2,11 +2,19 @@
 
 #include <vector>
 
+#define GarbageCollected gc_object
+#define gc_super_class_init gc_object(shared_gc)
+#define requires_gc newtoo::garbage_collector* GC
+#define shared_gc GC
+#define using_gc GC
+
 namespace newtoo
 {
+	class garbage_collector;
+
 	struct reference_list {
 		std::vector<void**> list;
-		short __registered : 1;
+		garbage_collector* __gc;
 		void** operator[](size_t index);
 		size_t size();
 
@@ -19,9 +27,10 @@ namespace newtoo
 
 	struct gc_object {
 		reference_list __own_references;
+		garbage_collector* __gc;
 		short __marked : 1;
 
-		gc_object();
+		gc_object(requires_gc);
 		~gc_object();
 	};
 }

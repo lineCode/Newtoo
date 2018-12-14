@@ -1,8 +1,9 @@
-﻿#include <iostream>
+#include <iostream>
 
 #include "html/ht_attribute.h"
 #include "html/ht_parser.h"
 #include "utils/garbage_collector.h"
+#include "utils/gc_ptr.h"
 
 namespace newtoo
 {
@@ -40,8 +41,42 @@ int main()
 	}
 
 	std::cout << "\n\nHappy new year!\n";
+	
+	$_GC_init;
 
-	newtoo::GC.collect();
+	struct Object : newtoo::GarbageCollected
+	{
+		int a;
+
+		Object
+		
+		(requires_gc):gc_super_class_init,
+
+		a(7)
+		{
+
+		}
+	};
+
+	struct ObjectHndl : newtoo::GarbageCollected
+	{
+		Object* obj;
+
+		ObjectHndl
+
+		(requires_gc):gc_super_class_init,
+
+		obj(new Object(shared_gc))
+		{
+			__own_references.Register((void**)&obj);
+		}
+	};
+
+	ObjectHndl* hndl = new ObjectHndl(using_gc);
+
+	auto object = newtoo::ptr <Object>( new Object(using_gc) );
+
+	$_GC_collect;
 
 	while (true) // pause
 	{}

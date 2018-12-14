@@ -23,5 +23,7 @@ add_executable(
 		 src/utils/garbage_collector.h
 		 src/utils/gc_object.cpp
 		 src/utils/gc_object.h
+		 src/utils/gc_ptr.cpp
+		 src/utils/gc_ptr.h
 		 src/utils/string_switch.h
 )

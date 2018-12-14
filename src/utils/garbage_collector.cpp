@@ -1,4 +1,8 @@
 #include "garbage_collector.h"
+#include <iostream>
+#include <string>
+
+#define gc_verbose
 
 namespace newtoo
 {
@@ -43,17 +47,40 @@ namespace newtoo
 			}
 		}
 
-		//sweep
-		for (size_t i = 0; i < reflists.size(); i++)
+		//mark from references
+		for (size_t i = 0; i < ptrs.size(); i++)
 		{
-			if(heap[i]->__marked == 0)
-				delete heap[i];
+			gc_object* ptri = ptrs[i];
+			for (size_t i2 = 0; i2 < heap.size(); i2++) {
+				if (ptri == heap[i2]) {
+					heap[i2]->__marked = 1;
+					break;
+				}
+			}
 		}
+
+#ifdef gc_verbose
+		unsigned deleted = 0;
+#endif
+
+		//sweep
+		for (size_t i = 0; i < heap.size(); i++)
+		{
+			if (heap[i]->__marked == 0) {
+				delete heap[i];
+#ifdef gc_verbose
+				deleted++;
+#endif
+			}
+		}
+#ifdef gc_verbose
+		std::cout << "[GC]: Deleted " + std::to_string(deleted) +" objects";
+#endif
 
 	}
 
 	void garbage_collector::Register(reference_list* reflist) {
 		reflists.push_back(reflist);
-		reflist->__registered = 1;
+		reflist->__gc = this;
 	}
 }
