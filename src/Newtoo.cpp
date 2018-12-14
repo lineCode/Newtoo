@@ -72,9 +72,7 @@ int main()
 		}
 	};
 
-	ObjectHndl* hndl = new ObjectHndl(using_gc);
-
-	//auto object = newtoo::ptr <Object>( new Object(using_gc) );
+	auto hndl = newtoo::ptr<ObjectHndl>( new ObjectHndl(using_gc) );
 
 	$_GC_collect;
 

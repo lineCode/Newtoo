@@ -14,7 +14,7 @@ namespace newtoo
 
 	struct reference_list {
 		std::vector<void**> list;
-		garbage_collector* __gc;
+		garbage_collector* gc__;
 		void** operator[](size_t index);
 		size_t size();
 
@@ -27,7 +27,7 @@ namespace newtoo
 
 	struct gc_object {
 		reference_list __own_references;
-		garbage_collector* __gc;
+		garbage_collector* gc__;
 		short __marked : 1;
 
 		gc_object(requires_gc);

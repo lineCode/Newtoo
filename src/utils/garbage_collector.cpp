@@ -84,6 +84,6 @@ namespace newtoo
 
 	void garbage_collector::Register(reference_list* reflist) {
 		reflists.push_back(reflist);
-		reflist->__gc = this;
+		reflist->gc__ = this;
 	}
 }
