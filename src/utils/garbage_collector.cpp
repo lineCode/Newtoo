@@ -64,17 +64,20 @@ namespace newtoo
 #endif
 
 		//sweep
-		for (size_t i = 0; i < heap.size(); i++)
+		size_t i = 0;
+		while (i < heap.size())
 		{
 			if (heap[i]->__marked == 0) {
 				delete heap[i];
+				i = 0;
 #ifdef gc_verbose
 				deleted++;
 #endif
 			}
+			else i++;
 		}
 #ifdef gc_verbose
-		std::cout << "[GC]: Deleted " + std::to_string(deleted) +" objects";
+		std::cout << "[GC]: Deleted " + std::to_string(deleted) +" objects\n";
 #endif
 
 	}

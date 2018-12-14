@@ -2,19 +2,19 @@
 
 namespace newtoo
 {
-	template<typename T> ptr::ptr(T& GC_OBJECT_) : target(*GC_OBJECT_)
+	template<typename T> ptr<T>::ptr(T& GC_OBJECT_) : target(*GC_OBJECT_)
 	{
 		gc_object* go = *GC_OBJECT_;
 		go->__gc->ptrs.push_back(go);
 	}
 
-	template<typename T> ptr::ptr(T* GC_OBJECT_) : target(GC_OBJECT_)
+	template<typename T> ptr<T>::ptr(T* GC_OBJECT_) : target(GC_OBJECT_)
 	{
 		gc_object* go = *GC_OBJECT_;
 		go->__gc->ptrs.push_back(go);
 	}
 
-	template<typename T> ptr::~ptr()
+	template<typename T> ptr<T>::~ptr()
 	{
 		gc_object* go = *target;
 		for (size_t i = 0; go->__gc->ptrs.size(); i++) {
@@ -25,11 +25,11 @@ namespace newtoo
 		}
 	}
 
-	template<typename T> T* ptr::get()
+	template<typename T> T* ptr<T>::get()
 	{
 		return &target;
 	}
-	template<typename T> T& ptr::operator->()
+	template<typename T> T& ptr<T>::operator->()
 	{
 		return target;
 	}
